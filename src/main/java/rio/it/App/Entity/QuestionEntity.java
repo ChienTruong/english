@@ -13,8 +13,10 @@ import java.util.List;
 @Data
 public class QuestionEntity {
     @Id
-    private Long questionEntity;
+    private Long questionEntityId;
     private String pathFileMp3;
+    @OneToMany(mappedBy = "questionEntity")
+    private List<ParagraphEntity> paragraphEntityList = new ArrayList<>(0);
     @OneToMany(mappedBy = "questionEntity")
     private List<FileImageEntity> fileImageEntityList = new ArrayList(0);
     @OneToMany(mappedBy = "questionEntity")
