@@ -2,10 +2,7 @@ package rio.it.App.Entity;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 /**
  * Created by chien on 08/04/2018.
@@ -14,6 +11,7 @@ import javax.persistence.ManyToOne;
 @Data
 public class ParagraphEntity {
     @Id
+    @GeneratedValue
     private Long paragraphId;
     @ManyToOne()
     @JoinColumn(name = "questionEntityId")

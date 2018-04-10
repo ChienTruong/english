@@ -13,6 +13,7 @@ import java.util.List;
 @Data
 public class SubQuestionEntity {
     @Id
+    @GeneratedValue
     private Long subQuestionId;
     private String sentenceAsk;
     private String translateAsk;

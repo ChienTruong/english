@@ -13,8 +13,8 @@ import java.util.List;
 @Data
 public class QuestionEntity {
     @Id
+    @GeneratedValue
     private Long questionEntityId;
-    private String pathFileMp3;
     @OneToMany(mappedBy = "questionEntity")
     private List<ParagraphEntity> paragraphEntityList = new ArrayList<>(0);
     @OneToMany(mappedBy = "questionEntity")
@@ -24,4 +24,7 @@ public class QuestionEntity {
     @ManyToOne
     @JoinColumn(name = "partId")
     private PartEntity partEntity;
+    @ManyToOne
+    @JoinColumn(name = "partQuestionId")
+    private PartQuestionEntity partQuestionEntity;
 }

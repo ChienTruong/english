@@ -5,9 +5,9 @@ import java.util.List;
 /**
  * Created by chien on 06/04/2018.
  */
-public interface General<E, ID> {
+public interface GenericRepository<E, ID> {
 
-    boolean save(E e);
+    void save(E e);
 
     boolean delete(E e);
 

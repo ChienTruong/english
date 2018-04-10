@@ -1,6 +1,6 @@
 package rio.it.App.Repository.Implement;
 
-import rio.it.App.Repository.General;
+import rio.it.App.Repository.GenericRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by chien on 06/04/2018.
  */
-public abstract class GeneralRepository<E, ID> implements General<E, ID> {
+public abstract class GenericRepositoryImpl<E, ID> implements GenericRepository<E, ID> {
 
     protected Class<E> entityClass;
 
@@ -18,15 +18,14 @@ public abstract class GeneralRepository<E, ID> implements General<E, ID> {
     private EntityManager entityManager;
 
 
-    public GeneralRepository() {
+    public GenericRepositoryImpl() {
         ParameterizedType parameterizedType = (ParameterizedType) this.getClass().getGenericSuperclass();
         this.entityClass = (Class<E>) parameterizedType.getActualTypeArguments()[0];
     }
 
     @Override
-    public boolean save(E e) {
+    public void save(E e) {
         this.entityManager.persist(e);
-        return this.entityManager.contains(e);
     }
 
     @Override
