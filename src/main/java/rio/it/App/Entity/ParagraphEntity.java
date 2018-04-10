@@ -13,6 +13,7 @@ public class ParagraphEntity {
     @Id
     @GeneratedValue
     private Long paragraphId;
+    private String paragraph;
     @ManyToOne()
     @JoinColumn(name = "questionEntityId")
     private QuestionEntity questionEntity;
