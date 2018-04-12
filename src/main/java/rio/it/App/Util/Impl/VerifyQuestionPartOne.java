@@ -11,6 +11,9 @@ public class VerifyQuestionPartOne implements VerifyPartQuestion {
     @Override
     public boolean verify(PartQuestionDto partQuestionDto) {
         System.out.println("one");
-        return false;
+        if (partQuestionDto.getPathFileMp3().getSize() == 0){
+            return false;
+        }
+        return true;
     }
 }
