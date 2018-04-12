@@ -3,11 +3,15 @@ package rio.it.App.Service.Impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rio.it.App.Dto.PartQuestionDto;
+import rio.it.App.Entity.PartEntity;
 import rio.it.App.Repository.PartQuestionRepository;
+import rio.it.App.Repository.PartRepository;
 import rio.it.App.Service.PartQuestionService;
 import rio.it.App.Util.FactoryVerifyPartQuestion;
 import rio.it.App.Util.Part;
 import rio.it.App.Util.VerifyPartQuestion;
+
+import java.util.Arrays;
 
 /**
  * Created by chien on 10/04/2018.
@@ -16,12 +20,14 @@ import rio.it.App.Util.VerifyPartQuestion;
 public class PartQuestionServiceImpl implements PartQuestionService {
 
     private PartQuestionRepository partQuestionRepository;
+    private PartRepository partRepository;
     private FactoryVerifyPartQuestion factoryVerifyPartQuestion;
     private VerifyPartQuestion verifyPartQuestion;
 
     @Autowired
-    public PartQuestionServiceImpl(PartQuestionRepository partQuestionRepository, FactoryVerifyPartQuestion factoryVerifyPartQuestion) {
+    public PartQuestionServiceImpl(PartQuestionRepository partQuestionRepository, PartRepository partRepository, FactoryVerifyPartQuestion factoryVerifyPartQuestion) {
         this.partQuestionRepository = partQuestionRepository;
+        this.partRepository = partRepository;
         this.factoryVerifyPartQuestion = factoryVerifyPartQuestion;
     }
 
@@ -36,11 +42,26 @@ public class PartQuestionServiceImpl implements PartQuestionService {
      */
     @Override
     public boolean createPartQuestionDto(PartQuestionDto partQuestionDto) {
-        this.verifyPartQuestion = this.factoryVerifyPartQuestion.getVerify(Part.FIVE);
-        boolean verifyResult = this.verifyPartQuestion.verify(partQuestionDto);
-        if (verifyResult) {
-            // dosomething
+        // find part is here
+        if (!partQuestionDto.getNamePart().isEmpty()) {
+            PartEntity partEntity = this.partRepository.findByName(partQuestionDto.getNamePart());
+            if (partEntity == null) {
+                return false;
+            }
+            Part part = getPartEnum(partEntity.getPartName());
+            this.verifyPartQuestion = this.factoryVerifyPartQuestion.getVerify(part);
+            boolean verifyResult = this.verifyPartQuestion.verify(partQuestionDto);
+            if (verifyResult) {
+                // do something
+                // step1. transfer entity
+                // step2. process another
+                // step3. give entity to repository
+            }
         }
         return false;
+    }
+
+    private Part getPartEnum(String partName) {
+        return Arrays.stream(Part.values()).filter(part -> part.toString().endsWith(partName)).findFirst().get();
     }
 }

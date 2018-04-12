@@ -21,5 +21,4 @@ public class PartQuestionEntity {
     @ManyToOne
     @JoinColumn(name = "partId")
     private PartEntity partEntity;
-
 }

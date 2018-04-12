@@ -2,7 +2,6 @@ package rio.it.App.Util.Impl;
 
 import org.springframework.stereotype.Component;
 import rio.it.App.Util.FactoryVerifyPartQuestion;
-import rio.it.App.Util.Impl.*;
 import rio.it.App.Util.Part;
 import rio.it.App.Util.VerifyPartQuestion;
 

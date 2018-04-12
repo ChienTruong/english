@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Entity
 @Data
 public class SentenceEntity {
+
     @Id
     @GeneratedValue
     private Long sentenceId;

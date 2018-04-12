@@ -10,4 +10,8 @@ import rio.it.App.Repository.PartRepository;
 @Repository
 public class PartRepositoryImpl extends GenericRepositoryImpl<PartEntity, Long> implements PartRepository {
 
+    @Override
+    public PartEntity findByName(String namePart) {
+        return null;
+    }
 }
