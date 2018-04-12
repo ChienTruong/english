@@ -21,7 +21,6 @@ public class QuestionEntity {
     private List<FileImageEntity> fileImageEntityList = new ArrayList(0);
     @OneToMany(mappedBy = "questionEntity")
     private List<SubQuestionEntity> subQuestionEntityList = new ArrayList<>(0);
-
     @ManyToOne
     @JoinColumn(name = "partQuestionId")
     private PartQuestionEntity partQuestionEntity;
