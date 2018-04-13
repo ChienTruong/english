@@ -10,6 +10,7 @@ public class VerifyQuestionPartFour implements VerifyPartQuestion {
 
     @Override
     public boolean verify(PartQuestionDto partQuestionDto) {
+        System.out.println("Four");
         return false;
     }
 }

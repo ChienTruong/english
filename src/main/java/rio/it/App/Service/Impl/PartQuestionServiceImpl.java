@@ -8,7 +8,7 @@ import rio.it.App.Repository.PartQuestionRepository;
 import rio.it.App.Repository.PartRepository;
 import rio.it.App.Service.PartQuestionService;
 import rio.it.App.Util.FactoryVerifyPartQuestion;
-import rio.it.App.Util.Part;
+import rio.it.App.Util.PartEnum;
 import rio.it.App.Util.VerifyPartQuestion;
 
 import java.util.Arrays;
@@ -38,7 +38,9 @@ public class PartQuestionServiceImpl implements PartQuestionService {
      * @return Step 1: get class verify match with partQuestion
      * @Note_11/04/18_Chien: view class factoryVerifyPartQuestion to know information of this class
      * Step 2: it will be verified by class verifyPartQuestion
-     * Step 3: ...
+     * Step 3: transfer entity
+     * Step 4: process another function
+     * Step 5: give entity to repository
      */
     @Override
     public boolean createPartQuestionDto(PartQuestionDto partQuestionDto) {
@@ -48,20 +50,28 @@ public class PartQuestionServiceImpl implements PartQuestionService {
             if (partEntity == null) {
                 return false;
             }
-            Part part = getPartEnum(partEntity.getPartName());
-            this.verifyPartQuestion = this.factoryVerifyPartQuestion.getVerify(part);
+            PartEnum partEnum = getPartEnum(partEntity.getPartName());
+            this.verifyPartQuestion = this.factoryVerifyPartQuestion.getVerify(partEnum);
             boolean verifyResult = this.verifyPartQuestion.verify(partQuestionDto);
             if (verifyResult) {
                 // do something
                 // step1. transfer entity
+
                 // step2. process another
+
                 // step3. give entity to repository
+
             }
         }
         return false;
     }
 
-    private Part getPartEnum(String partName) {
-        return Arrays.stream(Part.values()).filter(part -> part.toString().endsWith(partName)).findFirst().get();
+    /**
+     *
+     * @param partName
+     * @return
+     */
+    private PartEnum getPartEnum(String partName) {
+        return Arrays.stream(PartEnum.values()).filter(part -> partName.toUpperCase().contains(part.name())).findFirst().get();
     }
 }

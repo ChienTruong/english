@@ -15,5 +15,4 @@ public class QuestionDto {
     private List<FileImageDto> fileImageDtoList;
     private List<SubQuestionDto> subQuestionDtoList;
 
-
 }

@@ -26,11 +26,7 @@ public class PartQuestionRestImpl implements PartQuestionRest {
 
     @Override
     public ResponseEntity create(@RequestBody() PartQuestionDto partQuestionDto) {
-<<<<<<< HEAD
-
-=======
         this.partQuestionService.createPartQuestionDto(partQuestionDto);
->>>>>>> 49c073b16c2e6a2df0335f9e6ae44c136d569b25
         return null;
     }
 

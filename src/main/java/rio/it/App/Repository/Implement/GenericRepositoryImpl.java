@@ -12,10 +12,10 @@ import java.util.List;
  */
 public abstract class GenericRepositoryImpl<E, ID> implements GenericRepository<E, ID> {
 
-    protected Class<E> entityClass;
+    private Class<E> entityClass;
 
     @PersistenceContext
-    private EntityManager entityManager;
+    protected EntityManager entityManager;
 
 
     public GenericRepositoryImpl() {

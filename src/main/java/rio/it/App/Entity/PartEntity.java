@@ -1,6 +1,8 @@
 package rio.it.App.Entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,6 +13,10 @@ import java.util.List;
  */
 @Entity
 @Data
+@EqualsAndHashCode
+@ToString(exclude = {
+        "partQuestionEntityList"
+})
 public class PartEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

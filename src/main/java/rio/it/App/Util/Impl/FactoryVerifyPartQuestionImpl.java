@@ -2,7 +2,7 @@ package rio.it.App.Util.Impl;
 
 import org.springframework.stereotype.Component;
 import rio.it.App.Util.FactoryVerifyPartQuestion;
-import rio.it.App.Util.Part;
+import rio.it.App.Util.PartEnum;
 import rio.it.App.Util.VerifyPartQuestion;
 
 import javax.validation.constraints.NotNull;
@@ -15,16 +15,15 @@ import java.util.Map;
 @Component
 public class FactoryVerifyPartQuestionImpl implements FactoryVerifyPartQuestion {
 
-    private Map<Part, VerifyPartQuestion> mapVerifyPartQuestion;
+    private Map<PartEnum, VerifyPartQuestion> mapVerifyPartQuestion;
 
     /**
      * @param part
      * @return
-     * @Note_11/04/18_Chien: if don't like this solution, u can view more solution else in file ElseCase.java, or think else solution
-     * --> choice result:
+     * --> choice result: this class
      */
     @Override
-    public VerifyPartQuestion getVerify(@NotNull Part part) {
+    public VerifyPartQuestion getVerify(@NotNull PartEnum part) {
         init();
         if (!this.mapVerifyPartQuestion.containsKey(part)) {
             VerifyPartQuestion verifyPartQuestion = choice(part);
@@ -33,7 +32,7 @@ public class FactoryVerifyPartQuestionImpl implements FactoryVerifyPartQuestion 
         return this.mapVerifyPartQuestion.get(part);
     }
 
-    private VerifyPartQuestion choice(@NotNull Part part) {
+    private VerifyPartQuestion choice(@NotNull PartEnum part) {
         VerifyPartQuestion verifyPartQuestion = null;
         switch (part) {
             case ONE:

@@ -6,5 +6,5 @@ import javax.validation.constraints.NotNull;
  * Created by chien on 12/04/2018.
  */
 public interface FactoryVerifyPartQuestion {
-    VerifyPartQuestion getVerify(@NotNull Part part);
+    VerifyPartQuestion getVerify(@NotNull PartEnum part);
 }
