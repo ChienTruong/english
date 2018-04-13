@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rio.it.App.Dto.PartQuestionDto;
 import rio.it.App.Entity.PartEntity;
-import rio.it.App.Entity.PartQuestionEntity;
 import rio.it.App.Repository.PartQuestionRepository;
 import rio.it.App.Repository.PartRepository;
 import rio.it.App.Service.PartQuestionService;
@@ -70,7 +69,6 @@ public class PartQuestionServiceImpl implements PartQuestionService {
     }
 
     /**
-     *
      * @param partName
      * @return
      */

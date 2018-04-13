@@ -8,7 +8,7 @@ import rio.it.App.Entity.PartQuestionEntity;
 /**
  * Created by chien on 10/04/2018.
  */
-public interface PartQuestionTranform {
+public interface PartQuestionTransform {
 
     PartQuestionEntity convertPartQuestionDtoToEntity(PartQuestionDto partQuestionDto);
 
