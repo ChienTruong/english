@@ -16,9 +16,13 @@ public class PartQuestionEntity {
     @GeneratedValue
     private Long partQuestionId;
     private String pathFileMp3;
+    private Boolean status;
     @OneToMany(mappedBy = "partQuestionEntity")
     private List<QuestionEntity> questionEntityList;
     @ManyToOne
     @JoinColumn(name = "partId")
     private PartEntity partEntity;
+    @ManyToOne()
+    @JoinColumn(name = "accountID")
+    private AccountEntity accountEntity;
 }
