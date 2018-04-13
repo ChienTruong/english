@@ -15,6 +15,8 @@ public class QuestionEntity {
     @Id
     @GeneratedValue
     private Long questionEntityId;
+    private Integer timeStart;
+    private Integer timeEnd;
     @OneToMany(mappedBy = "questionEntity")
     private List<ParagraphEntity> paragraphEntityList = new ArrayList<>(0);
     @OneToMany(mappedBy = "questionEntity")
