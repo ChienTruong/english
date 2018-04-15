@@ -11,8 +11,14 @@ import rio.it.App.Transform.SentenceTransform;
 @Service
 public class SentenceTransformImpl implements SentenceTransform {
 
+
     @Override
     public SentenceEntity convertSentenceDtoToEntity(SentenceDto sentenceDto) {
+        return null;
+    }
+
+    @Override
+    public SentenceDto convertSentenceEntityToDto(SentenceEntity sentenceEntity) {
         return null;
     }
 }

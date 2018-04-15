@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,8 +13,11 @@ import java.util.List;
 @Data
 @EqualsAndHashCode
 public class PartQuestionDto {
+
     private Long partQuestionId;
     private MultipartFile pathFileMp3;
-    private List<QuestionDto> questionDtoList;
+    private List<QuestionDto> questionDtoList = new ArrayList<>();
     private String namePart;
+
+
 }

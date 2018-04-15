@@ -25,4 +25,5 @@ public class PartQuestionEntity {
     @ManyToOne()
     @JoinColumn(name = "accountID")
     private AccountEntity accountEntity;
+
 }

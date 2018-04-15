@@ -25,4 +25,9 @@ public class PartQuestionTransformImpl implements PartQuestionTransform {
         }
         return partQuestionEntity;
     }
+
+    @Override
+    public PartQuestionDto convertPartQuestionEntityToDto(PartQuestionEntity partQuestionEntity) {
+        return null;
+    }
 }

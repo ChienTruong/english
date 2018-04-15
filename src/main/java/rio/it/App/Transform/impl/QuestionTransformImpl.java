@@ -22,4 +22,9 @@ public class QuestionTransformImpl implements QuestionTransform {
         }
         return null;
     }
+
+    @Override
+    public QuestionDto convertQuestionEntityToDto(QuestionEntity questionEntity) {
+        return null;
+    }
 }

@@ -9,5 +9,6 @@ import rio.it.App.Entity.PartQuestionEntity;
 public interface PartQuestionTransform {
 
     PartQuestionEntity convertPartQuestionDtoToEntity(PartQuestionDto partQuestionDto);
+    PartQuestionDto convertPartQuestionEntityToDto(PartQuestionEntity partQuestionEntity);
 
 }
