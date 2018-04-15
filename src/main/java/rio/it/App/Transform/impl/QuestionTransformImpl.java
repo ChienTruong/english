@@ -17,13 +17,28 @@ public class QuestionTransformImpl implements QuestionTransform {
     @Override
     public QuestionEntity convertQuestionDtoToEntity(QuestionDto questionDto) {
         QuestionEntity questionEntity = null;
+        logger.info("Begin convertQuestionDtoToEntity with type Dto: "+questionDto);
         if (questionDto != null) {
+            questionEntity = new QuestionEntity();
+            questionEntity.setQuestionEntityId(questionDto.getQuestionEntityId());
+            questionEntity.setTimeEnd(questionDto.getTimeEnd());
+            questionEntity.setTimeStart(questionDto.getTimeStart());
         }
-        return null;
+        logger.info("End convertQuestionDtoToEntity result: "+questionEntity);
+        return questionEntity;
     }
 
     @Override
     public QuestionDto convertQuestionEntityToDto(QuestionEntity questionEntity) {
-        return null;
+        QuestionDto questionDto = null;
+        logger.info("Begin convertQuestionEntityToDto with type Entity: "+questionEntity);
+        if (questionEntity != null){
+            questionDto = new QuestionDto();
+            questionDto.setQuestionEntityId(questionEntity.getQuestionEntityId());
+            questionDto.setTimeEnd(questionEntity.getTimeEnd());
+            questionDto.setTimeStart(questionEntity.getTimeStart());
+        }
+        logger.info("End convertQuestionEntityToDto with result: "+questionDto);
+        return questionDto;
     }
 }

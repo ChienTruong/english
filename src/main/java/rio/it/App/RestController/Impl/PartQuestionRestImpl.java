@@ -15,7 +15,8 @@ import rio.it.App.Service.PartQuestionService;
  */
 @RestController
 @RequestMapping("/partQuestion")
-public class PartQuestionRestImpl implements PartQuestionRest {
+public class
+PartQuestionRestImpl implements PartQuestionRest {
 
     private PartQuestionService partQuestionService;
 
