@@ -9,6 +9,7 @@ import java.util.List;
  * Created by chien on 10/04/2018.
  */
 public interface Transform {
+
     List<PartQuestionEntity> transformListPartQuestion(List<PartQuestionDto> partQuestionDtoList);
 
     List<PartQuestionEntity> transformListQuestion(List<PartQuestionDto> partQuestionDtoList);
