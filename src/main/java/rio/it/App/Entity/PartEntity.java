@@ -23,5 +23,5 @@ public class PartEntity {
     private Long partId;
     private String partName;
     @OneToMany(mappedBy = "partEntity")
-    private List<PartQuestionEntity> partQuestionEntityList = new ArrayList<>(0);
+    private List<PartQuestionEntity> partQuestionEntityList;
 }

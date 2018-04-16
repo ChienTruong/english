@@ -20,7 +20,7 @@ public class PartQuestionTransformImpl implements PartQuestionTransform {
         logger.info("Begin convertPartQuestionDtoToEntity with Dto: " + partQuestionDto);
         if (partQuestionDto != null) {
             partQuestionEntity = new PartQuestionEntity();
-            partQuestionEntity.setPathFileMp3(partQuestionDto.getNamePart());
+            partQuestionEntity.setPathFileMp3(partQuestionDto.getNamePartFileMp3());
         }
         logger.info("End convertPartQuestionDtoToEntity with result: " + partQuestionEntity);
         return partQuestionEntity;
@@ -33,7 +33,7 @@ public class PartQuestionTransformImpl implements PartQuestionTransform {
         logger.info("Begin convertPartQuestionDtoToDto with Entity: "+partQuestionEntity);
         if (partQuestionEntity != null){
             partQuestionDto = new PartQuestionDto();
-            partQuestionDto.setNamePart(partQuestionEntity.getPathFileMp3());
+            partQuestionDto.setNamePartFileMp3(partQuestionEntity.getPathFileMp3());
         }
         logger.info("End convertPartQuestionDtoToDto with result: "+partQuestionDto);
         return partQuestionDto;

@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rio.it.App.Dto.PartQuestionDto;
+import rio.it.App.Entity.PartQuestionEntity;
 import rio.it.App.Entity.PartEntity;
 import rio.it.App.Repository.PartQuestionRepository;
 import rio.it.App.Repository.PartRepository;
 import rio.it.App.Service.PartQuestionService;
+import rio.it.App.Transform.GenericTransform;
 import rio.it.App.Util.FactoryVerifyPartQuestion;
 import rio.it.App.Util.PartEnum;
 import rio.it.App.Util.VerifyPartQuestion;
@@ -25,12 +27,13 @@ public class PartQuestionServiceImpl implements PartQuestionService {
     private PartRepository partRepository;
     private FactoryVerifyPartQuestion factoryVerifyPartQuestion;
     private VerifyPartQuestion verifyPartQuestion;
-
+    private GenericTransform genericTransform;
     @Autowired
-    public PartQuestionServiceImpl(PartQuestionRepository partQuestionRepository, PartRepository partRepository, FactoryVerifyPartQuestion factoryVerifyPartQuestion) {
+    public PartQuestionServiceImpl(PartQuestionRepository partQuestionRepository, PartRepository partRepository, FactoryVerifyPartQuestion factoryVerifyPartQuestion, GenericTransform genericTransform) {
         this.partQuestionRepository = partQuestionRepository;
         this.partRepository = partRepository;
         this.factoryVerifyPartQuestion = factoryVerifyPartQuestion;
+        this.genericTransform = genericTransform;
     }
 
     /**
@@ -47,8 +50,8 @@ public class PartQuestionServiceImpl implements PartQuestionService {
     @Override
     public boolean createPartQuestionDto(PartQuestionDto partQuestionDto) {
         // find part is here
-        if (!partQuestionDto.getNamePart().isEmpty()) {
-            PartEntity partEntity = this.partRepository.findByName(partQuestionDto.getNamePart());
+        if (!partQuestionDto.getNamePartFileMp3().isEmpty()) {
+            PartEntity partEntity = this.partRepository.findByName(partQuestionDto.getNamePartFileMp3());
             if (partEntity == null) {
                 return false;
             }
@@ -56,15 +59,14 @@ public class PartQuestionServiceImpl implements PartQuestionService {
             this.verifyPartQuestion = this.factoryVerifyPartQuestion.getVerify(partEnum);
             boolean verifyResult = this.verifyPartQuestion.verify(partQuestionDto);
             if (verifyResult) {
+            PartQuestionEntity  partQuestionEntity = genericTransform.transformPartQuestionDtoToEntity(partQuestionDto);
                 // do something
+
                 // step1. transfer entity
-
-
 
                 // step2. process another
 
                 // step3. give entity to repository
-
             }
         }
         return false;

@@ -14,8 +14,8 @@ public class PartQuestionDto {
 
     private Long partQuestionId;
     private MultipartFile pathFileMp3;
-    private List<QuestionDto> questionDtoList = new ArrayList<>();
-    private String namePart;
+    private List<QuestionDto> questionDtoList;
+    private String namePartFileMp3;
 
 
 }

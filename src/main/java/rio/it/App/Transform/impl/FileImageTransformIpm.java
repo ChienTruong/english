@@ -19,7 +19,7 @@ public class FileImageTransformIpm implements FileImageTransform {
         logger.info("Begin convertFileImageDtoToEntity with Dto:"+fileImageDto);
         if (fileImageDto != null){
             fileImageEntity =new FileImageEntity();
-            fileImageDto.setPathFileName(fileImageDto.getPathFileName());
+            fileImageDto.setPathFileNameImage(fileImageDto.getPathFileNameImage());
         }
         logger.info("End convertFileImageDtoToEntity with result:"+fileImageEntity);
         return fileImageEntity;
@@ -31,7 +31,7 @@ public class FileImageTransformIpm implements FileImageTransform {
         logger.info("Begin convertFileImageEntityToDto with Entity:"+fileImageEntity);
         if (fileImageEntity != null){
             fileImageDto = new FileImageDto();
-            fileImageDto.setPathFileName(fileImageEntity.getPathFileImage());
+            fileImageDto.setPathFileNameImage(fileImageEntity.getPathFileImage());
 
         }
         logger.info("End convertFileImageEntityToDto with result :"+fileImageDto);
