@@ -18,6 +18,7 @@ public class PartQuestionDto {
     private MultipartFile pathFileMp3;
     private List<QuestionDto> questionDtoList;
     private String namePart;
+    private String NamePartFileMp3;
 
 
 }
