@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 public interface GenericRest<D, ID> {
 
     @PostMapping("")
-    ResponseEntity create(@RequestBody() D d);
+    ResponseEntity create(/*@RequestBody()*/ D d);
 
     @GetMapping()
     ResponseEntity findAll();

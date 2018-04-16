@@ -1,5 +1,7 @@
 package rio.it.App.Service.Impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +22,7 @@ import java.util.Arrays;
 @Service
 @Transactional
 public class PartQuestionServiceImpl implements PartQuestionService {
-
+    private Logger logger = LoggerFactory.getLogger(PartQuestionServiceImpl.class);
     private PartQuestionRepository partQuestionRepository;
     private PartRepository partRepository;
     private FactoryVerifyPartQuestion factoryVerifyPartQuestion;
@@ -47,26 +49,32 @@ public class PartQuestionServiceImpl implements PartQuestionService {
     @Override
     public boolean createPartQuestionDto(PartQuestionDto partQuestionDto) {
         // find part is here
-        if (!partQuestionDto.getNamePart().isEmpty()) {
-            PartEntity partEntity = this.partRepository.findByName(partQuestionDto.getNamePart());
-            if (partEntity == null) {
-                return false;
+        PartEntity partEntity = null;
+        PartEnum partEnum = null;
+        logger.info("Begin createPartQuestionDto with condition: "+partQuestionDto);
+        try {
+            if (!partQuestionDto.getNamePart().isEmpty()) {
+                partEntity = this.partRepository.findByName(partQuestionDto.getNamePart());
+                if (partEntity == null) {
+                    return false;
+                }
+                partEnum = getPartEnum(partEntity.getPartName());
+                this.verifyPartQuestion = this.factoryVerifyPartQuestion.getVerify(partEnum);
+                boolean verifyResult = this.verifyPartQuestion.verify(partQuestionDto);
+                if (verifyResult) {
+                    // do something
+                    // step1. transfer entity
+
+                    // step2. process another
+
+                    // step3. give entity to repository
+
+                }
             }
-            PartEnum partEnum = getPartEnum(partEntity.getPartName());
-            this.verifyPartQuestion = this.factoryVerifyPartQuestion.getVerify(partEnum);
-            boolean verifyResult = this.verifyPartQuestion.verify(partQuestionDto);
-            if (verifyResult) {
-                // do something
-                // step1. transfer entity
-
-
-
-                // step2. process another
-
-                // step3. give entity to repository
-
-            }
+        }catch (Exception e){
+            logger.info("Error createPartQuestionDto: "+e);
         }
+
         return false;
     }
 
