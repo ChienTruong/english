@@ -18,11 +18,11 @@ public class QuestionEntity {
     private Integer timeStart;
     private Integer timeEnd;
     @OneToMany(mappedBy = "questionEntity")
-    private List<ParagraphEntity> paragraphEntityList;
+    private List<ParagraphEntity> paragraphEntityList = new ArrayList<>(0);
     @OneToMany(mappedBy = "questionEntity")
-    private List<FileImageEntity> fileImageEntityList;
+    private List<FileImageEntity> fileImageEntityList = new ArrayList(0);
     @OneToMany(mappedBy = "questionEntity")
-    private List<SubQuestionEntity> subQuestionEntityList;
+    private List<SubQuestionEntity> subQuestionEntityList = new ArrayList<>(0);
     @ManyToOne
     @JoinColumn(name = "partQuestionId")
     private PartQuestionEntity partQuestionEntity;

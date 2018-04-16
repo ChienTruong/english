@@ -15,6 +15,6 @@ public class SubQuestionDto {
     private String translateAsk;
     private Character answer;
 
-    private List<SentenceDto> sentenceDtoList;
+    private List<SentenceDto> sentenceDtoList = new ArrayList<>(4);
 
 }

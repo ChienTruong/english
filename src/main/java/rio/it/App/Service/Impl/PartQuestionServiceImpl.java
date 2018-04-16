@@ -52,7 +52,6 @@ public class PartQuestionServiceImpl implements PartQuestionService {
         PartEntity partEntity = null;
         PartEnum partEnum = null;
         logger.info("Begin createPartQuestionDto with condition: "+partQuestionDto);
-
         try {
             if (!partQuestionDto.getNamePart().isEmpty()) {
                 partEntity = this.partRepository.findByName(partQuestionDto.getNamePart());
@@ -61,12 +60,9 @@ public class PartQuestionServiceImpl implements PartQuestionService {
                 }
                 partEnum = getPartEnum(partEntity.getPartName());
                 this.verifyPartQuestion = this.factoryVerifyPartQuestion.getVerify(partEnum);
-                System.out.println("RRRR");
                 boolean verifyResult = this.verifyPartQuestion.verify(partQuestionDto);
-                System.out.println("^^^^^^"+verifyResult);
                 if (verifyResult) {
                     // do something
-
                     // step1. transfer entity
 
                     // step2. process another
@@ -76,7 +72,6 @@ public class PartQuestionServiceImpl implements PartQuestionService {
                 }
             }
         }catch (Exception e){
-            System.out.println("Loi");
             logger.info("Error createPartQuestionDto: "+e);
         }
 

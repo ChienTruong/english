@@ -2,6 +2,7 @@ package rio.it.App.Dto;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ public class QuestionDto {
     private Integer timeEnd;
 
     private List<ParagraphDto> paragraphDtoList;
-    private List<FileImageDto> fileImageDtoList;
+    private List<FileImageDto> fileImageDtoList ;
     private List<SubQuestionDto> subQuestionDtoList;
 
 }
