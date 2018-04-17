@@ -6,6 +6,8 @@ import rio.it.App.Dto.PartQuestionDto;
 import rio.it.App.Entity.PartQuestionEntity;
 import rio.it.App.Transform.*;
 
+import java.util.List;
+
 /**
  * Created by chien on 15/04/2018.
  */
@@ -28,7 +30,12 @@ public class TransformImpl implements Transform {
     }
 
     @Override
-    public PartQuestionEntity doTransformForPartQuestion(PartQuestionDto partQuestionDto) {
+    public List<PartQuestionEntity> transformListPartQuestion(List<PartQuestionDto> partQuestionDtoList) {
+        return null;
+    }
+
+    @Override
+    public List<PartQuestionEntity> transformListQuestion(List<PartQuestionDto> partQuestionDtoList) {
         return null;
     }
 }

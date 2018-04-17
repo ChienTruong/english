@@ -1,6 +1,7 @@
 package rio.it.App.Entity;
 
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
@@ -10,6 +11,10 @@ import java.util.List;
  */
 @Entity
 @Data
+@ToString(exclude = {
+        "partEntity",
+        "accountEntity"
+})
 public class PartQuestionEntity {
 
     @Id
@@ -17,7 +22,7 @@ public class PartQuestionEntity {
     private Long partQuestionId;
     private String pathFileMp3;
     private Boolean status;
-    @OneToMany(mappedBy = "partQuestionEntity")
+    @OneToMany(mappedBy = "partQuestionEntity", cascade = CascadeType.ALL)
     private List<QuestionEntity> questionEntityList;
     @ManyToOne
     @JoinColumn(name = "partId")

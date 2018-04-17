@@ -18,29 +18,38 @@ public class VerifyQuestionPartTwo implements VerifyPartQuestion {
     public boolean verify(PartQuestionDto partQuestionDto) {
         LOGGER.info("Do verify for partQuestionDto part two");
         if (verifyItIsPartTwo(partQuestionDto)) {
-            return verifyItIsRedundant(partQuestionDto);
+            return verifyItDoNotRedundant(partQuestionDto);
         }
         LOGGER.info("Error ! Verify for partQuestionDto part two");
         return false;
     }
 
-    private boolean verifyItIsRedundant(PartQuestionDto partQuestionDto) {
-        return false;
+    /**
+     * @param partQuestionDto
+     * @return
+     */
+    private boolean verifyItDoNotRedundant(PartQuestionDto partQuestionDto) {
+
+        return true;
     }
 
+    /**
+     * @param partQuestionDto
+     * @return
+     */
     private boolean verifyItIsPartTwo(PartQuestionDto partQuestionDto) {
         if (partQuestionDto.getPathFileMp3().getSize() != 0) {
             if (!partQuestionDto.getQuestionDtoList().isEmpty()) {
                 for (QuestionDto questionDto : partQuestionDto.getQuestionDtoList()) {
                     if (questionDto.getSubQuestionDtoList().size() != 1) {
-                        break;
+                        return false;
                     }
                     SubQuestionDto subQuestionDto = questionDto.getSubQuestionDtoList().get(0);
                     if (subQuestionDto.getSentenceAsk().isEmpty()
-                            || subQuestionDto.getSentenceDtoList().size() == 3
+                            || subQuestionDto.getSentenceDtoList().size() != 3
                             || subQuestionDto.getSentenceDtoList().stream()
                             .anyMatch(sentenceDto -> sentenceDto.getSentenceEn().isEmpty())) {
-                        break;
+                        return false;
                     }
                 }
                 return true;

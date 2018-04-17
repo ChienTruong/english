@@ -19,7 +19,7 @@ public class SubQuestionEntity {
     private String translateAsk;
     private Character answer;
     @OneToMany(mappedBy = "subQuestionEntity")
-    private List<SentenceEntity> sentenceEntityList = new ArrayList(4);
+    private List<SentenceEntity> sentenceEntityList;
     @ManyToOne()
     @JoinColumn(name = "questionEntityId")
     private QuestionEntity questionEntity;
