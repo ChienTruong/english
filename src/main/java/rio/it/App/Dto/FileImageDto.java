@@ -10,5 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileImageDto {
     private Long fileImageId;
     private MultipartFile pathFileImage;
+    private String pathFileNameImage;
 
 }

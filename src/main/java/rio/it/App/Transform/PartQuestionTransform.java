@@ -8,7 +8,20 @@ import rio.it.App.Entity.PartQuestionEntity;
  */
 public interface PartQuestionTransform {
 
+    /**
+     * convert partQuestionDto to partQuestionEntity
+     * @param partQuestionDto
+     * @return partQuestionEntity
+     * @author Quang Lai
+     */
     PartQuestionEntity convertPartQuestionDtoToEntity(PartQuestionDto partQuestionDto);
+
+    /**
+     * convert partQuestionEntity to partQuestionDto
+     * @param partQuestionEntity
+     * @return partQuestionDto
+     * @author Quang Lai
+     */
     PartQuestionDto convertPartQuestionEntityToDto(PartQuestionEntity partQuestionEntity);
 
 }

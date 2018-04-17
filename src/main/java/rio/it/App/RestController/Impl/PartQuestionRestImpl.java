@@ -15,7 +15,8 @@ import rio.it.App.Service.PartQuestionService;
  */
 @RestController
 @RequestMapping("/partQuestion")
-public class PartQuestionRestImpl implements PartQuestionRest {
+public class
+PartQuestionRestImpl implements PartQuestionRest {
 
     private PartQuestionService partQuestionService;
 
@@ -25,8 +26,10 @@ public class PartQuestionRestImpl implements PartQuestionRest {
     }
 
     @Override
-    public ResponseEntity create(@RequestBody() PartQuestionDto partQuestionDto) {
-        System.out.println(partQuestionDto);
+    public ResponseEntity create(/*@RequestBody()*/ PartQuestionDto partQuestionDto) {
+        System.out.println(partQuestionDto.toString());
+//        System.out.println(partQuestionDto.getQuestionDtoList().get(0).getFileImageDtoList().get(0).getPathFileImage().getSize());
+//        System.out.println(partQuestionDto.getQuestionDtoList().get(1).getFileImageDtoList().get(1).getPathFileImage().getSize());
         this.partQuestionService.createPartQuestionDto(partQuestionDto);
         return null;
     }

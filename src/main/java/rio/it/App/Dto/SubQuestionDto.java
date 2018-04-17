@@ -10,10 +10,11 @@ import java.util.List;
  */
 @Data
 public class SubQuestionDto {
-
     private Long subQuestionId;
     private String sentenceAsk;
     private String translateAsk;
     private Character answer;
+
     private List<SentenceDto> sentenceDtoList;
+
 }

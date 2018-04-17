@@ -21,13 +21,22 @@ public class PartQuestionTransformImpl implements PartQuestionTransform {
         logger.info("Begin convertPartQuestionDtoToEntity with Dto: " + partQuestionDto);
         if (partQuestionDto != null) {
             partQuestionEntity = new PartQuestionEntity();
-            partQuestionEntity.setPathFileMp3(partQuestionDto.getNamePart());
+            partQuestionEntity.setPathFileMp3(partQuestionDto.getNamePartFileMp3());
         }
+        logger.info("End convertPartQuestionDtoToEntity with result: " + partQuestionEntity);
         return partQuestionEntity;
     }
 
     @Override
     public PartQuestionDto convertPartQuestionEntityToDto(PartQuestionEntity partQuestionEntity) {
-        return null;
+
+        PartQuestionDto partQuestionDto = null;
+        logger.info("Begin convertPartQuestionDtoToDto with Entity: "+partQuestionEntity);
+        if (partQuestionEntity != null){
+            partQuestionDto = new PartQuestionDto();
+            partQuestionDto.setNamePartFileMp3(partQuestionEntity.getPathFileMp3());
+        }
+        logger.info("End convertPartQuestionDtoToDto with result: "+partQuestionDto);
+        return partQuestionDto;
     }
 }

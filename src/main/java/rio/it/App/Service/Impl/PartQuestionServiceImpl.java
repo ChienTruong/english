@@ -1,15 +1,17 @@
 package rio.it.App.Service.Impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rio.it.App.Dto.PartQuestionDto;
-import rio.it.App.Entity.PartEntity;
 import rio.it.App.Entity.PartQuestionEntity;
-import rio.it.App.Entity.QuestionEntity;
+import rio.it.App.Entity.PartEntity;
 import rio.it.App.Repository.PartQuestionRepository;
 import rio.it.App.Repository.PartRepository;
 import rio.it.App.Service.PartQuestionService;
+import rio.it.App.Transform.GenericTransform;
 import rio.it.App.Util.FactoryVerifyPartQuestion;
 import rio.it.App.Util.PartEnum;
 import rio.it.App.Util.VerifyPartQuestion;
@@ -22,17 +24,19 @@ import java.util.Arrays;
 @Service
 @Transactional
 public class PartQuestionServiceImpl implements PartQuestionService {
-
+    private Logger logger = LoggerFactory.getLogger(PartQuestionServiceImpl.class);
     private PartQuestionRepository partQuestionRepository;
     private PartRepository partRepository;
     private FactoryVerifyPartQuestion factoryVerifyPartQuestion;
     private VerifyPartQuestion verifyPartQuestion;
+    private GenericTransform genericTransform;
 
     @Autowired
-    public PartQuestionServiceImpl(PartQuestionRepository partQuestionRepository, PartRepository partRepository, FactoryVerifyPartQuestion factoryVerifyPartQuestion) {
+    public PartQuestionServiceImpl(GenericTransform genericTransform ,PartQuestionRepository partQuestionRepository, PartRepository partRepository, FactoryVerifyPartQuestion factoryVerifyPartQuestion) {
         this.partQuestionRepository = partQuestionRepository;
         this.partRepository = partRepository;
         this.factoryVerifyPartQuestion = factoryVerifyPartQuestion;
+        this.genericTransform = genericTransform;
     }
 
     /**
@@ -49,23 +53,34 @@ public class PartQuestionServiceImpl implements PartQuestionService {
     @Override
     public boolean createPartQuestionDto(PartQuestionDto partQuestionDto) {
         // find part is here
-        if (!partQuestionDto.getNamePart().isEmpty()) {
-            PartEntity partEntity = this.partRepository.findByName(partQuestionDto.getNamePart());
-            if (partEntity == null) {
-                return false;
-            }
-            PartEnum partEnum = getPartEnum(partEntity.getPartName());
-            this.verifyPartQuestion = this.factoryVerifyPartQuestion.getVerify(partEnum);
-            boolean verifyResult = this.verifyPartQuestion.verify(partQuestionDto);
-            if (verifyResult) {
-                // do something
-                // step1. transfer entity
+        PartEntity partEntity = null;
+        PartEnum partEnum = null;
+        logger.info("Begin createPartQuestionDto with condition: "+partQuestionDto);
+        try {
+            if (!partQuestionDto.getNamePart().isEmpty()) {
+                partEntity = this.partRepository.findByName(partQuestionDto.getNamePart());
+                if (partEntity == null) {
+                    return false;
+                }
+                partEnum = getPartEnum(partEntity.getPartName());
+                this.verifyPartQuestion = this.factoryVerifyPartQuestion.getVerify(partEnum);
+                boolean verifyResult = this.verifyPartQuestion.verify(partQuestionDto);
+                if (verifyResult) {
+                    PartQuestionEntity partQuestionEntity = genericTransform.transformPartQuestionDtoToEntity(partQuestionDto);
 
-                // step2. process another
+                    // do something
+                    // step1. transfer entity
 
-                // step3. give entity to repository
+                    // step2. process another
+
+                    // step3. give entity to repository
+
+                }
             }
+        }catch (Exception e){
+            logger.info("Error createPartQuestionDto: "+e);
         }
+
         return false;
     }
 
