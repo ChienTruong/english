@@ -3,16 +3,18 @@ package rio.it.App.RestController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * Created by chien on 10/04/2018.
  */
 public interface GenericRest<D, ID> {
 
     @PostMapping("")
-    ResponseEntity create(/*@RequestBody()*/ D d);
+    ResponseEntity create(@RequestBody() D d);
 
     @GetMapping()
-    ResponseEntity findAll();
+    List<D> findAll();
 
     @GetMapping("/{id}")
     ResponseEntity findOne(@PathVariable(name = "id") ID id);

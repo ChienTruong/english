@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rio.it.App.Dto.*;
 import rio.it.App.Entity.*;
+import rio.it.App.Repository.AccountRepository;
 import rio.it.App.Transform.*;
-
 import java.util.ArrayList;
 
 /**
@@ -22,16 +22,20 @@ public class GenericTransformsImpl implements GenericTransform {
     private ParagraphTransform paragraphTransform;
     private SentenceTransform sentenceTransform;
     private FileImageTransform fileImageTransform;
+    private AccountTransform accountTransform;
+    private AccountRepository accountRepository;
     private   Logger logger = LoggerFactory.getLogger(GenericTransformsImpl.class);
 
     @Autowired
-    public GenericTransformsImpl(PartQuestionTransform partQuestionTransform, QuestionTransform questionTransform, SubQuestionTransform subQuestionTransform, ParagraphTransform paragraphTransform, SentenceTransform sentenceTransform, FileImageTransform fileImageTransform) {
+    public GenericTransformsImpl(AccountRepository accountRepository,AccountTransform accountTransform, PartQuestionTransform partQuestionTransform, QuestionTransform questionTransform, SubQuestionTransform subQuestionTransform, ParagraphTransform paragraphTransform, SentenceTransform sentenceTransform, FileImageTransform fileImageTransform) {
         this.partQuestionTransform = partQuestionTransform;
         this.questionTransform = questionTransform;
         this.subQuestionTransform = subQuestionTransform;
         this.paragraphTransform = paragraphTransform;
         this.sentenceTransform = sentenceTransform;
         this.fileImageTransform = fileImageTransform;
+        this.accountTransform = accountTransform;
+        this.accountRepository = accountRepository;
     }
 
     public PartQuestionEntity transformPartQuestionDtoToEntity(PartQuestionDto partQuestionDto) {
@@ -39,6 +43,10 @@ public class GenericTransformsImpl implements GenericTransform {
 
         logger.info("Begin transformPartQuestionDtoToEntity with condition :"+partQuestionDto);
         PartQuestionEntity partQuestionEntity = this.partQuestionTransform.convertPartQuestionDtoToEntity(partQuestionDto);
+        // add accountEntity in partQuestionEntity
+        AccountEntity accountEntity =  accountRepository.findByName(partQuestionDto.getAccountDto().getEmail());
+        partQuestionEntity.setAccountEntity(accountEntity);
+        // new ArrayList<>() for QuestionEntityList in partQuestionEntity
         partQuestionEntity.setQuestionEntityList(new ArrayList<>());
          // transform questionDtoToEntity
         for (QuestionDto questionDto : partQuestionDto.getQuestionDtoList()) {
@@ -49,12 +57,14 @@ public class GenericTransformsImpl implements GenericTransform {
             questionEntity.setSubQuestionEntityList(new ArrayList<>());
 
             partQuestionEntity.getQuestionEntityList().add(questionEntity);
+            questionEntity.setPartQuestionEntity(partQuestionEntity);
 
             if (!questionDto.getFileImageDtoList().isEmpty()) {
                 //transform fileImageDtoToEntity
                 for (FileImageDto fileImageDto : questionDto.getFileImageDtoList()) {
                     FileImageEntity fileImageEntity = fileImageTransform.convertFileImageDtoToEntity(fileImageDto);
                     questionEntity.getFileImageEntityList().add(fileImageEntity);
+                    fileImageEntity.setQuestionEntity(questionEntity);
                 }
             }
 
@@ -63,6 +73,7 @@ public class GenericTransformsImpl implements GenericTransform {
                 for (ParagraphDto paragraphDto : questionDto.getParagraphDtoList()) {
                     ParagraphEntity paragraphEntity = this.paragraphTransform.convertParagraphDtoToEntity(paragraphDto);
                     questionEntity.getParagraphEntityList().add(paragraphEntity);
+                    paragraphEntity.setQuestionEntity(questionEntity);
                 }
             }
             if (!questionDto.getSubQuestionDtoList().isEmpty()) {
@@ -76,8 +87,10 @@ public class GenericTransformsImpl implements GenericTransform {
                         for (SentenceDto sentenceDto : subQuestionDto.getSentenceDtoList()) {
                             SentenceEntity sentenceEntity = this.sentenceTransform.convertSentenceDtoToEntity(sentenceDto);
                             subQuestionEntity.getSentenceEntityList().add(sentenceEntity);
+                            sentenceEntity.setSubQuestionEntity(subQuestionEntity);
                         }
                     }
+                    subQuestionEntity.setQuestionEntity(questionEntity);
                 }
             }
 
