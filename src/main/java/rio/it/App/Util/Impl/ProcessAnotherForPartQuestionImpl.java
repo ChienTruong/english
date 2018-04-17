@@ -27,9 +27,9 @@ public class ProcessAnotherForPartQuestionImpl {
             partQuestionEntity.setPathFileMp3(pathToFileMp3);
         }
         for (QuestionDto questionDto : partQuestionDto.getQuestionDtoList()) {
-            if (questionDto.getSizeOfAllImage() == 0) {
-                break;
-            }
+//            if (questionDto.getSizeOfAllImage() == 0) {
+//                break;
+//            }
             // not think yet
         }
     }
