@@ -10,7 +10,6 @@ import javax.persistence.Id;
 @Data
 public class RoleEntity {
 
-
     @Id
     @GeneratedValue()
     private Long id;

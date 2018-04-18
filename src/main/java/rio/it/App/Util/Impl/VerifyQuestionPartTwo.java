@@ -13,18 +13,18 @@ import java.util.List;
 /**
  * Created by chien on 12/04/2018.
  */
-public class VerifyQuestionPartTwo extends VerifyPartQuestionGeneric implements VerifyPartQuestion {
+public class VerifyQuestionPartTwo implements VerifyPartQuestion {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(VerifyQuestionPartTwo.class);
 
-    public VerifyQuestionPartTwo(int maxSizeOfQuestionList, int maxSizeOfSubQuestionList, int maxSizeOfSentenceList) {
-        super(maxSizeOfQuestionList, maxSizeOfSubQuestionList, maxSizeOfSentenceList);
-    }
-
     @Override
-    protected boolean doVerify(PartQuestionDto partQuestionDto) {
+    public boolean verify(PartQuestionDto partQuestionDto) {
         LOGGER.info("Do verify for partQuestionDto part two");
-        return verifyItDoNotRedundant(partQuestionDto);
+        if (verifyItIsPartTwo(partQuestionDto)) {
+            return verifyItDoNotRedundant(partQuestionDto);
+        }
+        LOGGER.info("Error ! Verify for partQuestionDto part two");
+        return false;
     }
 
     /**
@@ -32,17 +32,39 @@ public class VerifyQuestionPartTwo extends VerifyPartQuestionGeneric implements 
      * @return
      */
     private boolean verifyItDoNotRedundant(PartQuestionDto partQuestionDto) {
+        FunctionVerify functionVerify = new FunctionVerify();
         if (partQuestionDto != null) {
             if (functionVerify.verifyNamePart(partQuestionDto.getNamePart())) {
                 if (!functionVerify.verifyFileNull(partQuestionDto.getPathFileMp3())) {
-                    if (functionVerify.verifySuffixOfFile(partQuestionDto.getPathFileMp3(), this.suffixMp3)
+                    if (functionVerify.verifySuffixOfFile(partQuestionDto.getPathFileMp3(), "mp3")
                             && functionVerify.verifySizeOfFile(partQuestionDto.getPathFileMp3())) {
                         List<QuestionDto> questionDtoList = partQuestionDto.getQuestionDtoList();
                         if (functionVerify.verifyListNotNullAndNotEmpty(questionDtoList)
-                                && questionDtoList.size() <= this.maxSizeOfQuestionList) {
+                                && questionDtoList.size() <= 30) {
+
                             for (QuestionDto questionDto : questionDtoList) {
-                                if (!verifyForQuestionDto(questionDto)) {
-                                    return false;
+                                if (!functionVerify.verifyListNotNullAndNotEmpty(questionDto.getParagraphDtoList())
+                                        && !functionVerify.verifyListNotNullAndNotEmpty(questionDto.getFileImageDtoList())
+                                        && functionVerify.verifyListNotNullAndNotEmpty(questionDto.getSubQuestionDtoList())) {
+                                    List<SubQuestionDto> subQuestionDtoList = questionDto.getSubQuestionDtoList();
+                                    if (functionVerify.verifyListNotNullAndNotEmpty(subQuestionDtoList)
+                                            && subQuestionDtoList.size() <= 1) {
+
+                                        for (SubQuestionDto subQuestionDto : subQuestionDtoList) {
+                                            if (functionVerify.verifyStringNotNullAndNoEmpty(subQuestionDto.getAnswer().toString())) {
+                                                if (functionVerify.verifyStringNotNullAndNoEmpty(subQuestionDto.getSentenceAsk())) {
+                                                    List<SentenceDto> sentenceDtoList = subQuestionDto.getSentenceDtoList();
+                                                    if (functionVerify.verifyListNotNullAndNotEmpty(sentenceDtoList)) {
+                                                        for (SentenceDto sentenceDto : sentenceDtoList) {
+                                                            if (!functionVerify.verifyStringNotNullAndNoEmpty(sentenceDto.getSentenceEn())) {
+                                                                return false;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
                             return true;
@@ -54,15 +76,22 @@ public class VerifyQuestionPartTwo extends VerifyPartQuestionGeneric implements 
         return false;
     }
 
-    private boolean verifyForQuestionDto(QuestionDto questionDto) {
-        if (!functionVerify.verifyListNotNullAndNotEmpty(questionDto.getParagraphDtoList())
-                && !functionVerify.verifyListNotNullAndNotEmpty(questionDto.getFileImageDtoList())
-                && functionVerify.verifyListNotNullAndNotEmpty(questionDto.getSubQuestionDtoList())) {
-            List<SubQuestionDto> subQuestionDtoList = questionDto.getSubQuestionDtoList();
-            if (functionVerify.verifyListNotNullAndNotEmpty(subQuestionDtoList)
-                    && subQuestionDtoList.size() == this.maxSizeOfSubQuestionList) {
-                for (SubQuestionDto subQuestionDto : subQuestionDtoList) {
-                    if (!verifyForSubQuestion(subQuestionDto)) {
+    /**
+     * @param partQuestionDto
+     * @return
+     */
+    private boolean verifyItIsPartTwo(PartQuestionDto partQuestionDto) {
+        if (partQuestionDto.getPathFileMp3().getSize() != 0) {
+            if (!partQuestionDto.getQuestionDtoList().isEmpty()) {
+                for (QuestionDto questionDto : partQuestionDto.getQuestionDtoList()) {
+                    if (questionDto.getSubQuestionDtoList().size() != 1) {
+                        return false;
+                    }
+                    SubQuestionDto subQuestionDto = questionDto.getSubQuestionDtoList().get(0);
+                    if (subQuestionDto.getSentenceAsk().isEmpty()
+                            || subQuestionDto.getSentenceDtoList().size() != 3
+                            || subQuestionDto.getSentenceDtoList().stream()
+                            .anyMatch(sentenceDto -> sentenceDto.getSentenceEn().isEmpty())) {
                         return false;
                     }
                 }
@@ -72,29 +101,5 @@ public class VerifyQuestionPartTwo extends VerifyPartQuestionGeneric implements 
         return false;
     }
 
-    private boolean verifyForSubQuestion(SubQuestionDto subQuestionDto) {
-        if (functionVerify.verifyStringNotNullAndNoEmpty(subQuestionDto.getAnswer().toString())) {
-            if (functionVerify.verifyStringNotNullAndNoEmpty(subQuestionDto.getSentenceAsk())) {
-                List<SentenceDto> sentenceDtoList = subQuestionDto.getSentenceDtoList();
-                if (functionVerify.verifyListNotNullAndNotEmpty(sentenceDtoList)
-                        && sentenceDtoList.size() == this.maxSizeOfSentenceList) {
-                    for (SentenceDto sentenceDto : sentenceDtoList) {
-                        if (!verifyForSentenceDto(sentenceDto)) {
-                            return false;
-                        }
-                    }
-                    return true;
-                }
-            }
-            return true;
-        }
-        return false;
-    }
 
-    private boolean verifyForSentenceDto(SentenceDto sentenceDto) {
-        if (functionVerify.verifyStringNotNullAndNoEmpty(sentenceDto.getSentenceEn())) {
-            return true;
-        }
-        return false;
-    }
 }
