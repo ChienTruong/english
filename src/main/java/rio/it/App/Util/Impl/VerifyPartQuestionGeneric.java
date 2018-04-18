@@ -20,6 +20,7 @@ public abstract class VerifyPartQuestionGeneric implements VerifyPartQuestion {
     protected int maxSizeOfSubQuestionList;
     protected int minSizeOfSubQuestionList;
     protected int sizeOfSentenceList;
+    protected int sizeOfFileImageList;
 
     protected final String suffixMp3 = "mp3";
     protected final String suffixJpg = "jpg";
@@ -37,6 +38,14 @@ public abstract class VerifyPartQuestionGeneric implements VerifyPartQuestion {
         this.maxSizeOfSubQuestionList = maxSizeOfSubQuestionList;
         this.minSizeOfSubQuestionList = minSizeOfSubQuestionList;
         this.sizeOfSentenceList = sizeOfSentenceList;
+    }
+
+    public VerifyPartQuestionGeneric(int maxSizeOfQuestionList, int maxSizeOfSubQuestionList, int minSizeOfSubQuestionList, int sizeOfSentenceList, int sizeOfFileImageList) {
+        this.maxSizeOfQuestionList = maxSizeOfQuestionList;
+        this.maxSizeOfSubQuestionList = maxSizeOfSubQuestionList;
+        this.minSizeOfSubQuestionList = minSizeOfSubQuestionList;
+        this.sizeOfSentenceList = sizeOfSentenceList;
+        this.sizeOfFileImageList = sizeOfFileImageList;
     }
 
     @Override
@@ -58,6 +67,32 @@ public abstract class VerifyPartQuestionGeneric implements VerifyPartQuestion {
                 && questionDtoList.size() <= this.maxSizeOfQuestionList) {
             for (QuestionDto questionDto : questionDtoList) {
                 if (!this.verifyForQuestionDto(questionDto)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    protected boolean doVerifyForSubQuestionList(List<SubQuestionDto> subQuestionDtoList) {
+        if (subQuestionDtoList.size() <= this.maxSizeOfSubQuestionList
+                && subQuestionDtoList.size() >= this.minSizeOfSubQuestionList) {
+            for (SubQuestionDto subQuestionDto : subQuestionDtoList) {
+                if (!this.verifyForSubQuestionDto(subQuestionDto)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    protected boolean doVerifyForSentenceList(List<SentenceDto> sentenceDtoList) {
+        if (this.functionVerify.verifyListNotNullAndNotEmpty(sentenceDtoList)
+                && sentenceDtoList.size() == this.sizeOfSentenceList) {
+            for (SentenceDto sentenceDto : sentenceDtoList) {
+                if (!this.verifyForSentenceDto(sentenceDto)) {
                     return false;
                 }
             }
@@ -89,7 +124,7 @@ public abstract class VerifyPartQuestionGeneric implements VerifyPartQuestion {
         return false;
     }
 
-    protected boolean verifyForSentenceDto(SentenceDto sentenceDto) {
+    private boolean verifyForSentenceDto(SentenceDto sentenceDto) {
         if (functionVerify.verifyStringNotNullAndNoEmpty(sentenceDto.getSentenceEn())) {
             return true;
         }
