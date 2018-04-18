@@ -25,7 +25,7 @@ public class VerifyQuestionPartThree implements VerifyPartQuestion {
     private boolean verifyPartQuestionThree(PartQuestionDto partQuestionDto){
         FunctionVerify functionVerify = new FunctionVerify();
         if(partQuestionDto != null){
-            if(functionVerify.verifyNamePart(partQuestionDto.getNamePart())){
+            if(functionVerify.verifyStringNotNullAndNoEmpty(partQuestionDto.getNamePart())){
                 if(functionVerify.verifyFileNull(partQuestionDto.getPathFileMp3())){
                     if(functionVerify.verifySuffixOfFile(partQuestionDto.getPathFileMp3(), "mp3")
                             && functionVerify.verifySizeOfFile(partQuestionDto.getPathFileMp3())){

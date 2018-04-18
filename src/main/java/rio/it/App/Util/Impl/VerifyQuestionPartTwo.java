@@ -2,7 +2,7 @@ package rio.it.App.Util.Impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import rio.it.App.Dto.PartQuestionDto;
+import org.springframework.web.multipart.MultipartFile;
 import rio.it.App.Dto.QuestionDto;
 import rio.it.App.Dto.SentenceDto;
 import rio.it.App.Dto.SubQuestionDto;
@@ -15,12 +15,10 @@ import java.util.List;
  */
 public class VerifyQuestionPartTwo extends VerifyPartQuestionGeneric implements VerifyPartQuestion {
 
-
-    // chien truong
     private static final Logger LOGGER = LoggerFactory.getLogger(VerifyQuestionPartTwo.class);
 
-    public VerifyQuestionPartTwo(int maxSizeOfQuestionList, int maxSizeOfSubQuestionList, int maxSizeOfSentenceList) {
-        super(maxSizeOfQuestionList, maxSizeOfSubQuestionList, maxSizeOfSentenceList);
+    public VerifyQuestionPartTwo(int maxSizeOfQuestionList, int minSizeOfSubQuestionList, int sizeOfSentenceList) {
+        super(maxSizeOfQuestionList, minSizeOfSubQuestionList, sizeOfSentenceList);
     }
 
     @Override
@@ -29,33 +27,19 @@ public class VerifyQuestionPartTwo extends VerifyPartQuestionGeneric implements 
     }
 
     @Override
-    protected boolean verifyForPartQuestionDto(PartQuestionDto partQuestionDto) {
-        if (!functionVerify.verifyFileNull(partQuestionDto.getPathFileMp3())) {
-            if (functionVerify.verifySuffixOfFile(partQuestionDto.getPathFileMp3(), this.suffixMp3)
-                    && functionVerify.verifySizeOfFile(partQuestionDto.getPathFileMp3())) {
-                List<QuestionDto> questionDtoList = partQuestionDto.getQuestionDtoList();
-                if (functionVerify.verifyListNotNullAndNotEmpty(questionDtoList)
-                        && questionDtoList.size() <= this.maxSizeOfQuestionList) {
-                    for (QuestionDto questionDto : questionDtoList) {
-                        if (!this.verifyForQuestionDto(questionDto)) {
-                            return false;
-                        }
-                    }
-                    return true;
-                }
-            }
-        }
-        return false;
+    protected boolean verifyForFileMp3(MultipartFile multipartFile) {
+        return this.verifyNotAllowNullFileMp3(multipartFile);
     }
 
     @Override
     protected boolean verifyForQuestionDto(QuestionDto questionDto) {
-        if (!functionVerify.verifyListNotNullAndNotEmpty(questionDto.getParagraphDtoList())
-                && !functionVerify.verifyListNotNullAndNotEmpty(questionDto.getFileImageDtoList())
-                && functionVerify.verifyListNotNullAndNotEmpty(questionDto.getSubQuestionDtoList())) {
+        if (!this.functionVerify.verifyListNotNullAndNotEmpty(questionDto.getParagraphDtoList())
+                && !this.functionVerify.verifyListNotNullAndNotEmpty(questionDto.getFileImageDtoList())
+                && this.functionVerify.verifyListNotNullAndNotEmpty(questionDto.getSubQuestionDtoList())) {
             List<SubQuestionDto> subQuestionDtoList = questionDto.getSubQuestionDtoList();
-            if (functionVerify.verifyListNotNullAndNotEmpty(subQuestionDtoList)
-                    && subQuestionDtoList.size() == this.maxSizeOfSubQuestionList) {
+            if (this.functionVerify.verifyListNotNullAndNotEmpty(subQuestionDtoList)
+                    && subQuestionDtoList.size() <= this.maxSizeOfSubQuestionList
+                    && subQuestionDtoList.size() >= this.minSizeOfSubQuestionList) {
                 for (SubQuestionDto subQuestionDto : subQuestionDtoList) {
                     if (!this.verifyForSubQuestionDto(subQuestionDto)) {
                         return false;
@@ -69,11 +53,11 @@ public class VerifyQuestionPartTwo extends VerifyPartQuestionGeneric implements 
 
     @Override
     protected boolean verifyForSubQuestionDto(SubQuestionDto subQuestionDto) {
-        if (functionVerify.verifyStringNotNullAndNoEmpty(subQuestionDto.getAnswer().toString())) {
-            if (functionVerify.verifyStringNotNullAndNoEmpty(subQuestionDto.getSentenceAsk())) {
+        if (this.functionVerify.verifyStringNotNullAndNoEmpty(subQuestionDto.getAnswer().toString())) {
+            if (this.functionVerify.verifyStringNotNullAndNoEmpty(subQuestionDto.getSentenceAsk())) {
                 List<SentenceDto> sentenceDtoList = subQuestionDto.getSentenceDtoList();
-                if (functionVerify.verifyListNotNullAndNotEmpty(sentenceDtoList)
-                        && sentenceDtoList.size() == this.maxSizeOfSentenceList) {
+                if (this.functionVerify.verifyListNotNullAndNotEmpty(sentenceDtoList)
+                        && sentenceDtoList.size() == this.sizeOfSentenceList) {
                     for (SentenceDto sentenceDto : sentenceDtoList) {
                         if (!this.verifyForSentenceDto(sentenceDto)) {
                             return false;

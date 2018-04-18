@@ -1,10 +1,13 @@
 package rio.it.App.Util.Impl;
 
+import org.springframework.web.multipart.MultipartFile;
 import rio.it.App.Dto.PartQuestionDto;
 import rio.it.App.Dto.QuestionDto;
 import rio.it.App.Dto.SentenceDto;
 import rio.it.App.Dto.SubQuestionDto;
 import rio.it.App.Util.VerifyPartQuestion;
+
+import java.util.List;
 
 /**
  * Created by chien on 18/04/2018.
@@ -15,16 +18,25 @@ public abstract class VerifyPartQuestionGeneric implements VerifyPartQuestion {
 
     protected int maxSizeOfQuestionList;
     protected int maxSizeOfSubQuestionList;
-    protected int maxSizeOfSentenceList;
+    protected int minSizeOfSubQuestionList;
+    protected int sizeOfSentenceList;
 
     protected final String suffixMp3 = "mp3";
     protected final String suffixJpg = "jpg";
     protected final String suffixPng = "png";
 
-    public VerifyPartQuestionGeneric(int maxSizeOfQuestionList, int maxSizeOfSubQuestionList, int maxSizeOfSentenceList) {
+    public VerifyPartQuestionGeneric(int maxSizeOfQuestionList, int minSizeOfSubQuestionList, int sizeOfSentenceList) {
+        this.maxSizeOfQuestionList = maxSizeOfQuestionList;
+        this.maxSizeOfSubQuestionList = minSizeOfSubQuestionList;
+        this.minSizeOfSubQuestionList = minSizeOfSubQuestionList;
+        this.sizeOfSentenceList = sizeOfSentenceList;
+    }
+
+    public VerifyPartQuestionGeneric(int maxSizeOfQuestionList, int maxSizeOfSubQuestionList, int minSizeOfSubQuestionList, int sizeOfSentenceList) {
         this.maxSizeOfQuestionList = maxSizeOfQuestionList;
         this.maxSizeOfSubQuestionList = maxSizeOfSubQuestionList;
-        this.maxSizeOfSentenceList = maxSizeOfSentenceList;
+        this.minSizeOfSubQuestionList = minSizeOfSubQuestionList;
+        this.sizeOfSentenceList = sizeOfSentenceList;
     }
 
     @Override
@@ -32,9 +44,24 @@ public abstract class VerifyPartQuestionGeneric implements VerifyPartQuestion {
         this.init();
         this.doLog();
         if (partQuestionDto != null) {
-            if (functionVerify.verifyNamePart(partQuestionDto.getNamePart())) {
-                return this.verifyForPartQuestionDto(partQuestionDto);
+            if (functionVerify.verifyStringNotNullAndNoEmpty(partQuestionDto.getNamePart())) {
+                if (this.verifyForFileMp3(partQuestionDto.getPathFileMp3())) {
+                    return this.doVerifyForQuestionDtoList(partQuestionDto.getQuestionDtoList());
+                }
             }
+        }
+        return false;
+    }
+
+    private boolean doVerifyForQuestionDtoList(List<QuestionDto> questionDtoList) {
+        if (this.functionVerify.verifyListNotNullAndNotEmpty(questionDtoList)
+                && questionDtoList.size() <= this.maxSizeOfQuestionList) {
+            for (QuestionDto questionDto : questionDtoList) {
+                if (!this.verifyForQuestionDto(questionDto)) {
+                    return false;
+                }
+            }
+            return true;
         }
         return false;
     }
@@ -43,6 +70,23 @@ public abstract class VerifyPartQuestionGeneric implements VerifyPartQuestion {
         if (functionVerify == null) {
             functionVerify = new FunctionVerify();
         }
+    }
+
+    protected boolean verifyAllowNullFileMp3(MultipartFile multipartFile) {
+        if (this.functionVerify.verifyFileNull(multipartFile)) {
+            return true;
+        }
+        return false;
+    }
+
+    protected boolean verifyNotAllowNullFileMp3(MultipartFile multipartFile) {
+        if (!this.functionVerify.verifyFileNull(multipartFile)) {
+            if (this.functionVerify.verifySuffixOfFile(multipartFile, this.suffixMp3)
+                    && this.functionVerify.verifySizeOfFile(multipartFile)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     protected boolean verifyForSentenceDto(SentenceDto sentenceDto) {
@@ -54,7 +98,7 @@ public abstract class VerifyPartQuestionGeneric implements VerifyPartQuestion {
 
     protected abstract void doLog();
 
-    protected abstract boolean verifyForPartQuestionDto(PartQuestionDto partQuestionDto);
+    protected abstract boolean verifyForFileMp3(MultipartFile multipartFile);
 
     protected abstract boolean verifyForQuestionDto(QuestionDto questionDto);
 
