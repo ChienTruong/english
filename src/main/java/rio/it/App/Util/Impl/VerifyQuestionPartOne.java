@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 import rio.it.App.Dto.FileImageDto;
 import rio.it.App.Dto.QuestionDto;
+import rio.it.App.Dto.SentenceDto;
 import rio.it.App.Dto.SubQuestionDto;
 import rio.it.App.Util.VerifyPartQuestion;
 
@@ -38,12 +39,31 @@ public class VerifyQuestionPartOne extends VerifyPartQuestionGeneric implements 
                 && this.functionVerify.verifyListNotNullAndNotEmpty(questionDto.getSubQuestionDtoList())) {
             List<FileImageDto> fileImageDtoList = questionDto.getFileImageDtoList();
             List<SubQuestionDto> subQuestionDtoList = questionDto.getSubQuestionDtoList();
+            if (this.doVerifyForFileImageList(fileImageDtoList)) {
+                if (this.doVerifyForSubQuestionList(subQuestionDtoList)) {
+                    return true;
+                }
+            }
         }
         return false;
     }
 
     @Override
     protected boolean verifyForSubQuestionDto(SubQuestionDto subQuestionDto) {
+        if (this.functionVerify.verifyStringNotNullAndNoEmpty(subQuestionDto.getAnswer().toString())) {
+            List<SentenceDto> sentenceDtoList = subQuestionDto.getSentenceDtoList();
+            if (this.functionVerify.verifyListNotNullAndNotEmpty(sentenceDtoList)
+                    && sentenceDtoList.size() == this.sizeOfSentenceList) {
+                for (SentenceDto sentenceDto : sentenceDtoList) {
+                    if (!this.verifyForSentenceDto(sentenceDto)) {
+                        return false;
+                    }
+                }
+                return true;
+            } else {
+                return true;
+            }
+        }
         return false;
     }
 

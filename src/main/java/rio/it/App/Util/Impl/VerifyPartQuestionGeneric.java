@@ -1,10 +1,7 @@
 package rio.it.App.Util.Impl;
 
 import org.springframework.web.multipart.MultipartFile;
-import rio.it.App.Dto.PartQuestionDto;
-import rio.it.App.Dto.QuestionDto;
-import rio.it.App.Dto.SentenceDto;
-import rio.it.App.Dto.SubQuestionDto;
+import rio.it.App.Dto.*;
 import rio.it.App.Util.VerifyPartQuestion;
 
 import java.util.List;
@@ -75,6 +72,22 @@ public abstract class VerifyPartQuestionGeneric implements VerifyPartQuestion {
         return false;
     }
 
+    protected boolean doVerifyForParagraphList(List<ParagraphDto> paragraphDtoList) {
+        return this.functionVerify.verifyStringNotNullAndNoEmpty(paragraphDtoList.get(0).getParagraph());
+    }
+
+    protected boolean doVerifyForFileImageList(List<FileImageDto> fileImageDtoList) {
+        if (fileImageDtoList.size() <= sizeOfFileImageList) {
+            for (FileImageDto fileImageDto : fileImageDtoList) {
+                if (!this.functionVerify.verifySuffixOfFile(fileImageDto.getPathFileImage(), this.suffixJpg, this.suffixPng)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
     protected boolean doVerifyForSubQuestionList(List<SubQuestionDto> subQuestionDtoList) {
         if (subQuestionDtoList.size() <= this.maxSizeOfSubQuestionList
                 && subQuestionDtoList.size() >= this.minSizeOfSubQuestionList) {
@@ -124,7 +137,7 @@ public abstract class VerifyPartQuestionGeneric implements VerifyPartQuestion {
         return false;
     }
 
-    private boolean verifyForSentenceDto(SentenceDto sentenceDto) {
+    protected boolean verifyForSentenceDto(SentenceDto sentenceDto) {
         if (functionVerify.verifyStringNotNullAndNoEmpty(sentenceDto.getSentenceEn())) {
             return true;
         }

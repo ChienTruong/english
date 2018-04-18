@@ -1,10 +1,10 @@
 package rio.it.App.Util.Impl;
 
 import org.springframework.web.multipart.MultipartFile;
-import rio.it.App.Dto.PartQuestionDto;
-import rio.it.App.Dto.QuestionDto;
-import rio.it.App.Dto.SubQuestionDto;
+import rio.it.App.Dto.*;
 import rio.it.App.Util.VerifyPartQuestion;
+
+import java.util.List;
 
 /**
  * Created by chien on 12/04/2018.
@@ -27,11 +27,22 @@ public class VerifyQuestionPartFour extends VerifyPartQuestionGeneric implements
 
     @Override
     protected boolean verifyForQuestionDto(QuestionDto questionDto) {
+        if (!this.functionVerify.verifyListNotNullAndNotEmpty(questionDto.getFileImageDtoList())
+                && this.functionVerify.verifyListNotNullAndNotEmpty(questionDto.getSubQuestionDtoList())) {
+            if (this.doVerifyForSubQuestionList(questionDto.getSubQuestionDtoList())) {
+                return true;
+            }
+        }
         return false;
     }
 
     @Override
     protected boolean verifyForSubQuestionDto(SubQuestionDto subQuestionDto) {
+        if (this.functionVerify.verifyStringNotNullAndNoEmpty(subQuestionDto.getAnswer().toString())) {
+            if (this.functionVerify.verifyStringNotNullAndNoEmpty(subQuestionDto.getSentenceAsk())) {
+                return this.doVerifyForSentenceList(subQuestionDto.getSentenceDtoList());
+            }
+        }
         return false;
     }
 }

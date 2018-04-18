@@ -37,7 +37,6 @@ public class VerifyQuestionPartTwo extends VerifyPartQuestionGeneric implements 
                 return true;
             }
         }
-        // chien
         return false;
     }
 
@@ -46,8 +45,9 @@ public class VerifyQuestionPartTwo extends VerifyPartQuestionGeneric implements 
         if (this.functionVerify.verifyStringNotNullAndNoEmpty(subQuestionDto.getAnswer().toString())) {
             if (this.functionVerify.verifyStringNotNullAndNoEmpty(subQuestionDto.getSentenceAsk())) {
                 return this.doVerifyForSentenceList(subQuestionDto.getSentenceDtoList());
+            } else {
+                return true;
             }
-            return true;
         }
         return false;
     }
