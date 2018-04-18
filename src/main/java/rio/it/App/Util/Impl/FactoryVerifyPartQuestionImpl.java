@@ -39,7 +39,7 @@ public class FactoryVerifyPartQuestionImpl implements FactoryVerifyPartQuestion 
                 verifyPartQuestion = new VerifyQuestionPartOne();
                 break;
             case TWO:
-                verifyPartQuestion = new VerifyQuestionPartTwo();
+                verifyPartQuestion = new VerifyQuestionPartTwo(30, 1, 3);
                 break;
             case THREE:
                 verifyPartQuestion = new VerifyQuestionPartThree();
@@ -48,7 +48,7 @@ public class FactoryVerifyPartQuestionImpl implements FactoryVerifyPartQuestion 
                 verifyPartQuestion = new VerifyQuestionPartFour();
                 break;
             case FIVE:
-                verifyPartQuestion = new VerifyQuestionPartFive();
+                verifyPartQuestion = new VerifyQuestionPartFive(40, 1, 4);
                 break;
             case SIX:
                 verifyPartQuestion = new VerifyQuestionPartSix();
