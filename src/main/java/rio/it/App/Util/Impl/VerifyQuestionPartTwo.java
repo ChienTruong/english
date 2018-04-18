@@ -15,6 +15,8 @@ import java.util.List;
  */
 public class VerifyQuestionPartTwo extends VerifyPartQuestionGeneric implements VerifyPartQuestion {
 
+
+    // chien truong
     private static final Logger LOGGER = LoggerFactory.getLogger(VerifyQuestionPartTwo.class);
 
     public VerifyQuestionPartTwo(int maxSizeOfQuestionList, int maxSizeOfSubQuestionList, int maxSizeOfSentenceList) {
