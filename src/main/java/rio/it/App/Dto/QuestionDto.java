@@ -12,10 +12,11 @@ import java.util.List;
 public class QuestionDto {
 
     private Long questionEntityId;
-    private List<ParagraphDto> paragraphDtoList ;
+    private Integer timeStart;
+    private Integer timeEnd;
+
+    private List<ParagraphDto> paragraphDtoList;
     private List<FileImageDto> fileImageDtoList ;
     private List<SubQuestionDto> subQuestionDtoList;
-    private Integer timeEnd;
-    private Integer timeStart;
 
 }

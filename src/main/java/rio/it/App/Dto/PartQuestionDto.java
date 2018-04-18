@@ -19,6 +19,7 @@ public class PartQuestionDto {
     private List<QuestionDto> questionDtoList;
     private String namePart;
     private String NamePartFileMp3;
+    private AccountDto accountDto;
 
 
 }

@@ -16,5 +16,6 @@ public class SubQuestionDto {
     private Character answer;
 
     private List<SentenceDto> sentenceDtoList;
+    private QuestionDto questionDto;
 
 }

@@ -12,4 +12,6 @@ public class SentenceDto {
     private String character;
     private String sentenceEn;
     private String sentenceVn;
+    private SubQuestionDto subQuestionDto;
+
 }

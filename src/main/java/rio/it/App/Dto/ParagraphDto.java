@@ -9,4 +9,6 @@ import lombok.Data;
 public class ParagraphDto {
     private Long paragraphId;
     private String paragraph;
+    private QuestionDto questionDto;
+
 }
