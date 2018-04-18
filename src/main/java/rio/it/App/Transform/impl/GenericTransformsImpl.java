@@ -44,8 +44,8 @@ public class GenericTransformsImpl implements GenericTransform {
         logger.info("Begin transformPartQuestionDtoToEntity with condition :"+partQuestionDto);
         PartQuestionEntity partQuestionEntity = this.partQuestionTransform.convertPartQuestionDtoToEntity(partQuestionDto);
         // add accountEntity in partQuestionEntity
-        AccountEntity accountEntity =  accountRepository.findByName(partQuestionDto.getAccountDto().getEmail());
-        partQuestionEntity.setAccountEntity(accountEntity);
+        //AccountEntity accountEntity =  accountRepository.findByName(partQuestionDto.getAccountDto().getEmail());
+        //partQuestionEntity.setAccountEntity(accountEntity);
         // new ArrayList<>() for QuestionEntityList in partQuestionEntity
         partQuestionEntity.setQuestionEntityList(new ArrayList<>());
          // transform questionDtoToEntity

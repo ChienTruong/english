@@ -7,6 +7,7 @@ import lombok.Data;
  */
 @Data
 public class SentenceDto {
+
     private Long sentenceId;
     private String character;
     private String sentenceEn;

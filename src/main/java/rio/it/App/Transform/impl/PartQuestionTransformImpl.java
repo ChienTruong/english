@@ -12,6 +12,7 @@ import rio.it.App.Transform.PartQuestionTransform;
  */
 @Service
 public class PartQuestionTransformImpl implements PartQuestionTransform {
+
     private Logger logger = LoggerFactory.getLogger(PartQuestionTransformImpl.class);
 
     @Override
