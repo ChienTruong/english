@@ -52,8 +52,10 @@ public class VerifyQuestionPartOne extends VerifyPartQuestionGeneric implements 
     protected boolean verifyForSubQuestionDto(SubQuestionDto subQuestionDto) {
         if (this.functionVerify.verifyStringNotNullAndNoEmpty(subQuestionDto.getAnswer().toString())) {
             List<SentenceDto> sentenceDtoList = subQuestionDto.getSentenceDtoList();
-            if (this.functionVerify.verifyListNotNullAndNotEmpty(sentenceDtoList)
-                    && sentenceDtoList.size() == this.sizeOfSentenceList) {
+            if (this.functionVerify.verifyListNotNullAndNotEmpty(sentenceDtoList)) {
+                if (sentenceDtoList.size() != this.sizeOfSentenceList) {
+                    return false;
+                }
                 for (SentenceDto sentenceDto : sentenceDtoList) {
                     if (!this.verifyForSentenceDto(sentenceDto)) {
                         return false;

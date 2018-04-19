@@ -79,7 +79,9 @@ public abstract class VerifyPartQuestionGeneric implements VerifyPartQuestion {
     protected boolean doVerifyForFileImageList(List<FileImageDto> fileImageDtoList) {
         if (fileImageDtoList.size() <= sizeOfFileImageList) {
             for (FileImageDto fileImageDto : fileImageDtoList) {
-                if (!this.functionVerify.verifySuffixOfFile(fileImageDto.getPathFileImage(), this.suffixJpg, this.suffixPng)) {
+                if (!this.functionVerify.verifySuffixOfFile(fileImageDto.getPathFileImage(), this.suffixJpg, this.suffixPng)
+                        || this.functionVerify.verifyFileNull(fileImageDto.getPathFileImage())
+                        || !this.functionVerify.verifySizeOfFile(fileImageDto.getPathFileImage())) {
                     return false;
                 }
             }
