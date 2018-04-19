@@ -10,6 +10,8 @@ import rio.it.App.Dto.PartQuestionDto;
 import rio.it.App.RestController.PartQuestionRest;
 import rio.it.App.Service.PartQuestionService;
 
+import java.util.List;
+
 /**
  * Created by chien on 10/04/2018.
  */
@@ -28,15 +30,12 @@ PartQuestionRestImpl implements PartQuestionRest {
     @Override
     public ResponseEntity create(/*@RequestBody()*/ PartQuestionDto partQuestionDto) {
         System.out.println(partQuestionDto.toString());
-//        System.out.println(partQuestionDto.getQuestionDtoList().get(0).getFileImageDtoList().get(0).getPathFileImage().getSize());
-//        System.out.println(partQuestionDto.getQuestionDtoList().get(1).getFileImageDtoList().get(1).getPathFileImage().getSize());
-        boolean create = this.partQuestionService.createPartQuestionDto(partQuestionDto);
-        System.out.println("Controller:  "+create);
+  this.partQuestionService.createPartQuestionDto(partQuestionDto);
         return null;
     }
 
     @Override
-    public ResponseEntity findAll() {
+    public List<PartQuestionDto> findAll() {
         return null;
     }
 

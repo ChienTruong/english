@@ -17,5 +17,6 @@ public class SubQuestionDto {
     private String answer;
 
     private List<SentenceDto> sentenceDtoList;
+    private QuestionDto questionDto;
 
 }

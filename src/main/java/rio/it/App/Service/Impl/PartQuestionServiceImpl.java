@@ -1,17 +1,13 @@
 package rio.it.App.Service.Impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rio.it.App.Dto.PartQuestionDto;
-import rio.it.App.Entity.PartQuestionEntity;
 import rio.it.App.Entity.PartEntity;
 import rio.it.App.Repository.PartQuestionRepository;
 import rio.it.App.Repository.PartRepository;
 import rio.it.App.Service.PartQuestionService;
-import rio.it.App.Transform.GenericTransform;
 import rio.it.App.Util.FactoryVerifyPartQuestion;
 import rio.it.App.Util.PartEnum;
 import rio.it.App.Util.VerifyPartQuestion;
@@ -19,24 +15,23 @@ import rio.it.App.Util.VerifyPartQuestion;
 import java.util.Arrays;
 
 /**
+ * `q`  12
  * Created by chien on 10/04/2018.
  */
 @Service
 @Transactional
 public class PartQuestionServiceImpl implements PartQuestionService {
-    private Logger logger = LoggerFactory.getLogger(PartQuestionServiceImpl.class);
+
     private PartQuestionRepository partQuestionRepository;
     private PartRepository partRepository;
     private FactoryVerifyPartQuestion factoryVerifyPartQuestion;
     private VerifyPartQuestion verifyPartQuestion;
-    private GenericTransform genericTransform;
 
     @Autowired
-    public PartQuestionServiceImpl(GenericTransform genericTransform ,PartQuestionRepository partQuestionRepository, PartRepository partRepository, FactoryVerifyPartQuestion factoryVerifyPartQuestion) {
+    public PartQuestionServiceImpl(PartQuestionRepository partQuestionRepository, PartRepository partRepository, FactoryVerifyPartQuestion factoryVerifyPartQuestion) {
         this.partQuestionRepository = partQuestionRepository;
         this.partRepository = partRepository;
         this.factoryVerifyPartQuestion = factoryVerifyPartQuestion;
-        this.genericTransform = genericTransform;
     }
 
     /**
@@ -46,53 +41,31 @@ public class PartQuestionServiceImpl implements PartQuestionService {
      * @return Step 1: get class verify match with partQuestion
      * @Note_11/04/18_Chien: view class factoryVerifyPartQuestion to know information of this class
      * Step 2: it will be verified by class verifyPartQuestion
-     * Step 3: transfer entity
-     * Step 4: process another function
-     * Step 5: give entity to repository
+     * Step 3: ...
      */
     @Override
     public boolean createPartQuestionDto(PartQuestionDto partQuestionDto) {
         // find part is here
-        PartEntity partEntity = null;
-        PartEnum partEnum = null;
-        logger.info("Begin createPartQuestionDto with condition: "+partQuestionDto);
-        try {
-            if (partQuestionDto.getNamePart() != null && !partQuestionDto.getNamePart().isEmpty()) {
-                partEntity = this.partRepository.findByName(partQuestionDto.getNamePart());
-                if (partEntity == null) {
-                    return false;
-                }
-                partEnum = getPartEnum(partEntity.getPartName());
-                this.verifyPartQuestion = this.factoryVerifyPartQuestion.getVerify(partEnum);
-                boolean verifyResult = this.verifyPartQuestion.verify(partQuestionDto);
-                System.out.println("Service:  "+verifyResult);
-                if (verifyResult) {
-
-//                    PartQuestionEntity partQuestionEntity = genericTransform.transformPartQuestionDtoToEntity(partQuestionDto);
-//                    partQuestionEntity.setPartEntity(partEntity);
-//                    System.out.println(partQuestionEntity.toString());
-                    // do something
-                    // step1. transfer entity
-
-                    // step2. process another
-
-                    // step3. give entity to repository
-//                    partQuestionRepository.save(partQuestionEntity);
-
-                }
+        if (!partQuestionDto.getNamePart().isEmpty()) {
+            PartEntity partEntity = this.partRepository.findByName(partQuestionDto.getNamePart());
+            if (partEntity == null) {
+                return false;
             }
-        }catch (Exception e){
-            logger.info("Error createPartQuestionDto: "+e);
-        }
+            PartEnum part = getPartEnum(partEntity.getPartName());
+            this.verifyPartQuestion = this.factoryVerifyPartQuestion.getVerify(part);
+            boolean verifyResult = this.verifyPartQuestion.verify(partQuestionDto);
+            if (verifyResult) {
+                // do something
+                // step1. transfer entity
+                // step2. process another
+                // step3. give entity to repository
 
+            }
+        }
         return false;
     }
 
-    /**
-     * @param partName
-     * @return
-     */
     private PartEnum getPartEnum(String partName) {
-        return Arrays.stream(PartEnum.values()).filter(part -> partName.toUpperCase().contains(part.name())).findFirst().get();
+        return Arrays.stream(PartEnum.values()).filter(part -> part.toString().endsWith(partName)).findFirst().get();
     }
 }

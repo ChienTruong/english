@@ -36,22 +36,22 @@ public class FactoryVerifyPartQuestionImpl implements FactoryVerifyPartQuestion 
         VerifyPartQuestion verifyPartQuestion = null;
         switch (part) {
             case ONE:
-                verifyPartQuestion = new VerifyQuestionPartOne();
+                verifyPartQuestion = new VerifyQuestionPartOne(10, 1, 1, 4, 1);
                 break;
             case TWO:
-                verifyPartQuestion = new VerifyQuestionPartTwo();
+                verifyPartQuestion = new VerifyQuestionPartTwo(30, 1, 3);
                 break;
             case THREE:
-                verifyPartQuestion = new VerifyQuestionPartThree();
+                verifyPartQuestion = new VerifyQuestionPartFour(10, 3, 4);
                 break;
             case FOUR:
-                verifyPartQuestion = new VerifyQuestionPartFour();
+                verifyPartQuestion = new VerifyQuestionPartFour(10, 3, 4);
                 break;
             case FIVE:
-                verifyPartQuestion = new VerifyQuestionPartFive();
+                verifyPartQuestion = new VerifyQuestionPartFive(40, 1, 4);
                 break;
             case SIX:
-                verifyPartQuestion = new VerifyQuestionPartSix();
+                verifyPartQuestion = new VerifyQuestionPartSix(4, 3, 4);
                 break;
             case SEVEN:
                 verifyPartQuestion = new VerifyQuestionPartSeven();

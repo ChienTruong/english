@@ -1,16 +1,40 @@
 package rio.it.App.Util.Impl;
 
-import rio.it.App.Dto.PartQuestionDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.multipart.MultipartFile;
+import rio.it.App.Dto.QuestionDto;
+import rio.it.App.Dto.SubQuestionDto;
 import rio.it.App.Util.VerifyPartQuestion;
 
 /**
  * Created by chien on 12/04/2018.
  */
-public class VerifyQuestionPartFive implements VerifyPartQuestion {
+public class VerifyQuestionPartFive extends VerifyPartQuestionGeneric implements VerifyPartQuestion {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(VerifyQuestionPartFive.class);
+
+    public VerifyQuestionPartFive(int maxSizeOfQuestionList, int minSizeOfSubQuestionList, int sizeOfSentenceList) {
+        super(maxSizeOfQuestionList, minSizeOfSubQuestionList, sizeOfSentenceList);
+    }
 
     @Override
-    public boolean verify(PartQuestionDto partQuestionDto) {
-        System.out.println("Five");
+    protected void doLog() {
+        LOGGER.info("Do verify for partQuestionDto part five");
+    }
+
+    @Override
+    protected boolean verifyForFileMp3(MultipartFile multipartFile) {
+        return this.verifyAllowNullFileMp3(multipartFile);
+    }
+
+    @Override
+    protected boolean verifyForQuestionDto(QuestionDto questionDto) {
+        return false;
+    }
+
+    @Override
+    protected boolean verifyForSubQuestionDto(SubQuestionDto subQuestionDto) {
         return false;
     }
 }

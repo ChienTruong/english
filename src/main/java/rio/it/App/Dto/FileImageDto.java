@@ -11,5 +11,6 @@ public class FileImageDto {
     private Long fileImageId;
     private MultipartFile pathFileImage;
     private String pathFileNameImage;
+    private QuestionDto questionDto;
 
 }

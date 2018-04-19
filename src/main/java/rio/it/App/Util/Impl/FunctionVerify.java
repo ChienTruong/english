@@ -9,15 +9,6 @@ import java.util.List;
  */
 public class FunctionVerify {
 
-    public boolean verifyNamePart(String namePart) {
-        if (namePart != null) {
-            if (!namePart.isEmpty()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public boolean verifyFileNull(MultipartFile multipartFile) {
         return multipartFile == null ? true : false;
     }
