@@ -57,7 +57,7 @@ public class PartQuestionServiceImpl implements PartQuestionService {
         PartEnum partEnum = null;
         logger.info("Begin createPartQuestionDto with condition: "+partQuestionDto);
         try {
-            if (!partQuestionDto.getNamePart().isEmpty()) {
+            if (partQuestionDto.getNamePart() != null && !partQuestionDto.getNamePart().isEmpty()) {
                 partEntity = this.partRepository.findByName(partQuestionDto.getNamePart());
                 if (partEntity == null) {
                     return false;
@@ -65,15 +65,19 @@ public class PartQuestionServiceImpl implements PartQuestionService {
                 partEnum = getPartEnum(partEntity.getPartName());
                 this.verifyPartQuestion = this.factoryVerifyPartQuestion.getVerify(partEnum);
                 boolean verifyResult = this.verifyPartQuestion.verify(partQuestionDto);
+                System.out.println("Service:  "+verifyResult);
                 if (verifyResult) {
-                    PartQuestionEntity partQuestionEntity = genericTransform.transformPartQuestionDtoToEntity(partQuestionDto);
 
+//                    PartQuestionEntity partQuestionEntity = genericTransform.transformPartQuestionDtoToEntity(partQuestionDto);
+//                    partQuestionEntity.setPartEntity(partEntity);
+//                    System.out.println(partQuestionEntity.toString());
                     // do something
                     // step1. transfer entity
 
                     // step2. process another
 
                     // step3. give entity to repository
+//                    partQuestionRepository.save(partQuestionEntity);
 
                 }
             }

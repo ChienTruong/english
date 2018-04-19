@@ -2,6 +2,7 @@ package rio.it.App.Repository.Implement;
 
 import org.springframework.stereotype.Repository;
 import rio.it.App.Entity.PartQuestionEntity;
+import rio.it.App.Entity.QuestionEntity;
 import rio.it.App.Repository.PartQuestionRepository;
 
 /**

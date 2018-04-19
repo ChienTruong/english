@@ -30,7 +30,8 @@ PartQuestionRestImpl implements PartQuestionRest {
         System.out.println(partQuestionDto.toString());
 //        System.out.println(partQuestionDto.getQuestionDtoList().get(0).getFileImageDtoList().get(0).getPathFileImage().getSize());
 //        System.out.println(partQuestionDto.getQuestionDtoList().get(1).getFileImageDtoList().get(1).getPathFileImage().getSize());
-        this.partQuestionService.createPartQuestionDto(partQuestionDto);
+        boolean create = this.partQuestionService.createPartQuestionDto(partQuestionDto);
+        System.out.println("Controller:  "+create);
         return null;
     }
 

@@ -47,7 +47,6 @@ public class GenericTransformsImpl implements GenericTransform {
             questionEntity.setFileImageEntityList(new ArrayList<>());
             questionEntity.setParagraphEntityList(new ArrayList<>());
             questionEntity.setSubQuestionEntityList(new ArrayList<>());
-
             partQuestionEntity.getQuestionEntityList().add(questionEntity);
 
             if (!questionDto.getFileImageDtoList().isEmpty()) {
@@ -81,10 +80,8 @@ public class GenericTransformsImpl implements GenericTransform {
                 }
             }
 
-
         }
-
-        logger.info("End transformPartQuestionDtoToEntity with result :"+partQuestionEntity);
+//        logger.info("End transformPartQuestionDtoToEntity with result :"+partQuestionEntity);
 
         return partQuestionEntity;
 

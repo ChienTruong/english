@@ -20,11 +20,11 @@ public class VerifyQuestionPartTwo implements VerifyPartQuestion {
     @Override
     public boolean verify(PartQuestionDto partQuestionDto) {
         LOGGER.info("Do verify for partQuestionDto part two");
-        if (verifyItIsPartTwo(partQuestionDto)) {
+//        if (verifyItIsPartTwo(partQuestionDto)) {
             return verifyItDoNotRedundant(partQuestionDto);
-        }
-        LOGGER.info("Error ! Verify for partQuestionDto part two");
-        return false;
+//        }
+//        LOGGER.info("Error ! Verify for partQuestionDto part two");
+//        return false;
     }
 
     /**

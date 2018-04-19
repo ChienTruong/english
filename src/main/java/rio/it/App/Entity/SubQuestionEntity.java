@@ -17,7 +17,7 @@ public class SubQuestionEntity {
     private Long subQuestionId;
     private String sentenceAsk;
     private String translateAsk;
-    private Character answer;
+    private String answer;
     @OneToMany(mappedBy = "subQuestionEntity")
     private List<SentenceEntity> sentenceEntityList;
     @ManyToOne()
