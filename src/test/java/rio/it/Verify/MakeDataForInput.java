@@ -1,10 +1,7 @@
 package rio.it.Verify;
 
 import org.springframework.mock.web.MockMultipartFile;
-import rio.it.App.Dto.FileImageDto;
-import rio.it.App.Dto.QuestionDto;
-import rio.it.App.Dto.SentenceDto;
-import rio.it.App.Dto.SubQuestionDto;
+import rio.it.App.Dto.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -77,5 +74,13 @@ public class MakeDataForInput {
             sentenceDto.setSentenceEn("Sentence EN");
         }
         return sentenceDto;
+    }
+
+    public ParagraphDto makeParagraphDto(boolean allowEmpty) {
+        ParagraphDto paragraphDto = new ParagraphDto();
+        if (!allowEmpty) {
+            paragraphDto.setParagraph("Paragraph");
+        }
+        return paragraphDto;
     }
 }

@@ -30,13 +30,6 @@ public abstract class VerifyPartQuestionGeneric implements VerifyPartQuestion {
         this.sizeOfSentenceList = sizeOfSentenceList;
     }
 
-    public VerifyPartQuestionGeneric(int maxSizeOfQuestionList, int maxSizeOfSubQuestionList, int minSizeOfSubQuestionList, int sizeOfSentenceList) {
-        this.maxSizeOfQuestionList = maxSizeOfQuestionList;
-        this.maxSizeOfSubQuestionList = maxSizeOfSubQuestionList;
-        this.minSizeOfSubQuestionList = minSizeOfSubQuestionList;
-        this.sizeOfSentenceList = sizeOfSentenceList;
-    }
-
     public VerifyPartQuestionGeneric(int maxSizeOfQuestionList, int maxSizeOfSubQuestionList, int minSizeOfSubQuestionList, int sizeOfSentenceList, int sizeOfFileImageList) {
         this.maxSizeOfQuestionList = maxSizeOfQuestionList;
         this.maxSizeOfSubQuestionList = maxSizeOfSubQuestionList;
@@ -52,18 +45,19 @@ public abstract class VerifyPartQuestionGeneric implements VerifyPartQuestion {
         if (partQuestionDto != null) {
             if (functionVerify.verifyStringNotNullAndNoEmpty(partQuestionDto.getNamePart())) {
                 if (this.verifyForFileMp3(partQuestionDto.getPathFileMp3())) {
-                    return this.doVerifyForQuestionDtoList(partQuestionDto.getQuestionDtoList());
+                    return this.verifyForQuestionDtoList(partQuestionDto.getQuestionDtoList());
                 }
             }
         }
         return false;
     }
 
-    private boolean doVerifyForQuestionDtoList(List<QuestionDto> questionDtoList) {
+    private boolean verifyForQuestionDtoList(List<QuestionDto> questionDtoList) {
         if (this.functionVerify.verifyListNotNullAndNotEmpty(questionDtoList)
                 && questionDtoList.size() <= this.maxSizeOfQuestionList) {
             for (QuestionDto questionDto : questionDtoList) {
-                if (!this.verifyForQuestionDto(questionDto)) {
+                if (questionDto == null
+                        || !this.verifyForQuestionDto(questionDto)) {
                     return false;
                 }
             }
@@ -72,14 +66,18 @@ public abstract class VerifyPartQuestionGeneric implements VerifyPartQuestion {
         return false;
     }
 
-    protected boolean doVerifyForParagraphList(List<ParagraphDto> paragraphDtoList) {
+    protected boolean verifyForParagraphDtoList(List<ParagraphDto> paragraphDtoList) {
+        if (paragraphDtoList.size() > 5) {
+            return false;
+        }
         return this.functionVerify.verifyStringNotNullAndNoEmpty(paragraphDtoList.get(0).getParagraph());
     }
 
-    protected boolean doVerifyForFileImageList(List<FileImageDto> fileImageDtoList) {
+    protected boolean verifyForFileImageDtoList(List<FileImageDto> fileImageDtoList) {
         if (fileImageDtoList.size() <= sizeOfFileImageList) {
             for (FileImageDto fileImageDto : fileImageDtoList) {
-                if (!this.functionVerify.verifySuffixOfFile(fileImageDto.getPathFileImage(), this.suffixJpg, this.suffixPng)
+                if (fileImageDto == null
+                        || !this.functionVerify.verifySuffixOfFile(fileImageDto.getPathFileImage(), this.suffixJpg, this.suffixPng)
                         || this.functionVerify.verifyFileNull(fileImageDto.getPathFileImage())
                         || !this.functionVerify.verifySizeOfFile(fileImageDto.getPathFileImage())) {
                     return false;
@@ -90,11 +88,12 @@ public abstract class VerifyPartQuestionGeneric implements VerifyPartQuestion {
         return false;
     }
 
-    protected boolean doVerifyForSubQuestionList(List<SubQuestionDto> subQuestionDtoList) {
+    protected boolean verifyForSubQuestionDtoList(List<SubQuestionDto> subQuestionDtoList) {
         if (subQuestionDtoList.size() <= this.maxSizeOfSubQuestionList
                 && subQuestionDtoList.size() >= this.minSizeOfSubQuestionList) {
             for (SubQuestionDto subQuestionDto : subQuestionDtoList) {
-                if (!this.verifyForSubQuestionDto(subQuestionDto)) {
+                if (subQuestionDto == null
+                        || !this.verifyForSubQuestionDto(subQuestionDto)) {
                     return false;
                 }
             }
@@ -103,11 +102,12 @@ public abstract class VerifyPartQuestionGeneric implements VerifyPartQuestion {
         return false;
     }
 
-    protected boolean doVerifyForSentenceList(List<SentenceDto> sentenceDtoList) {
+    protected boolean verifyForSentenceDtoList(List<SentenceDto> sentenceDtoList) {
         if (this.functionVerify.verifyListNotNullAndNotEmpty(sentenceDtoList)
                 && sentenceDtoList.size() == this.sizeOfSentenceList) {
             for (SentenceDto sentenceDto : sentenceDtoList) {
-                if (!this.verifyForSentenceDto(sentenceDto)) {
+                if (sentenceDto == null
+                        || !this.verifyForSentenceDto(sentenceDto)) {
                     return false;
                 }
             }
@@ -150,7 +150,29 @@ public abstract class VerifyPartQuestionGeneric implements VerifyPartQuestion {
 
     protected abstract boolean verifyForFileMp3(MultipartFile multipartFile);
 
-    protected abstract boolean verifyForQuestionDto(QuestionDto questionDto);
+    protected boolean verifyForQuestionDto(QuestionDto questionDto) {
+        List<ParagraphDto> paragraphDtoList = questionDto.getParagraphDtoList();
+        List<FileImageDto> fileImageDtoList = questionDto.getFileImageDtoList();
+        List<SubQuestionDto> subQuestionDtoList = questionDto.getSubQuestionDtoList();
+        if (this.functionVerify.verifyListNotNullAndNotEmpty(paragraphDtoList)
+                && !this.functionVerify.verifyListNotNullAndNotEmpty(fileImageDtoList)
+                && this.functionVerify.verifyListNotNullAndNotEmpty(subQuestionDtoList)) {
+            if (this.verifyForParagraphDtoList(paragraphDtoList)) {
+                if (this.verifyForSubQuestionDtoList(subQuestionDtoList)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
-    protected abstract boolean verifyForSubQuestionDto(SubQuestionDto subQuestionDto);
+    protected boolean verifyForSubQuestionDto(SubQuestionDto subQuestionDto) {
+        if (subQuestionDto.getAnswer() != null
+                && this.functionVerify.verifyStringNotNullAndNoEmpty(subQuestionDto.getAnswer().toString())) {
+            if (this.functionVerify.verifyStringNotNullAndNoEmpty(subQuestionDto.getSentenceAsk())) {
+                return this.verifyForSentenceDtoList(subQuestionDto.getSentenceDtoList());
+            }
+        }
+        return false;
+    }
 }

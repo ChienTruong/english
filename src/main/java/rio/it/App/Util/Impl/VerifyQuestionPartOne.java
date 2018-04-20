@@ -34,13 +34,13 @@ public class VerifyQuestionPartOne extends VerifyPartQuestionGeneric implements 
 
     @Override
     protected boolean verifyForQuestionDto(QuestionDto questionDto) {
+        List<FileImageDto> fileImageDtoList = questionDto.getFileImageDtoList();
+        List<SubQuestionDto> subQuestionDtoList = questionDto.getSubQuestionDtoList();
         if (!this.functionVerify.verifyListNotNullAndNotEmpty(questionDto.getParagraphDtoList())
-                && this.functionVerify.verifyListNotNullAndNotEmpty(questionDto.getFileImageDtoList())
-                && this.functionVerify.verifyListNotNullAndNotEmpty(questionDto.getSubQuestionDtoList())) {
-            List<FileImageDto> fileImageDtoList = questionDto.getFileImageDtoList();
-            List<SubQuestionDto> subQuestionDtoList = questionDto.getSubQuestionDtoList();
-            if (this.doVerifyForFileImageList(fileImageDtoList)) {
-                if (this.doVerifyForSubQuestionList(subQuestionDtoList)) {
+                && this.functionVerify.verifyListNotNullAndNotEmpty(fileImageDtoList)
+                && this.functionVerify.verifyListNotNullAndNotEmpty(subQuestionDtoList)) {
+            if (this.verifyForFileImageDtoList(fileImageDtoList)) {
+                if (this.verifyForSubQuestionDtoList(subQuestionDtoList)) {
                     return true;
                 }
             }
@@ -50,14 +50,16 @@ public class VerifyQuestionPartOne extends VerifyPartQuestionGeneric implements 
 
     @Override
     protected boolean verifyForSubQuestionDto(SubQuestionDto subQuestionDto) {
-        if (this.functionVerify.verifyStringNotNullAndNoEmpty(subQuestionDto.getAnswer().toString())) {
+        if (subQuestionDto.getAnswer() != null
+                && this.functionVerify.verifyStringNotNullAndNoEmpty(subQuestionDto.getAnswer().toString())) {
             List<SentenceDto> sentenceDtoList = subQuestionDto.getSentenceDtoList();
             if (this.functionVerify.verifyListNotNullAndNotEmpty(sentenceDtoList)) {
                 if (sentenceDtoList.size() != this.sizeOfSentenceList) {
                     return false;
                 }
                 for (SentenceDto sentenceDto : sentenceDtoList) {
-                    if (!this.verifyForSentenceDto(sentenceDto)) {
+                    if (sentenceDto == null
+                            || !this.verifyForSentenceDto(sentenceDto)) {
                         return false;
                     }
                 }
