@@ -20,6 +20,9 @@ public class VerifyQuestionPartSeven implements VerifyPartQuestion {
             verifyPartSeven(partQuestionDto);
         return false;
 
+
+
+
 //        if (partQuestionDto.getPathFileMp3() == null){
 //            if (!partQuestionDto.getQuestionDtoList().isEmpty()){
 //                for (QuestionDto questionDto : partQuestionDto.getQuestionDtoList()){
