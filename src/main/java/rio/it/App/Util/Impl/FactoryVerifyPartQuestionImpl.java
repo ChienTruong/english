@@ -19,8 +19,7 @@ public class FactoryVerifyPartQuestionImpl implements FactoryVerifyPartQuestion 
 
     /**
      * @param part
-     * @return
-     * --> choice result: this class
+     * @return --> choice result: this class
      */
     @Override
     public VerifyPartQuestion getVerify(@NotNull PartEnum part) {
@@ -42,7 +41,7 @@ public class FactoryVerifyPartQuestionImpl implements FactoryVerifyPartQuestion 
                 verifyPartQuestion = new VerifyQuestionPartTwo(30, 1, 3);
                 break;
             case THREE:
-                verifyPartQuestion = new VerifyQuestionPartFour(10, 3, 4);
+                verifyPartQuestion = new VerifyQuestionPartThree(10, 3, 4);
                 break;
             case FOUR:
                 verifyPartQuestion = new VerifyQuestionPartFour(10, 3, 4);
@@ -51,10 +50,10 @@ public class FactoryVerifyPartQuestionImpl implements FactoryVerifyPartQuestion 
                 verifyPartQuestion = new VerifyQuestionPartFive(40, 1, 4);
                 break;
             case SIX:
-                verifyPartQuestion = new VerifyQuestionPartSix(4, 3, 4);
+                verifyPartQuestion = new VerifyForPartSix(4, 3, 4);
                 break;
             case SEVEN:
-                verifyPartQuestion = new VerifyQuestionPartSeven();
+                verifyPartQuestion = new VerifyQuestionPartSeven(14, 5, 2, 4, 2);
                 break;
         }
         return verifyPartQuestion;

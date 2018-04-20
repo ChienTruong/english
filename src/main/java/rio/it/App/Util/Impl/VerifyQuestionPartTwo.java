@@ -7,6 +7,8 @@ import rio.it.App.Dto.QuestionDto;
 import rio.it.App.Dto.SubQuestionDto;
 import rio.it.App.Util.VerifyPartQuestion;
 
+import java.util.List;
+
 /**
  * Created by chien on 12/04/2018.
  */
@@ -30,10 +32,11 @@ public class VerifyQuestionPartTwo extends VerifyPartQuestionGeneric implements 
 
     @Override
     protected boolean verifyForQuestionDto(QuestionDto questionDto) {
+        List<SubQuestionDto> subQuestionDtoList = questionDto.getSubQuestionDtoList();
         if (!this.functionVerify.verifyListNotNullAndNotEmpty(questionDto.getParagraphDtoList())
                 && !this.functionVerify.verifyListNotNullAndNotEmpty(questionDto.getFileImageDtoList())
-                && this.functionVerify.verifyListNotNullAndNotEmpty(questionDto.getSubQuestionDtoList())) {
-            if (this.doVerifyForSubQuestionList(questionDto.getSubQuestionDtoList())) {
+                && this.functionVerify.verifyListNotNullAndNotEmpty(subQuestionDtoList)) {
+            if (this.verifyForSubQuestionDtoList(questionDto.getSubQuestionDtoList())) {
                 return true;
             }
         }
@@ -42,9 +45,10 @@ public class VerifyQuestionPartTwo extends VerifyPartQuestionGeneric implements 
 
     @Override
     protected boolean verifyForSubQuestionDto(SubQuestionDto subQuestionDto) {
-        if (this.functionVerify.verifyStringNotNullAndNoEmpty(subQuestionDto.getAnswer().toString())) {
+        if (subQuestionDto.getAnswer() != null
+                && this.functionVerify.verifyStringNotNullAndNoEmpty(subQuestionDto.getAnswer().toString())) {
             if (this.functionVerify.verifyStringNotNullAndNoEmpty(subQuestionDto.getSentenceAsk())) {
-                return this.doVerifyForSentenceList(subQuestionDto.getSentenceDtoList());
+                return this.verifyForSentenceDtoList(subQuestionDto.getSentenceDtoList());
             } else {
                 return true;
             }

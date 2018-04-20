@@ -3,7 +3,6 @@ package rio.it.App.Util.Impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
-import rio.it.App.Dto.QuestionDto;
 import rio.it.App.Dto.SubQuestionDto;
 import rio.it.App.Util.VerifyPartQuestion;
 
@@ -29,12 +28,14 @@ public class VerifyQuestionPartFive extends VerifyPartQuestionGeneric implements
     }
 
     @Override
-    protected boolean verifyForQuestionDto(QuestionDto questionDto) {
-        return false;
-    }
-
-    @Override
     protected boolean verifyForSubQuestionDto(SubQuestionDto subQuestionDto) {
+        if (subQuestionDto.getAnswer() != null
+                && this.functionVerify.verifyStringNotNullAndNoEmpty(subQuestionDto.getAnswer().toString())
+                && !this.functionVerify.verifyStringNotNullAndNoEmpty(subQuestionDto.getSentenceAsk())) {
+            if (this.verifyForSentenceDtoList(subQuestionDto.getSentenceDtoList())) {
+                return true;
+            }
+        }
         return false;
     }
 }

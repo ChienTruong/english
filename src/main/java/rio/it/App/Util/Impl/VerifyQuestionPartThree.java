@@ -1,13 +1,8 @@
 package rio.it.App.Util.Impl;
 
 import org.springframework.web.multipart.MultipartFile;
-import rio.it.App.Dto.*;
+import rio.it.App.Dto.QuestionDto;
 import rio.it.App.Util.VerifyPartQuestion;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -33,18 +28,8 @@ public class VerifyQuestionPartThree extends VerifyPartQuestionGeneric implement
     protected boolean verifyForQuestionDto(QuestionDto questionDto) {
         if (!this.functionVerify.verifyListNotNullAndNotEmpty(questionDto.getFileImageDtoList())
                 && this.functionVerify.verifyListNotNullAndNotEmpty(questionDto.getSubQuestionDtoList())) {
-            if (this.doVerifyForSubQuestionList(questionDto.getSubQuestionDtoList())) {
+            if (this.verifyForSubQuestionDtoList(questionDto.getSubQuestionDtoList())) {
                 return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    protected boolean verifyForSubQuestionDto(SubQuestionDto subQuestionDto) {
-        if (this.functionVerify.verifyStringNotNullAndNoEmpty(subQuestionDto.getAnswer().toString())) {
-            if (this.functionVerify.verifyStringNotNullAndNoEmpty(subQuestionDto.getSentenceAsk())) {
-                return this.doVerifyForSentenceList(subQuestionDto.getSentenceDtoList());
             }
         }
         return false;
