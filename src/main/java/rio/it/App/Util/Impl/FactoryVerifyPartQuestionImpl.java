@@ -53,7 +53,7 @@ public class FactoryVerifyPartQuestionImpl implements FactoryVerifyPartQuestion 
                 verifyPartQuestion = new VerifyForPartSix(4, 3, 4);
                 break;
             case SEVEN:
-                verifyPartQuestion = new VerifyQuestionPartSeven(14, 5, 2, 4, 2);
+                verifyPartQuestion = new VerifyQuestionPartSeven(14, 5, 2);
                 break;
         }
         return verifyPartQuestion;
