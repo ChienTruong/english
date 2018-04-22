@@ -13,6 +13,9 @@ public abstract class VerifyPartQuestionGeneric implements VerifyPartQuestion {
 
     protected FunctionVerify functionVerify;
 
+    protected boolean allowNullListParagraphDto;
+    protected boolean allowNullListFileImageDto;
+
     protected int maxSizeOfQuestionList;
     protected int maxSizeOfSubQuestionList;
     protected int minSizeOfSubQuestionList;
@@ -25,12 +28,23 @@ public abstract class VerifyPartQuestionGeneric implements VerifyPartQuestion {
 
     public VerifyPartQuestionGeneric(int maxSizeOfQuestionList, int minSizeOfSubQuestionList, int sizeOfSentenceList) {
         this.maxSizeOfQuestionList = maxSizeOfQuestionList;
+        this.minSizeOfSubQuestionList = minSizeOfSubQuestionList;
+        this.maxSizeOfSubQuestionList = minSizeOfSubQuestionList;
+        this.sizeOfSentenceList = sizeOfSentenceList;
+    }
+
+    public VerifyPartQuestionGeneric(boolean allowNullListParagraphDto, boolean allowNullListFileImageDto, int maxSizeOfQuestionList, int minSizeOfSubQuestionList, int sizeOfSentenceList) {
+        this.allowNullListParagraphDto = allowNullListParagraphDto;
+        this.allowNullListFileImageDto = allowNullListFileImageDto;
+        this.maxSizeOfQuestionList = maxSizeOfQuestionList;
         this.maxSizeOfSubQuestionList = minSizeOfSubQuestionList;
         this.minSizeOfSubQuestionList = minSizeOfSubQuestionList;
         this.sizeOfSentenceList = sizeOfSentenceList;
     }
 
-    public VerifyPartQuestionGeneric(int maxSizeOfQuestionList, int maxSizeOfSubQuestionList, int minSizeOfSubQuestionList, int sizeOfSentenceList, int sizeOfFileImageList) {
+    public VerifyPartQuestionGeneric(boolean allowNullListParagraphDto, boolean allowNullListFileImageDto, int maxSizeOfQuestionList, int maxSizeOfSubQuestionList, int minSizeOfSubQuestionList, int sizeOfSentenceList, int sizeOfFileImageList) {
+        this.allowNullListParagraphDto = allowNullListParagraphDto;
+        this.allowNullListFileImageDto = allowNullListFileImageDto;
         this.maxSizeOfQuestionList = maxSizeOfQuestionList;
         this.maxSizeOfSubQuestionList = maxSizeOfSubQuestionList;
         this.minSizeOfSubQuestionList = minSizeOfSubQuestionList;
@@ -45,100 +59,197 @@ public abstract class VerifyPartQuestionGeneric implements VerifyPartQuestion {
         if (partQuestionDto != null) {
             if (functionVerify.verifyStringNotNullAndNoEmpty(partQuestionDto.getNamePart())) {
                 if (this.verifyForFileMp3(partQuestionDto.getPathFileMp3())) {
-                    return this.verifyForQuestionDtoList(partQuestionDto.getQuestionDtoList());
+                    List<QuestionDto> questionDtoList = partQuestionDto.getQuestionDtoList();
+                    if (this.verifyForQuestionDtoList(questionDtoList)) {
+                        return filterEachInQuestionDtoList(questionDtoList);
+                    }
                 }
             }
         }
         return false;
     }
 
-    private boolean verifyForQuestionDtoList(List<QuestionDto> questionDtoList) {
+    /**
+     * @param questionDtoList
+     * @return
+     */
+    protected boolean verifyForQuestionDtoList(List<QuestionDto> questionDtoList) {
         if (this.functionVerify.verifyListNotNullAndNotEmpty(questionDtoList)
                 && questionDtoList.size() <= this.maxSizeOfQuestionList) {
-            for (QuestionDto questionDto : questionDtoList) {
-                if (questionDto == null
-                        || !this.verifyForQuestionDto(questionDto)) {
-                    return false;
-                }
-            }
             return true;
         }
         return false;
     }
 
+    /**
+     * @param questionDtoList
+     * @return
+     */
+    protected boolean filterEachInQuestionDtoList(List<QuestionDto> questionDtoList) {
+        for (QuestionDto questionDto : questionDtoList) {
+            if (questionDto == null
+                    || !this.verifyForQuestionDto(questionDto)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @param questionDto
+     * @return
+     */
+    protected boolean verifyForQuestionDto(QuestionDto questionDto) {
+        List<ParagraphDto> paragraphDtoList = questionDto.getParagraphDtoList();
+        List<FileImageDto> fileImageDtoList = questionDto.getFileImageDtoList();
+        List<SubQuestionDto> subQuestionDtoList = questionDto.getSubQuestionDtoList();
+        if (this.functionVerify.verifyListNotNullAndNotEmpty(paragraphDtoList) != this.allowNullListParagraphDto
+                && this.functionVerify.verifyListNotNullAndNotEmpty(fileImageDtoList) != this.allowNullListFileImageDto
+                && this.functionVerify.verifyListNotNullAndNotEmpty(subQuestionDtoList)) {
+            if (!this.allowNullListParagraphDto
+                    && !this.verifyForParagraphDtoList(paragraphDtoList)) {
+                return false;
+            }
+            if (!this.allowNullListFileImageDto
+                    && !this.verifyForFileImageDtoList(fileImageDtoList)) {
+                return false;
+            }
+            if (this.verifyForSubQuestionDtoList(subQuestionDtoList)) {
+                return filterEachInSubQuestionDtoList(subQuestionDtoList);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @param paragraphDtoList
+     * @return
+     * @note not edit
+     */
     protected boolean verifyForParagraphDtoList(List<ParagraphDto> paragraphDtoList) {
-        if (paragraphDtoList.size() > 5) {
+        if (paragraphDtoList.size() > 4) {
             return false;
         }
-        return this.functionVerify.verifyStringNotNullAndNoEmpty(paragraphDtoList.get(0).getParagraph());
+        return this.verifyForParagraphDto(paragraphDtoList.get(0));
     }
 
-    protected boolean verifyForFileImageDtoList(List<FileImageDto> fileImageDtoList) {
-        if (fileImageDtoList.size() <= sizeOfFileImageList) {
-            for (FileImageDto fileImageDto : fileImageDtoList) {
-                if (fileImageDto == null
-                        || !this.functionVerify.verifySuffixOfFile(fileImageDto.getPathFileImage(), this.suffixJpg, this.suffixPng)
-                        || this.functionVerify.verifyFileNull(fileImageDto.getPathFileImage())
-                        || !this.functionVerify.verifySizeOfFile(fileImageDto.getPathFileImage())) {
-                    return false;
-                }
-            }
-            return true;
-        }
-        return false;
-    }
-
-    protected boolean verifyForSubQuestionDtoList(List<SubQuestionDto> subQuestionDtoList) {
-        if (subQuestionDtoList.size() <= this.maxSizeOfSubQuestionList
-                && subQuestionDtoList.size() >= this.minSizeOfSubQuestionList) {
-            for (SubQuestionDto subQuestionDto : subQuestionDtoList) {
-                if (subQuestionDto == null
-                        || !this.verifyForSubQuestionDto(subQuestionDto)) {
-                    return false;
-                }
-            }
-            return true;
-        }
-        return false;
-    }
-
-    protected boolean verifyForSentenceDtoList(List<SentenceDto> sentenceDtoList) {
-        if (this.functionVerify.verifyListNotNullAndNotEmpty(sentenceDtoList)
-                && sentenceDtoList.size() == this.sizeOfSentenceList) {
-            for (SentenceDto sentenceDto : sentenceDtoList) {
-                if (sentenceDto == null
-                        || !this.verifyForSentenceDto(sentenceDto)) {
-                    return false;
-                }
-            }
-            return true;
-        }
-        return false;
-    }
-
-    private synchronized void init() {
-        if (functionVerify == null) {
-            functionVerify = new FunctionVerify();
-        }
-    }
-
-    protected boolean verifyAllowNullFileMp3(MultipartFile multipartFile) {
-        if (this.functionVerify.verifyFileNull(multipartFile)) {
-            return true;
-        }
-        return false;
-    }
-
-    protected boolean verifyNotAllowNullFileMp3(MultipartFile multipartFile) {
-        if (!this.functionVerify.verifyFileNull(multipartFile)) {
-            if (this.functionVerify.verifySuffixOfFile(multipartFile, this.suffixMp3)
-                    && this.functionVerify.verifySizeOfFile(multipartFile)) {
+    /**
+     * @param paragraphDto
+     * @return
+     */
+    protected boolean verifyForParagraphDto(ParagraphDto paragraphDto) {
+        if (paragraphDto != null) {
+            String paragraph = paragraphDto.getParagraph();
+            if (paragraph != null
+                    && this.functionVerify.verifyStringNotNullAndNoEmpty(paragraph)) {
                 return true;
             }
         }
         return false;
     }
 
+    /**
+     * @param fileImageDtoList
+     * @return
+     * @note not edit
+     */
+    protected boolean verifyForFileImageDtoList(List<FileImageDto> fileImageDtoList) {
+        if (fileImageDtoList.size() <= sizeOfFileImageList) {
+            for (FileImageDto fileImageDto : fileImageDtoList) {
+                if (!this.verifyForFileImageDto(fileImageDto)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param fileImageDto
+     * @return
+     */
+    protected boolean verifyForFileImageDto(FileImageDto fileImageDto) {
+        if (fileImageDto != null
+                && this.functionVerify.verifySuffixOfFile(fileImageDto.getPathFileImage(), this.suffixJpg, this.suffixPng)
+                && !this.functionVerify.verifyFileNull(fileImageDto.getPathFileImage())
+                && this.functionVerify.verifySizeOfFile(fileImageDto.getPathFileImage())) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param subQuestionDtoList
+     * @return
+     */
+    protected boolean verifyForSubQuestionDtoList(List<SubQuestionDto> subQuestionDtoList) {
+        if (subQuestionDtoList.size() <= this.maxSizeOfSubQuestionList
+                && subQuestionDtoList.size() >= this.minSizeOfSubQuestionList) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     *
+     */
+    protected boolean filterEachInSubQuestionDtoList(List<SubQuestionDto> subQuestionDtoList) {
+        for (SubQuestionDto subQuestionDto : subQuestionDtoList) {
+            if (!this.verifyForSubQuestionDto(subQuestionDto)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @param subQuestionDto
+     * @return
+     */
+    protected boolean verifyForSubQuestionDto(SubQuestionDto subQuestionDto) {
+        if (subQuestionDto != null
+                && subQuestionDto.getAnswer() != null
+                && this.functionVerify.verifyStringNotNullAndNoEmpty(subQuestionDto.getAnswer().toString())
+                && this.functionVerify.verifyStringNotNullAndNoEmpty(subQuestionDto.getSentenceAsk())) {
+            List<SentenceDto> sentenceDtoList = subQuestionDto.getSentenceDtoList();
+            if (this.verifyForSentenceDtoList(sentenceDtoList)) {
+                return filterEachInSentenceDtoList(sentenceDtoList);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @param sentenceDtoList
+     * @return
+     */
+    protected boolean verifyForSentenceDtoList(List<SentenceDto> sentenceDtoList) {
+        if (this.functionVerify.verifyListNotNullAndNotEmpty(sentenceDtoList)
+                && sentenceDtoList.size() == this.sizeOfSentenceList) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param sentenceDtoList
+     * @return
+     */
+    protected boolean filterEachInSentenceDtoList(List<SentenceDto> sentenceDtoList) {
+        for (SentenceDto sentenceDto : sentenceDtoList) {
+            if (sentenceDto == null
+                    || !this.verifyForSentenceDto(sentenceDto)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @param sentenceDto
+     * @return
+     */
     protected boolean verifyForSentenceDto(SentenceDto sentenceDto) {
         if (functionVerify.verifyStringNotNullAndNoEmpty(sentenceDto.getSentenceEn())) {
             return true;
@@ -146,31 +257,53 @@ public abstract class VerifyPartQuestionGeneric implements VerifyPartQuestion {
         return false;
     }
 
+    //
+
+    /**
+     *
+     */
     protected abstract void doLog();
 
+    /**
+     * @param multipartFile
+     * @return
+     */
     protected abstract boolean verifyForFileMp3(MultipartFile multipartFile);
 
-    protected boolean verifyForQuestionDto(QuestionDto questionDto) {
-        List<ParagraphDto> paragraphDtoList = questionDto.getParagraphDtoList();
-        List<FileImageDto> fileImageDtoList = questionDto.getFileImageDtoList();
-        List<SubQuestionDto> subQuestionDtoList = questionDto.getSubQuestionDtoList();
-        if (this.functionVerify.verifyListNotNullAndNotEmpty(paragraphDtoList)
-                && !this.functionVerify.verifyListNotNullAndNotEmpty(fileImageDtoList)
-                && this.functionVerify.verifyListNotNullAndNotEmpty(subQuestionDtoList)) {
-            if (this.verifyForParagraphDtoList(paragraphDtoList)) {
-                if (this.verifyForSubQuestionDtoList(subQuestionDtoList)) {
-                    return true;
-                }
-            }
+    // create by Son
+    // not allow edit code below and this comment
+    // when you want edit below code, u must ask member of your team
+    // fuck off when u do this not ask team
+
+    /**
+     *
+     */
+    private synchronized void init() {
+        if (functionVerify == null) {
+            functionVerify = new FunctionVerify();
+        }
+    }
+
+    /**
+     * @param multipartFile
+     * @return
+     */
+    protected boolean verifyAllowNullFileMp3(MultipartFile multipartFile) {
+        if (this.functionVerify.verifyFileNull(multipartFile)) {
+            return true;
         }
         return false;
     }
 
-    protected boolean verifyForSubQuestionDto(SubQuestionDto subQuestionDto) {
-        if (subQuestionDto.getAnswer() != null
-                && this.functionVerify.verifyStringNotNullAndNoEmpty(subQuestionDto.getAnswer().toString())) {
-            if (this.functionVerify.verifyStringNotNullAndNoEmpty(subQuestionDto.getSentenceAsk())) {
-                return this.verifyForSentenceDtoList(subQuestionDto.getSentenceDtoList());
+    /**
+     * @param multipartFile
+     * @return
+     */
+    protected boolean verifyNotAllowNullFileMp3(MultipartFile multipartFile) {
+        if (!this.functionVerify.verifyFileNull(multipartFile)) {
+            if (this.functionVerify.verifySuffixOfFile(multipartFile, this.suffixMp3)
+                    && this.functionVerify.verifySizeOfFile(multipartFile)) {
+                return true;
             }
         }
         return false;
