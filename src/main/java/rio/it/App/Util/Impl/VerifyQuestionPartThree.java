@@ -1,8 +1,12 @@
 package rio.it.App.Util.Impl;
 
 import org.springframework.web.multipart.MultipartFile;
+import rio.it.App.Dto.ParagraphDto;
 import rio.it.App.Dto.QuestionDto;
+import rio.it.App.Dto.SubQuestionDto;
 import rio.it.App.Util.VerifyPartQuestion;
+
+import java.util.List;
 
 
 /**
@@ -26,43 +30,19 @@ public class VerifyQuestionPartThree extends VerifyPartQuestionGeneric implement
 
     @Override
     protected boolean verifyForQuestionDto(QuestionDto questionDto) {
+        List<ParagraphDto> paragraphDtoList = questionDto.getParagraphDtoList();
+        List<SubQuestionDto> subQuestionDtoList = questionDto.getSubQuestionDtoList();
         if (!this.functionVerify.verifyListNotNullAndNotEmpty(questionDto.getFileImageDtoList())
-                && this.functionVerify.verifyListNotNullAndNotEmpty(questionDto.getSubQuestionDtoList())) {
-            if (this.verifyForSubQuestionDtoList(questionDto.getSubQuestionDtoList())) {
-                return true;
+                && this.functionVerify.verifyListNotNullAndNotEmpty(subQuestionDtoList)) {
+            if (this.functionVerify.verifyListNotNullAndNotEmpty(paragraphDtoList)) {
+                if (!this.verifyForParagraphDto(paragraphDtoList.get(0))) {
+                    return false;
+                }
+            }
+            if (this.verifyForSubQuestionDtoList(subQuestionDtoList)) {
+                return this.filterEachInSubQuestionDtoList(subQuestionDtoList);
             }
         }
         return false;
     }
-//
-//    @Override
-//    public boolean verify(PartQuestionDto partQuestionDto) {
-//        System.out.println("Three");
-//
-//
-//        return false;
-//    }
-//
-//    private boolean verifyPartQuestionThree(PartQuestionDto partQuestionDto){
-//        FunctionVerify functionVerify = new FunctionVerify();
-//        if(partQuestionDto != null){
-//            if(functionVerify.verifyStringNotNullAndNoEmpty(partQuestionDto.getNamePart())){
-//                if(functionVerify.verifyFileNull(partQuestionDto.getPathFileMp3())){
-//                    if(functionVerify.verifySuffixOfFile(partQuestionDto.getPathFileMp3(), "mp3")
-//                            && functionVerify.verifySizeOfFile(partQuestionDto.getPathFileMp3())){
-//                        List<QuestionDto> questionDtoList = partQuestionDto.getQuestionDtoList();
-//                        if(functionVerify.verifyListNotNullAndNotEmpty(questionDtoList)
-//                                && questionDtoList.size() <= 30 ){
-//                            for(QuestionDto questionDto : questionDtoList){
-//                                if(!functionVerify.verifyListNotNullAndNotEmpty(questionDto.getParagraphDtoList())){
-//
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        return false;
-//    }
 }

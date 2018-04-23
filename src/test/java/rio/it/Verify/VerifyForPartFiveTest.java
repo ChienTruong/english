@@ -8,6 +8,7 @@ import rio.it.App.Dto.QuestionDto;
 import rio.it.App.Dto.SentenceDto;
 import rio.it.App.Dto.SubQuestionDto;
 import rio.it.App.Util.Impl.VerifyQuestionPartFive;
+import rio.it.App.Util.VerifyPartQuestion;
 
 import java.io.IOException;
 
@@ -23,11 +24,14 @@ public class VerifyForPartFiveTest extends SuperVerifyTest {
     @Before
     public void init() throws IOException {
         super.init();
-        this.verifyPartQuestion = new VerifyQuestionPartFive(this.maxSizeOfListQuestionDto, this.minSizeOfListSubQuestionDto, this.sizeOfListSentence);
     }
 
-    @Test
-    public void testPartFiveWithData_Success() {
+    @Override
+    protected VerifyPartQuestion makeVerification() {
+        return new VerifyQuestionPartFive(false, true, this.maxSizeOfListQuestionDto, this.minSizeOfListSubQuestionDto, this.sizeOfListSentence);
+    }
+
+    private void makeDataPartFive() {
         for (int i = 0; i < this.maxSizeOfListQuestionDto; i++) {
             QuestionDto questionDto = this.makeDataForInput.makeQuestionDto(false, true);
             ParagraphDto paragraphDto = this.makeDataForInput.makeParagraphDto(false);
@@ -42,6 +46,11 @@ public class VerifyForPartFiveTest extends SuperVerifyTest {
             }
             this.partQuestionDto.getQuestionDtoList().add(questionDto);
         }
+    }
+
+    @Test
+    public void testPartFiveWithData_Success() {
+        this.makeDataPartFive();
         Assert.assertTrue(this.verifyPartQuestion.verify(this.partQuestionDto));
     }
 }

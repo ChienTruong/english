@@ -8,6 +8,7 @@ import rio.it.App.Dto.ParagraphDto;
 import rio.it.App.Dto.QuestionDto;
 import rio.it.App.Dto.SubQuestionDto;
 import rio.it.App.Util.Impl.VerifyQuestionPartOne;
+import rio.it.App.Util.VerifyPartQuestion;
 
 import java.io.IOException;
 
@@ -24,7 +25,11 @@ public class VerifyForPartOneTest extends VerifyForListeningTest {
     @Before
     public void init() throws IOException {
         super.init();
-        this.verifyPartQuestion = new VerifyQuestionPartOne(maxSizeOfListQuestionDto, minSizeOfListSubQuestionDto, minSizeOfListSubQuestionDto, sizeOfListSentence, maxSizeOfListFileImageDto);
+    }
+
+    @Override
+    protected VerifyPartQuestion makeVerification() {
+        return new VerifyQuestionPartOne(true, false, maxSizeOfListQuestionDto, minSizeOfListSubQuestionDto, minSizeOfListSubQuestionDto, sizeOfListSentence, maxSizeOfListFileImageDto);
     }
 
     @Test
@@ -174,6 +179,7 @@ public class VerifyForPartOneTest extends VerifyForListeningTest {
             }
             for (int j = 0; j < minSizeOfListSubQuestionDto; j++) {
                 SubQuestionDto subQuestionDto = this.makeDataForInput.makeSubQuestionDto(true, true);
+                // make error
                 subQuestionDto.setAnswer(null);
                 questionDto.getSubQuestionDtoList().add(subQuestionDto);
             }
