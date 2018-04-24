@@ -1,26 +1,26 @@
 package rio.it.App.Transform;
 
 import rio.it.App.Entity.ParagraphEntity;
-import rio.it.App.Dto.ParagraphDto;
+import rio.it.App.Model.ParagraphModel;
 
 public interface ParagraphTransform {
 
     /**
-     * convert ParagraphDto To ParagraphEntity
-     * @param paragraphDto
+     * convert ParagraphModel To ParagraphEntity
+     * @param paragraphModel
      * @return paragraphEntity
      * @author Quang Lai
      */
-    ParagraphEntity convertParagraphDtoToEntity(ParagraphDto paragraphDto);
+    ParagraphEntity convertParagraphModelToEntity(ParagraphModel paragraphModel);
 
 
     /**
-     * convert paragraphEntity to paragraphDto
+     * convert paragraphEntity to paragraphModel
      * @param paragraphEntity
-     * @return paragraphDto
+     * @return paragraphModel
      * @author Quang Lai
      */
-    ParagraphDto    convertParagraphEntityToDto(ParagraphEntity paragraphEntity);
+    ParagraphModel convertParagraphEntityToModel(ParagraphEntity paragraphEntity);
 
 
 }

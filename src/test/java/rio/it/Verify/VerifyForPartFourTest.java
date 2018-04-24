@@ -3,7 +3,7 @@ package rio.it.Verify;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import rio.it.App.Dto.*;
+import rio.it.App.Model.*;
 import rio.it.App.Util.Impl.VerifyQuestionPartFour;
 import rio.it.App.Util.VerifyPartQuestion;
 
@@ -18,8 +18,8 @@ import static org.hamcrest.Matchers.*;
  */
 public class VerifyForPartFourTest extends VerifyForListeningTest {
 
-    private int maxSizeOfListQuestionDto = 10;
-    private int maxSizeOfListSubQuestionDto = 3;
+    private int maxSizeOfListQuestionModel = 10;
+    private int maxSizeOfListSubQuestionModel = 3;
     private int sizeOfListSentence = 4;
 
     @Before
@@ -29,56 +29,56 @@ public class VerifyForPartFourTest extends VerifyForListeningTest {
 
     @Override
     protected VerifyPartQuestion makeVerification() {
-        return new VerifyQuestionPartFour(this.maxSizeOfListQuestionDto, this.maxSizeOfListSubQuestionDto, this.sizeOfListSentence);
+        return new VerifyQuestionPartFour(this.maxSizeOfListQuestionModel, this.maxSizeOfListSubQuestionModel, this.sizeOfListSentence);
     }
 
     private void makePartFour_WithDataNotFull() {
-        for (int i = 0; i < this.maxSizeOfListQuestionDto; i++) {
-            QuestionDto questionDto = this.makeDataForInput.makeQuestionDto(true, true);
-            for (int j = 0; j < this.maxSizeOfListSubQuestionDto; j++) {
-                SubQuestionDto subQuestionDto = this.makeDataForInput.makeSubQuestionDto(false, false);
+        for (int i = 0; i < this.maxSizeOfListQuestionModel; i++) {
+            QuestionModel questionModel = this.makeDataForInput.makeQuestionModel(true, true);
+            for (int j = 0; j < this.maxSizeOfListSubQuestionModel; j++) {
+                SubQuestionModel subQuestionModel = this.makeDataForInput.makeSubQuestionModel(false, false);
                 for (int z = 0; z < this.sizeOfListSentence; z++) {
-                    SentenceDto sentenceDto = this.makeDataForInput.makeSentenceDto(false);
-                    subQuestionDto.getSentenceDtoList().add(sentenceDto);
+                    SentenceModel sentenceModel = this.makeDataForInput.makeSentenceModel(false);
+                    subQuestionModel.getSentenceModelList().add(sentenceModel);
                 }
-                questionDto.getSubQuestionDtoList().add(subQuestionDto);
+                questionModel.getSubQuestionModelList().add(subQuestionModel);
             }
-            this.partQuestionDto.getQuestionDtoList().add(questionDto);
+            this.partQuestionModel.getQuestionModelList().add(questionModel);
         }
     }
 
     @Test
-    public void testPartFour_RedundantListFileImageDto_False() throws IOException {
+    public void testPartFour_RedundantListFileImageModel_False() throws IOException {
         this.makePartFour_WithDataNotFull();
-        List<QuestionDto> questionDtoList = this.partQuestionDto.getQuestionDtoList();
-        for (QuestionDto questionDto : questionDtoList) {
+        List<QuestionModel> questionModelList = this.partQuestionModel.getQuestionModelList();
+        for (QuestionModel questionModel : questionModelList) {
             // make error
-            questionDto.setFileImageDtoList(new ArrayList<>(1));
-            FileImageDto fileImageDto = this.makeDataForInput.makeFileImageDto(false, true);
-            questionDto.getFileImageDtoList().add(fileImageDto);
+            questionModel.setFileImageModelList(new ArrayList<>(1));
+            FileImageModel fileImageModel = this.makeDataForInput.makeFileImageModel(false, true);
+            questionModel.getFileImageModelList().add(fileImageModel);
         }
-        Assert.assertNotNull(this.partQuestionDto.getQuestionDtoList().get(0).getFileImageDtoList());
-        Assert.assertFalse(this.verifyPartQuestion.verify(this.partQuestionDto));
+        Assert.assertNotNull(this.partQuestionModel.getQuestionModelList().get(0).getFileImageModelList());
+        Assert.assertFalse(this.verifyPartQuestion.verify(this.partQuestionModel));
     }
 
     @Test
     public void testPartFourWithDataNotFull_Success() {
         this.makePartFour_WithDataNotFull();
-        Assert.assertTrue(this.verifyPartQuestion.verify(this.partQuestionDto));
+        Assert.assertTrue(this.verifyPartQuestion.verify(this.partQuestionModel));
     }
 
     @Test
     public void testPartFourWithDataFull_Success() {
         this.makePartFour_WithDataNotFull();
-        List<QuestionDto> questionDtoList = this.partQuestionDto.getQuestionDtoList();
-        for (QuestionDto questionDto : questionDtoList) {
-            questionDto.setParagraphDtoList(new ArrayList<>());
-            ParagraphDto paragraphDto = this.makeDataForInput.makeParagraphDto(false);
-            questionDto.getParagraphDtoList().add(paragraphDto);
+        List<QuestionModel> questionModelList = this.partQuestionModel.getQuestionModelList();
+        for (QuestionModel questionModel : questionModelList) {
+            questionModel.setParagraphModelList(new ArrayList<>());
+            ParagraphModel paragraphModel = this.makeDataForInput.makeParagraphModel(false);
+            questionModel.getParagraphModelList().add(paragraphModel);
         }
-        Assert.assertNotNull(questionDtoList.get(0).getParagraphDtoList());
-        Assert.assertNotNull(questionDtoList.get(0).getParagraphDtoList().get(0));
-        Assert.assertThat(questionDtoList.get(0).getParagraphDtoList().get(0).getParagraph(), is(not(isEmptyOrNullString())));
-        Assert.assertTrue(this.verifyPartQuestion.verify(this.partQuestionDto));
+        Assert.assertNotNull(questionModelList.get(0).getParagraphModelList());
+        Assert.assertNotNull(questionModelList.get(0).getParagraphModelList().get(0));
+        Assert.assertThat(questionModelList.get(0).getParagraphModelList().get(0).getParagraph(), is(not(isEmptyOrNullString())));
+        Assert.assertTrue(this.verifyPartQuestion.verify(this.partQuestionModel));
     }
 }

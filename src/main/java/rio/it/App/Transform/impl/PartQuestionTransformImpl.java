@@ -3,7 +3,7 @@ package rio.it.App.Transform.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import rio.it.App.Dto.PartQuestionDto;
+import rio.it.App.Model.PartQuestionModel;
 import rio.it.App.Entity.PartQuestionEntity;
 import rio.it.App.Transform.PartQuestionTransform;
 
@@ -16,27 +16,25 @@ public class PartQuestionTransformImpl implements PartQuestionTransform {
     private Logger logger = LoggerFactory.getLogger(PartQuestionTransformImpl.class);
 
     @Override
-    public PartQuestionEntity convertPartQuestionDtoToEntity(PartQuestionDto partQuestionDto) {
+    public PartQuestionEntity convertPartQuestionModelToEntity(PartQuestionModel partQuestionModel) {
         PartQuestionEntity partQuestionEntity = null;
-        logger.info("Begin convertPartQuestionDtoToEntity with Dto: " + partQuestionDto);
-        if (partQuestionDto != null) {
+        logger.info("Begin convertPartQuestionModelToEntity with Model: " + partQuestionModel);
+        if (partQuestionModel != null) {
             partQuestionEntity = new PartQuestionEntity();
-            partQuestionEntity.setPathFileMp3(partQuestionDto.getNamePartFileMp3());
         }
-        logger.info("End convertPartQuestionDtoToEntity with result: " + partQuestionEntity);
+        logger.info("End convertPartQuestionModelToEntity with result: " + partQuestionEntity);
         return partQuestionEntity;
     }
 
     @Override
-    public PartQuestionDto convertPartQuestionEntityToDto(PartQuestionEntity partQuestionEntity) {
+    public PartQuestionModel convertPartQuestionEntityToModel(PartQuestionEntity partQuestionEntity) {
 
-        PartQuestionDto partQuestionDto = null;
-        logger.info("Begin convertPartQuestionDtoToDto with Entity: "+partQuestionEntity);
+        PartQuestionModel partQuestionModel = null;
+        logger.info("Begin convertPartQuestionModelTo Model with Entity: "+partQuestionEntity);
         if (partQuestionEntity != null){
-            partQuestionDto = new PartQuestionDto();
-            partQuestionDto.setNamePartFileMp3(partQuestionEntity.getPathFileMp3());
+            partQuestionModel = new PartQuestionModel();
         }
-        logger.info("End convertPartQuestionDtoToDto with result: "+partQuestionDto);
-        return partQuestionDto;
+        logger.info("End convertPartQuestionModelTo Model with result: "+partQuestionModel);
+        return partQuestionModel;
     }
 }

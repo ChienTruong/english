@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import rio.it.App.Dto.PartQuestionDto;
+import rio.it.App.BusinessLogic.Impl.PartQuestionBlImpl;
+import rio.it.App.Model.PartQuestionModel;
 import rio.it.App.RestController.PartQuestionRest;
-import rio.it.App.Service.PartQuestionService;
 
 import java.util.List;
 
@@ -17,40 +17,38 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/partQuestion")
-public class
-PartQuestionRestImpl implements PartQuestionRest {
+public class PartQuestionRestImpl implements PartQuestionRest {
 
-    private PartQuestionService partQuestionService;
+    private PartQuestionBlImpl partQuestionBl;
 
     @Autowired
-    public PartQuestionRestImpl(PartQuestionService partQuestionService) {
-        this.partQuestionService = partQuestionService;
+    public PartQuestionRestImpl(PartQuestionBlImpl partQuestionBl) {
+        this.partQuestionBl = partQuestionBl;
     }
 
     @Override
-    public ResponseEntity create(/*@RequestBody()*/ PartQuestionDto partQuestionDto) {
-        System.out.println(partQuestionDto.toString());
-  this.partQuestionService.createPartQuestionDto(partQuestionDto);
+    public ResponseEntity create(PartQuestionModel partQuestionModel) {
+        this.partQuestionBl.createPartQuestionDto(partQuestionModel);
         return null;
     }
 
     @Override
-    public List<PartQuestionDto> findAll() {
+    public ResponseEntity<List<PartQuestionModel>> findAll() {
         return null;
     }
 
     @Override
-    public ResponseEntity findOne(@PathVariable(name = "id") Long aLong) {
+    public ResponseEntity<PartQuestionModel> findOne(@PathVariable(name = "id") Long partQuestionId) {
         return null;
     }
 
     @Override
-    public ResponseEntity update(@PathVariable(name = "id") Long aLong, @RequestBody() PartQuestionDto partQuestionDto) {
+    public ResponseEntity update(@PathVariable(name = "id") Long partQuestionId, @RequestBody() PartQuestionModel partQuestionModel) {
         return null;
     }
 
     @Override
-    public ResponseEntity delete(@PathVariable(name = "id") Long aLong) {
+    public ResponseEntity delete(@PathVariable(name = "id") Long partQuestionId) {
         return null;
     }
 }

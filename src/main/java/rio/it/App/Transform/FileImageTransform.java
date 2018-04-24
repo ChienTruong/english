@@ -1,24 +1,24 @@
 package rio.it.App.Transform;
 
 import rio.it.App.Entity.FileImageEntity;
-import rio.it.App.Dto.FileImageDto;
+import rio.it.App.Model.FileImageModel;
 
 public interface FileImageTransform {
 
     /**
-     * convert FileImageDto to FileImageEntity
-     * @param fileImageDto
+     * convert FileImageModel to FileImageEntity
+     * @param fileImageModel
      * @return FileImageEntity
      * @author Quang Lai
      */
-    FileImageEntity convertFileImageDtoToEntity(FileImageDto fileImageDto);
+    FileImageEntity convertFileImageModelToEntity(FileImageModel fileImageModel);
 
     /**
-     * convert FileImageEntity to FileImageDto
+     * convert FileImageEntity to FileImageModel
      * @param fileImageEntity
-     * @return FileImageDto
+     * @return FileImageModel
      * @author Quang Lai
      */
-    FileImageDto convertFileImageEntityToDto(FileImageEntity fileImageEntity);
+    FileImageModel convertFileImageEntityToModel(FileImageEntity fileImageEntity);
 
 }

@@ -1,9 +1,11 @@
 package rio.it.App.Repository;
 
-import rio.it.App.Entity.PartQuestionEntity;
+import rio.it.App.Model.PartQuestionModel;
 
 /**
- * Created by chien on 08/04/2018.
+ * Created by chien on 23/04/2018.
  */
-public interface PartQuestionRepository extends GenericRepository<PartQuestionEntity, Long> {
+public interface PartQuestionRepository {
+
+    void save(PartQuestionModel partQuestionModel);
 }

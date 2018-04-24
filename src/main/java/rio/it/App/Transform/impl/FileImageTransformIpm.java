@@ -2,7 +2,7 @@ package rio.it.App.Transform.impl;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import rio.it.App.Dto.FileImageDto;
+import rio.it.App.Model.FileImageModel;
 import rio.it.App.Entity.FileImageEntity;
 import rio.it.App.Transform.FileImageTransform;
 
@@ -12,30 +12,26 @@ public class FileImageTransformIpm implements FileImageTransform {
 
     private org.slf4j.Logger logger = LoggerFactory.getLogger(FileImageTransformIpm.class);
 
-
     @Override
-    public FileImageEntity convertFileImageDtoToEntity(FileImageDto fileImageDto) {
+    public FileImageEntity convertFileImageModelToEntity(FileImageModel fileImageModel) {
         FileImageEntity fileImageEntity =null;
-        logger.info("Begin convertFileImageDtoToEntity with Dto:"+fileImageDto);
-        if (fileImageDto != null){
+        logger.info("Begin convertFileImageModelToEntity with Model:"+ fileImageModel);
+        if (fileImageModel != null){
             fileImageEntity =new FileImageEntity();
-            fileImageDto.setPathFileNameImage(fileImageDto.getPathFileNameImage());
         }
-        logger.info("End convertFileImageDtoToEntity with result:"+fileImageEntity);
+        logger.info("End convertFileImageModelToEntity with result:"+fileImageEntity);
         return fileImageEntity;
     }
 
     @Override
-    public FileImageDto convertFileImageEntityToDto(FileImageEntity fileImageEntity) {
-        FileImageDto fileImageDto =null;
-        logger.info("Begin convertFileImageEntityToDto with Entity:"+fileImageEntity);
+    public FileImageModel convertFileImageEntityToModel(FileImageEntity fileImageEntity) {
+        FileImageModel fileImageModel =null;
+        logger.info("Begin convertFileImageEntityToModel with Entity:"+fileImageEntity);
         if (fileImageEntity != null){
-            fileImageDto = new FileImageDto();
-            fileImageDto.setPathFileNameImage(fileImageEntity.getPathFileImage());
-
+            fileImageModel = new FileImageModel();
         }
-        logger.info("End convertFileImageEntityToDto with result :"+fileImageDto);
-        return fileImageDto;
+        logger.info("End convertFileImageEntityToModel with result :"+fileImageModel);
+        return fileImageModel;
 
     }
 }

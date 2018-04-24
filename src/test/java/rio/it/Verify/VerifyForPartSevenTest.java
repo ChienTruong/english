@@ -3,10 +3,10 @@ package rio.it.Verify;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import rio.it.App.Dto.FileImageDto;
-import rio.it.App.Dto.QuestionDto;
-import rio.it.App.Dto.SentenceDto;
-import rio.it.App.Dto.SubQuestionDto;
+import rio.it.App.Model.FileImageModel;
+import rio.it.App.Model.QuestionModel;
+import rio.it.App.Model.SentenceModel;
+import rio.it.App.Model.SubQuestionModel;
 import rio.it.App.Util.Impl.VerifyQuestionPartSeven;
 import rio.it.App.Util.VerifyPartQuestion;
 
@@ -17,11 +17,11 @@ import java.io.IOException;
  */
 public class VerifyForPartSevenTest extends SuperVerifyTest {
 
-    private int maxSizeOfListQuestionDto = 14;
-    private int maxSizeOfListSubQuestionDto = 5;
-    private int minSizeOfListSubQuestionDto = 2;
+    private int maxSizeOfListQuestionModel = 14;
+    private int maxSizeOfListSubQuestionModel = 5;
+    private int minSizeOfListSubQuestionModel = 2;
     private int sizeOfListSentence = 4;
-    private int maxSizeOfListFileImageDto = 2;
+    private int maxSizeOfListFileImageModel = 2;
 
     @Before
     public void init() throws IOException {
@@ -30,31 +30,31 @@ public class VerifyForPartSevenTest extends SuperVerifyTest {
 
     @Override
     protected VerifyPartQuestion makeVerification() {
-        return new VerifyQuestionPartSeven(true, false, this.maxSizeOfListQuestionDto, this.maxSizeOfListSubQuestionDto, this.minSizeOfListSubQuestionDto, this.sizeOfListSentence, this.maxSizeOfListFileImageDto);
+        return new VerifyQuestionPartSeven(true, false, this.maxSizeOfListQuestionModel, this.maxSizeOfListSubQuestionModel, this.minSizeOfListSubQuestionModel, this.sizeOfListSentence, this.maxSizeOfListFileImageModel);
     }
 
     private void makeDataPartSeven() throws IOException {
-        for (int i = 0; i < this.maxSizeOfListQuestionDto; i++) {
-            QuestionDto questionDto = this.makeDataForInput.makeQuestionDto(true, false);
-            for (int j = 0; j < this.maxSizeOfListFileImageDto; j++) {
-                FileImageDto fileImageDto = this.makeDataForInput.makeFileImageDto(false, false);
-                questionDto.getFileImageDtoList().add(fileImageDto);
+        for (int i = 0; i < this.maxSizeOfListQuestionModel; i++) {
+            QuestionModel questionModel = this.makeDataForInput.makeQuestionModel(true, false);
+            for (int j = 0; j < this.maxSizeOfListFileImageModel; j++) {
+                FileImageModel fileImageModel = this.makeDataForInput.makeFileImageModel(false, false);
+                questionModel.getFileImageModelList().add(fileImageModel);
             }
-            for (int j = 0; j < this.minSizeOfListSubQuestionDto; j++) {
-                SubQuestionDto subQuestionDto = this.makeDataForInput.makeSubQuestionDto(false, false);
+            for (int j = 0; j < this.minSizeOfListSubQuestionModel; j++) {
+                SubQuestionModel subQuestionModel = this.makeDataForInput.makeSubQuestionModel(false, false);
                 for (int z = 0; z < this.sizeOfListSentence; z++) {
-                    SentenceDto sentenceDto = this.makeDataForInput.makeSentenceDto(false);
-                    subQuestionDto.getSentenceDtoList().add(sentenceDto);
+                    SentenceModel sentenceModel = this.makeDataForInput.makeSentenceModel(false);
+                    subQuestionModel.getSentenceModelList().add(sentenceModel);
                 }
-                questionDto.getSubQuestionDtoList().add(subQuestionDto);
+                questionModel.getSubQuestionModelList().add(subQuestionModel);
             }
-            this.partQuestionDto.getQuestionDtoList().add(questionDto);
+            this.partQuestionModel.getQuestionModelList().add(questionModel);
         }
     }
 
     @Test
     public void testPartSevenWithData_Success() throws IOException {
         this.makeDataPartSeven();
-        Assert.assertTrue(this.verifyPartQuestion.verify(this.partQuestionDto));
+        Assert.assertTrue(this.verifyPartQuestion.verify(this.partQuestionModel));
     }
 }

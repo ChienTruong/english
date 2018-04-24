@@ -1,6 +1,6 @@
 package rio.it.App.Transform;
 
-import rio.it.App.Dto.PartQuestionDto;
+import rio.it.App.Model.PartQuestionModel;
 import rio.it.App.Entity.PartQuestionEntity;
 
 /**
@@ -9,19 +9,19 @@ import rio.it.App.Entity.PartQuestionEntity;
 public interface PartQuestionTransform {
 
     /**
-     * convert partQuestionDto to partQuestionEntity
-     * @param partQuestionDto
+     * convert partQuestionModel to partQuestionEntity
+     * @param partQuestionModel
      * @return partQuestionEntity
      * @author Quang Lai
      */
-    PartQuestionEntity convertPartQuestionDtoToEntity(PartQuestionDto partQuestionDto);
+    PartQuestionEntity convertPartQuestionModelToEntity(PartQuestionModel partQuestionModel);
 
     /**
-     * convert partQuestionEntity to partQuestionDto
+     * convert partQuestionEntity to partQuestionModel
      * @param partQuestionEntity
-     * @return partQuestionDto
+     * @return partQuestionModel
      * @author Quang Lai
      */
-    PartQuestionDto convertPartQuestionEntityToDto(PartQuestionEntity partQuestionEntity);
+    PartQuestionModel convertPartQuestionEntityToModel(PartQuestionEntity partQuestionEntity);
 
 }
