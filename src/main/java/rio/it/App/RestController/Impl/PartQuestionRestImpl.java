@@ -6,10 +6,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import rio.it.App.BusinessLogic.Impl.PartQuestionBlImpl;
 import rio.it.App.Model.PartQuestionModel;
 import rio.it.App.RestController.PartQuestionRest;
 
+import java.net.URI;
 import java.util.List;
 
 /**
@@ -28,8 +30,13 @@ public class PartQuestionRestImpl implements PartQuestionRest {
 
     @Override
     public ResponseEntity create(PartQuestionModel partQuestionModel) {
-        this.partQuestionBl.createPartQuestionDto(partQuestionModel);
-        return null;
+        if (this.partQuestionBl.createPartQuestionDto(partQuestionModel)) {
+            URI location = ServletUriComponentsBuilder
+                    .fromCurrentRequest().path("/{id}")
+                    .buildAndExpand(partQuestionModel.getPartQuestionId()).toUri();
+            return ResponseEntity.created(location).build();
+        }
+        return ResponseEntity.badRequest().build();
     }
 
     @Override
@@ -49,6 +56,12 @@ public class PartQuestionRestImpl implements PartQuestionRest {
 
     @Override
     public ResponseEntity delete(@PathVariable(name = "id") Long partQuestionId) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity getRandom(@PathVariable(name = "partName") String partName) {
+
         return null;
     }
 }

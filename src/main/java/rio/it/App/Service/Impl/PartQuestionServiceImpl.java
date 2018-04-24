@@ -24,4 +24,10 @@ public class PartQuestionServiceImpl implements PartQuestionService {
     public void save(PartQuestionModel partQuestionModel) {
         partQuestionRepository.save(partQuestionModel);
     }
+
+    @Override
+    public PartQuestionModel getById(Long idOfPartQuestion) {
+        this.partQuestionRepository.findById(idOfPartQuestion);
+        return null;
+    }
 }

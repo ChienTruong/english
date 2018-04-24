@@ -8,4 +8,6 @@ import rio.it.App.Model.PartQuestionModel;
 public interface PartQuestionRepository {
 
     void save(PartQuestionModel partQuestionModel);
+
+    PartQuestionModel findById(Long idOfPartQuestion);
 }

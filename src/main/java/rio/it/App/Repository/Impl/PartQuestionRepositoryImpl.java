@@ -1,6 +1,5 @@
 package rio.it.App.Repository.Impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import rio.it.App.Dao.PartDao;
 import rio.it.App.Dao.PartQuestionDao;
@@ -28,5 +27,16 @@ public class PartQuestionRepositoryImpl implements PartQuestionRepository {
 
     @Override
     public void save(PartQuestionModel partQuestionModel) {
+        PartQuestionEntity partQuestionEntity = this.partQuestionTransform.convertPartQuestionModelToEntity(partQuestionModel);
+        PartEntity partEntity = this.partDao.findByName(partQuestionModel.getNamePart());
+        partQuestionEntity.setPartEntity(partEntity);
+        partQuestionDao.save(partQuestionEntity);
+    }
+
+    @Override
+    public PartQuestionModel findById(Long idOfPartQuestion) {
+        PartQuestionEntity partQuestionEntity = this.partQuestionDao.findOne(idOfPartQuestion);
+        PartQuestionModel partQuestionModel = this.partQuestionTransform.convertPartQuestionEntityToModel(partQuestionEntity);
+        return partQuestionModel;
     }
 }

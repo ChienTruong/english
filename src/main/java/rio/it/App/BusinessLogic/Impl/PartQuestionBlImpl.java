@@ -49,10 +49,7 @@ public class PartQuestionBlImpl implements PartQuestionBl {
             this.verifyPartQuestion = this.factoryVerifyPartQuestion.getVerify(part);
             boolean verifyResult = this.verifyPartQuestion.verify(partQuestionModel);
             if (verifyResult) {
-                // do something
-                // step1. transfer entity
-                // step2. process another
-                // step3. give entity to repository
+                this.partQuestionService.save(partQuestionModel);
             }
         }
         return false;

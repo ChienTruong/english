@@ -7,5 +7,7 @@ import rio.it.App.Model.PartQuestionModel;
  */
 public interface PartQuestionService {
 
-    void save(PartQuestionModel partQuestionDto);
+    void save(PartQuestionModel partQuestionModel);
+
+    PartQuestionModel getById(Long idOfPartQuestion);
 }

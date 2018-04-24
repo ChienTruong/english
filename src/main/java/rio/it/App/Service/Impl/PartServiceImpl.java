@@ -6,6 +6,8 @@ import rio.it.App.Model.PartModel;
 import rio.it.App.Repository.PartRepository;
 import rio.it.App.Service.PartService;
 
+import java.util.List;
+
 /**
  * Created by chien on 10/04/2018.
  */
@@ -32,5 +34,15 @@ public class PartServiceImpl implements PartService {
     public PartModel findByName(String namePart) {
         PartModel partModel = partRepository.findByName(namePart);
         return partModel;
+    }
+
+    @Override
+    public PartModel findById(Long idPartQuestion) {
+        return null;
+    }
+
+    @Override
+    public List<Long> getAllIdOfListPartQuestion(String namePart) {
+        return this.partRepository.getListIdOfPartQuestionByNamePart(namePart);
     }
 }

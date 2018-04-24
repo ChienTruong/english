@@ -4,9 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import rio.it.App.Dao.PartDao;
 import rio.it.App.Entity.PartEntity;
+import rio.it.App.Entity.PartQuestionEntity;
 import rio.it.App.Model.PartModel;
 import rio.it.App.Repository.PartRepository;
 import rio.it.App.Transform.PartTransform;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by chien on 23/04/2018.
@@ -28,5 +32,13 @@ public class PartRepositoryImpl implements PartRepository {
         PartEntity partEntity = partDao.findByName(name);
         PartModel partModel = partTransform.convertPartEntityToModel(partEntity);
         return partModel;
+    }
+
+    @Override
+    public List<Long> getListIdOfPartQuestionByNamePart(String namePart) {
+        PartEntity partEntity = partDao.findByName(namePart);
+        return partEntity.getPartQuestionEntityList()
+                .stream().map(PartQuestionEntity::getPartQuestionId)
+                .collect(Collectors.toList());
     }
 }
