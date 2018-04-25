@@ -13,7 +13,7 @@ public class SubQuestionModel {
     private Long subQuestionId;
     private String sentenceAsk;
     private String translateAsk;
-    private Character answer;
+    private String answer;
     private List<SentenceModel> sentenceModelList;
     private QuestionModel questionModel;
 }

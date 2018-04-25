@@ -2,6 +2,7 @@ package rio.it.App.Service.Impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import rio.it.App.Model.PartQuestionModel;
 import rio.it.App.Repository.Impl.PartQuestionRepositoryImpl;
 import rio.it.App.Repository.PartQuestionRepository;
@@ -11,6 +12,7 @@ import rio.it.App.Service.PartQuestionService;
  * Created by chien on 10/04/2018.
  */
 @Service
+@Transactional
 public class PartQuestionServiceImpl implements PartQuestionService {
 
     private PartQuestionRepository partQuestionRepository;
