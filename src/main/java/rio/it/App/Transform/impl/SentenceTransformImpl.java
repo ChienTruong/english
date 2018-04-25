@@ -3,7 +3,7 @@ package rio.it.App.Transform.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import rio.it.App.Dto.SentenceDto;
+import rio.it.App.Model.SentenceModel;
 import rio.it.App.Entity.SentenceEntity;
 import rio.it.App.Transform.SentenceTransform;
 
@@ -15,32 +15,32 @@ public class SentenceTransformImpl implements SentenceTransform {
     private Logger logger = LoggerFactory.getLogger(SentenceTransformImpl.class);
 
     @Override
-    public SentenceEntity convertSentenceDtoToEntity(SentenceDto sentenceDto) {
+    public SentenceEntity convertSentenceModelToEntity(SentenceModel sentenceModel) {
         SentenceEntity sentenceEntity = null;
-        logger.info("Begin convertSentenceDtoToEntity with type dto: "+sentenceDto);
-        if (sentenceDto != null){
+        logger.info("Begin convertSentenceModelToEntity with type Model: "+ sentenceModel);
+        if (sentenceModel != null){
             sentenceEntity = new SentenceEntity();
-            sentenceEntity.setSentenceId(sentenceDto.getSentenceId());
-            sentenceEntity.setCharacter(sentenceDto.getCharacter());
-            sentenceEntity.setSentenceEn(sentenceDto.getSentenceEn());
-            sentenceEntity.setSentenceVn(sentenceDto.getSentenceVn());
+            sentenceEntity.setSentenceId(sentenceModel.getSentenceId());
+            sentenceEntity.setCharacter(sentenceModel.getCharacter());
+            sentenceEntity.setSentenceEn(sentenceModel.getSentenceEn());
+            sentenceEntity.setSentenceVn(sentenceModel.getSentenceVn());
         }
-        logger.info("End convertSentenceDtoToEntity with result: "+sentenceEntity);
+        logger.info("End convertSentenceModelToEntity with result: "+sentenceEntity);
         return sentenceEntity;
     }
 
     @Override
-    public SentenceDto convertSentenceEntityToDto(SentenceEntity sentenceEntity) {
-        SentenceDto sentenceDto = null;
-        logger.info("Begin convertSentenceEntityToDto with type Entity: "+sentenceEntity);
+    public SentenceModel convertSentenceEntityToModel(SentenceEntity sentenceEntity) {
+        SentenceModel sentenceModel = null;
+        logger.info("Begin convertSentenceEntityToModel with type Entity: "+sentenceEntity);
         if (sentenceEntity != null){
-            sentenceDto = new SentenceDto();
-            sentenceDto.setSentenceId(sentenceEntity.getSentenceId());
-            sentenceDto.setCharacter(sentenceEntity.getCharacter());
-            sentenceDto.setSentenceEn(sentenceEntity.getSentenceEn());
-            sentenceDto.setSentenceVn(sentenceEntity.getSentenceVn());
+            sentenceModel = new SentenceModel();
+            sentenceModel.setSentenceId(sentenceEntity.getSentenceId());
+            sentenceModel.setCharacter(sentenceEntity.getCharacter());
+            sentenceModel.setSentenceEn(sentenceEntity.getSentenceEn());
+            sentenceModel.setSentenceVn(sentenceEntity.getSentenceVn());
         }
-        logger.info("End convertSentenceEntityToDto with result: "+sentenceDto);
-        return sentenceDto;
+        logger.info("End convertSentenceEntityToModel with result: "+sentenceModel);
+        return sentenceModel;
     }
 }

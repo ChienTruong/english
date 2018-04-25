@@ -2,13 +2,10 @@ package rio.it.Dao;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import rio.it.App.Entity.PartEntity;
-import rio.it.App.Repository.PartRepository;
+import rio.it.App.Dao.PartDao;
 import rio.it.EnglishApplicationTests;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -21,7 +18,7 @@ import static org.hamcrest.CoreMatchers.is;
 public class PartRepositoryImplTest extends EnglishApplicationTests {
 
     @Autowired
-    private PartRepository partRepository;
+    private PartDao partRepository;
 
     @Test
     public void testFindByName_Success() {

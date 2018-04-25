@@ -1,10 +1,10 @@
 package rio.it.App.Util;
 
-import rio.it.App.Dto.PartQuestionDto;
+import rio.it.App.Model.PartQuestionModel;
 
 /**
  * Created by chien on 12/04/2018.
  */
 public interface VerifyPartQuestion {
-    boolean verify(PartQuestionDto partQuestionDto);
+    boolean verify(PartQuestionModel partQuestionModel);
 }
