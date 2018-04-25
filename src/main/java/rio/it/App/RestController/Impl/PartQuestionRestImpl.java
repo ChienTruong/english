@@ -30,7 +30,8 @@ PartQuestionRestImpl implements PartQuestionRest {
     @Override
     public ResponseEntity create(/*@RequestBody()*/ PartQuestionDto partQuestionDto) {
         System.out.println(partQuestionDto.toString());
-  this.partQuestionService.createPartQuestionDto(partQuestionDto);
+        boolean service = this.partQuestionService.createPartQuestionDto(partQuestionDto);
+        System.out.println("Controller:  "+service);
         return null;
     }
 

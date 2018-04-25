@@ -58,7 +58,7 @@ public class MakeDataForInput {
 
     public SubQuestionDto makeSubQuestionDto(boolean nullAsk, boolean nullListSentence) {
         SubQuestionDto subQuestionDto = new SubQuestionDto();
-        subQuestionDto.setAnswer('C');
+        subQuestionDto.setAnswer("C");
         if (!nullAsk) {
             subQuestionDto.setSentenceAsk("Ask Sentence");
         }

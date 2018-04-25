@@ -46,7 +46,7 @@ public class PartQuestionServiceImpl implements PartQuestionService {
     @Override
     public boolean createPartQuestionDto(PartQuestionDto partQuestionDto) {
         // find part is here
-        if (!partQuestionDto.getNamePart().isEmpty()) {
+        if (partQuestionDto.getNamePart() != null && !partQuestionDto.getNamePart().isEmpty()) {
             PartEntity partEntity = this.partRepository.findByName(partQuestionDto.getNamePart());
             if (partEntity == null) {
                 return false;
@@ -54,6 +54,7 @@ public class PartQuestionServiceImpl implements PartQuestionService {
             PartEnum part = getPartEnum(partEntity.getPartName());
             this.verifyPartQuestion = this.factoryVerifyPartQuestion.getVerify(part);
             boolean verifyResult = this.verifyPartQuestion.verify(partQuestionDto);
+            System.out.println(verifyResult);
             if (verifyResult) {
                 // do something
                 // step1. transfer entity

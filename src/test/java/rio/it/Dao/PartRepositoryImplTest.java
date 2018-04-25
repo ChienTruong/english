@@ -25,8 +25,8 @@ public class PartRepositoryImplTest extends EnglishApplicationTests {
 
     @Test
     public void testFindByName_Success() {
-        String input = "One";
-        String expected = "PartOne";
+        String input = "Seven";
+        String expected = "PartSeven";
         PartEntity partEntityResult = this.partRepository.findByName(input);
         Assert.assertThat(partEntityResult.getPartName(), is(equalTo(expected)));
     }
