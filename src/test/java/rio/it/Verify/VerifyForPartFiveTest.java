@@ -3,11 +3,12 @@ package rio.it.Verify;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import rio.it.App.Dto.ParagraphDto;
-import rio.it.App.Dto.QuestionDto;
-import rio.it.App.Dto.SentenceDto;
-import rio.it.App.Dto.SubQuestionDto;
+import rio.it.App.Model.ParagraphModel;
+import rio.it.App.Model.QuestionModel;
+import rio.it.App.Model.SentenceModel;
+import rio.it.App.Model.SubQuestionModel;
 import rio.it.App.Util.Impl.VerifyQuestionPartFive;
+import rio.it.App.Util.VerifyPartQuestion;
 
 import java.io.IOException;
 
@@ -16,32 +17,40 @@ import java.io.IOException;
  */
 public class VerifyForPartFiveTest extends SuperVerifyTest {
 
-    private int maxSizeOfListQuestionDto = 40;
-    private int minSizeOfListSubQuestionDto = 1;
+    private int maxSizeOfListQuestionModel = 40;
+    private int minSizeOfListSubQuestionModel = 1;
     private int sizeOfListSentence = 4;
 
     @Before
     public void init() throws IOException {
         super.init();
-        this.verifyPartQuestion = new VerifyQuestionPartFive(this.maxSizeOfListQuestionDto, this.minSizeOfListSubQuestionDto, this.sizeOfListSentence);
+    }
+
+    @Override
+    protected VerifyPartQuestion makeVerification() {
+        return new VerifyQuestionPartFive(false, true, this.maxSizeOfListQuestionModel, this.minSizeOfListSubQuestionModel, this.sizeOfListSentence);
+    }
+
+    private void makeDataPartFive() {
+        for (int i = 0; i < this.maxSizeOfListQuestionModel; i++) {
+            QuestionModel questionModel = this.makeDataForInput.makeQuestionModel(false, true);
+            ParagraphModel paragraphModel = this.makeDataForInput.makeParagraphModel(false);
+            questionModel.getParagraphModelList().add(paragraphModel);
+            for (int j = 0; j < this.minSizeOfListSubQuestionModel; j++) {
+                SubQuestionModel subQuestionModel = this.makeDataForInput.makeSubQuestionModel(true, false);
+                for (int z = 0; z < this.sizeOfListSentence; z++) {
+                    SentenceModel sentenceModel = this.makeDataForInput.makeSentenceModel(false);
+                    subQuestionModel.getSentenceModelList().add(sentenceModel);
+                }
+                questionModel.getSubQuestionModelList().add(subQuestionModel);
+            }
+            this.partQuestionModel.getQuestionModelList().add(questionModel);
+        }
     }
 
     @Test
     public void testPartFiveWithData_Success() {
-        for (int i = 0; i < this.maxSizeOfListQuestionDto; i++) {
-            QuestionDto questionDto = this.makeDataForInput.makeQuestionDto(false, true);
-            ParagraphDto paragraphDto = this.makeDataForInput.makeParagraphDto(false);
-            questionDto.getParagraphDtoList().add(paragraphDto);
-            for (int j = 0; j < this.minSizeOfListSubQuestionDto; j++) {
-                SubQuestionDto subQuestionDto = this.makeDataForInput.makeSubQuestionDto(true, false);
-                for (int z = 0; z < this.sizeOfListSentence; z++) {
-                    SentenceDto sentenceDto = this.makeDataForInput.makeSentenceDto(false);
-                    subQuestionDto.getSentenceDtoList().add(sentenceDto);
-                }
-                questionDto.getSubQuestionDtoList().add(subQuestionDto);
-            }
-            this.partQuestionDto.getQuestionDtoList().add(questionDto);
-        }
-        Assert.assertTrue(this.verifyPartQuestion.verify(this.partQuestionDto));
+        this.makeDataPartFive();
+        Assert.assertTrue(this.verifyPartQuestion.verify(this.partQuestionModel));
     }
 }

@@ -2,71 +2,32 @@ package rio.it.App.Service.Impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import rio.it.App.Dto.PartQuestionDto;
-import rio.it.App.Entity.PartEntity;
+import rio.it.App.Model.PartQuestionModel;
+import rio.it.App.Repository.Impl.PartQuestionRepositoryImpl;
 import rio.it.App.Repository.PartQuestionRepository;
-import rio.it.App.Repository.PartRepository;
 import rio.it.App.Service.PartQuestionService;
-import rio.it.App.Util.FactoryVerifyPartQuestion;
-import rio.it.App.Util.PartEnum;
-import rio.it.App.Util.VerifyPartQuestion;
-
-import java.util.Arrays;
 
 /**
- * `q`  12
  * Created by chien on 10/04/2018.
  */
 @Service
-@Transactional
 public class PartQuestionServiceImpl implements PartQuestionService {
 
     private PartQuestionRepository partQuestionRepository;
-    private PartRepository partRepository;
-    private FactoryVerifyPartQuestion factoryVerifyPartQuestion;
-    private VerifyPartQuestion verifyPartQuestion;
 
     @Autowired
-    public PartQuestionServiceImpl(PartQuestionRepository partQuestionRepository, PartRepository partRepository, FactoryVerifyPartQuestion factoryVerifyPartQuestion) {
+    public PartQuestionServiceImpl(PartQuestionRepositoryImpl partQuestionRepository) {
         this.partQuestionRepository = partQuestionRepository;
-        this.partRepository = partRepository;
-        this.factoryVerifyPartQuestion = factoryVerifyPartQuestion;
     }
 
-    /**
-     * Create new part question entity
-     *
-     * @param partQuestionDto
-     * @return Step 1: get class verify match with partQuestion
-     * @Note_11/04/18_Chien: view class factoryVerifyPartQuestion to know information of this class
-     * Step 2: it will be verified by class verifyPartQuestion
-     * Step 3: ...
-     */
     @Override
-    public boolean createPartQuestionDto(PartQuestionDto partQuestionDto) {
-        // find part is here
-        if (partQuestionDto.getNamePart() != null && !partQuestionDto.getNamePart().isEmpty()) {
-            PartEntity partEntity = this.partRepository.findByName(partQuestionDto.getNamePart());
-            if (partEntity == null) {
-                return false;
-            }
-            PartEnum part = getPartEnum(partEntity.getPartName());
-            this.verifyPartQuestion = this.factoryVerifyPartQuestion.getVerify(part);
-            boolean verifyResult = this.verifyPartQuestion.verify(partQuestionDto);
-            System.out.println(verifyResult);
-            if (verifyResult) {
-                // do something
-                // step1. transfer entity
-                // step2. process another
-                // step3. give entity to repository
-
-            }
-        }
-        return false;
+    public void save(PartQuestionModel partQuestionModel) {
+        partQuestionRepository.save(partQuestionModel);
     }
 
-    private PartEnum getPartEnum(String partName) {
-        return Arrays.stream(PartEnum.values()).filter(part -> part.toString().endsWith(partName)).findFirst().get();
+    @Override
+    public PartQuestionModel getById(Long idOfPartQuestion) {
+        this.partQuestionRepository.findById(idOfPartQuestion);
+        return null;
     }
 }

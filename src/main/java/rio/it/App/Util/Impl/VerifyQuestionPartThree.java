@@ -1,8 +1,12 @@
 package rio.it.App.Util.Impl;
 
 import org.springframework.web.multipart.MultipartFile;
-import rio.it.App.Dto.QuestionDto;
+import rio.it.App.Model.ParagraphModel;
+import rio.it.App.Model.QuestionModel;
+import rio.it.App.Model.SubQuestionModel;
 import rio.it.App.Util.VerifyPartQuestion;
+
+import java.util.List;
 
 
 /**
@@ -25,44 +29,20 @@ public class VerifyQuestionPartThree extends VerifyPartQuestionGeneric implement
     }
 
     @Override
-    protected boolean verifyForQuestionDto(QuestionDto questionDto) {
-        if (!this.functionVerify.verifyListNotNullAndNotEmpty(questionDto.getFileImageDtoList())
-                && this.functionVerify.verifyListNotNullAndNotEmpty(questionDto.getSubQuestionDtoList())) {
-            if (this.verifyForSubQuestionDtoList(questionDto.getSubQuestionDtoList())) {
-                return true;
+    protected boolean verifyForQuestionModel(QuestionModel questionModel) {
+        List<ParagraphModel> paragraphModelList = questionModel.getParagraphModelList();
+        List<SubQuestionModel> subQuestionModelList = questionModel.getSubQuestionModelList();
+        if (!this.functionVerify.verifyListNotNullAndNotEmpty(questionModel.getFileImageModelList())
+                && this.functionVerify.verifyListNotNullAndNotEmpty(subQuestionModelList)) {
+            if (this.functionVerify.verifyListNotNullAndNotEmpty(paragraphModelList)) {
+                if (!this.verifyForParagraphModel(paragraphModelList.get(0))) {
+                    return false;
+                }
+            }
+            if (this.verifyForSubQuestionModelList(subQuestionModelList)) {
+                return this.filterEachInSubQuestionModelList(subQuestionModelList);
             }
         }
         return false;
     }
-//
-//    @Override
-//    public boolean verify(PartQuestionDto partQuestionDto) {
-//        System.out.println("Three");
-//
-//
-//        return false;
-//    }
-//
-//    private boolean verifyPartQuestionThree(PartQuestionDto partQuestionDto){
-//        FunctionVerify functionVerify = new FunctionVerify();
-//        if(partQuestionDto != null){
-//            if(functionVerify.verifyStringNotNullAndNoEmpty(partQuestionDto.getNamePart())){
-//                if(functionVerify.verifyFileNull(partQuestionDto.getPathFileMp3())){
-//                    if(functionVerify.verifySuffixOfFile(partQuestionDto.getPathFileMp3(), "mp3")
-//                            && functionVerify.verifySizeOfFile(partQuestionDto.getPathFileMp3())){
-//                        List<QuestionDto> questionDtoList = partQuestionDto.getQuestionDtoList();
-//                        if(functionVerify.verifyListNotNullAndNotEmpty(questionDtoList)
-//                                && questionDtoList.size() <= 30 ){
-//                            for(QuestionDto questionDto : questionDtoList){
-//                                if(!functionVerify.verifyListNotNullAndNotEmpty(questionDto.getParagraphDtoList())){
-//
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        return false;
-//    }
 }

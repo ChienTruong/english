@@ -14,10 +14,10 @@ public interface GenericRest<D, ID> {
     ResponseEntity create(@RequestBody() D d);
 
     @GetMapping()
-    List<D> findAll();
+    ResponseEntity<List<D>> findAll();
 
     @GetMapping("/{id}")
-    ResponseEntity findOne(@PathVariable(name = "id") ID id);
+    ResponseEntity<D> findOne(@PathVariable(name = "id") ID id);
 
     @PutMapping("/{id}")
     ResponseEntity update(@PathVariable(name = "id") ID id, @RequestBody() D d);

@@ -9,6 +9,6 @@ public abstract class VerifyForListeningTest extends SuperVerifyTest {
 
     protected void init() throws IOException {
         super.init();
-        this.partQuestionDto.setPathFileMp3(this.makeDataForInput.makeFileMp3(false, false));
+        this.partQuestionModel.setPathFileMp3(this.makeDataForInput.makeFileMp3(false, false));
     }
 }

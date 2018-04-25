@@ -1,7 +1,7 @@
 package rio.it.Verify;
 
 import org.springframework.mock.web.MockMultipartFile;
-import rio.it.App.Dto.*;
+import rio.it.App.Model.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -38,49 +38,49 @@ public class MakeDataForInput {
         return mockMultipartFile;
     }
 
-    public QuestionDto makeQuestionDto(boolean nullListParagraph, boolean nullListFileImage) {
-        QuestionDto questionDto = new QuestionDto();
-        questionDto.setSubQuestionDtoList(new ArrayList<>(0));
+    public QuestionModel makeQuestionModel(boolean nullListParagraph, boolean nullListFileImage) {
+        QuestionModel questionModel = new QuestionModel();
+        questionModel.setSubQuestionModelList(new ArrayList<>(0));
         if (!nullListFileImage) {
-            questionDto.setFileImageDtoList(new ArrayList<>(0));
+            questionModel.setFileImageModelList(new ArrayList<>(0));
         }
         if (!nullListParagraph) {
-            questionDto.setParagraphDtoList(new ArrayList<>(0));
+            questionModel.setParagraphModelList(new ArrayList<>(0));
         }
-        return questionDto;
+        return questionModel;
     }
 
-    public FileImageDto makeFileImageDto(boolean allowNull, boolean allowEmpty) throws IOException {
-        FileImageDto fileImageDto = new FileImageDto();
-        fileImageDto.setPathFileImage(this.makeMultipartFile(allowNull, allowEmpty, "png"));
-        return fileImageDto;
+    public FileImageModel makeFileImageModel(boolean allowNull, boolean allowEmpty) throws IOException {
+        FileImageModel fileImageModel = new FileImageModel();
+        fileImageModel.setPathFileImage(this.makeMultipartFile(allowNull, allowEmpty, "png"));
+        return fileImageModel;
     }
 
-    public SubQuestionDto makeSubQuestionDto(boolean nullAsk, boolean nullListSentence) {
-        SubQuestionDto subQuestionDto = new SubQuestionDto();
-        subQuestionDto.setAnswer("C");
+    public SubQuestionModel makeSubQuestionModel(boolean nullAsk, boolean nullListSentence) {
+        SubQuestionModel subQuestionModel = new SubQuestionModel();
+        subQuestionModel.setAnswer('C');
         if (!nullAsk) {
-            subQuestionDto.setSentenceAsk("Ask Sentence");
+            subQuestionModel.setSentenceAsk("Ask Sentence");
         }
         if (!nullListSentence) {
-            subQuestionDto.setSentenceDtoList(new ArrayList<>());
+            subQuestionModel.setSentenceModelList(new ArrayList<>());
         }
-        return subQuestionDto;
+        return subQuestionModel;
     }
 
-    public SentenceDto makeSentenceDto(boolean emptySentence) {
-        SentenceDto sentenceDto = new SentenceDto();
+    public SentenceModel makeSentenceModel(boolean emptySentence) {
+        SentenceModel sentenceModel = new SentenceModel();
         if (!emptySentence) {
-            sentenceDto.setSentenceEn("Sentence EN");
+            sentenceModel.setSentenceEn("Sentence EN");
         }
-        return sentenceDto;
+        return sentenceModel;
     }
 
-    public ParagraphDto makeParagraphDto(boolean allowEmpty) {
-        ParagraphDto paragraphDto = new ParagraphDto();
+    public ParagraphModel makeParagraphModel(boolean allowEmpty) {
+        ParagraphModel paragraphModel = new ParagraphModel();
         if (!allowEmpty) {
-            paragraphDto.setParagraph("Paragraph");
+            paragraphModel.setParagraph("Paragraph");
         }
-        return paragraphDto;
+        return paragraphModel;
     }
 }

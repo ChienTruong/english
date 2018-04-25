@@ -4,10 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import rio.it.App.Dto.*;
 import rio.it.App.Entity.*;
-import rio.it.App.Repository.AccountRepository;
+import rio.it.App.Model.*;
 import rio.it.App.Transform.*;
+
 import java.util.ArrayList;
 
 /**
@@ -22,69 +22,61 @@ public class GenericTransformsImpl implements GenericTransform {
     private ParagraphTransform paragraphTransform;
     private SentenceTransform sentenceTransform;
     private FileImageTransform fileImageTransform;
-    private AccountTransform accountTransform;
-    private AccountRepository accountRepository;
-    private   Logger logger = LoggerFactory.getLogger(GenericTransformsImpl.class);
+
+    private Logger logger = LoggerFactory.getLogger(GenericTransformsImpl.class);
 
     @Autowired
-    public GenericTransformsImpl(AccountRepository accountRepository,AccountTransform accountTransform, PartQuestionTransform partQuestionTransform, QuestionTransform questionTransform, SubQuestionTransform subQuestionTransform, ParagraphTransform paragraphTransform, SentenceTransform sentenceTransform, FileImageTransform fileImageTransform) {
+    public GenericTransformsImpl(PartQuestionTransform partQuestionTransform, QuestionTransform questionTransform, SubQuestionTransform subQuestionTransform, ParagraphTransform paragraphTransform, SentenceTransform sentenceTransform, FileImageTransform fileImageTransform) {
         this.partQuestionTransform = partQuestionTransform;
         this.questionTransform = questionTransform;
         this.subQuestionTransform = subQuestionTransform;
         this.paragraphTransform = paragraphTransform;
         this.sentenceTransform = sentenceTransform;
         this.fileImageTransform = fileImageTransform;
-        this.accountTransform = accountTransform;
-        this.accountRepository = accountRepository;
     }
 
-    public PartQuestionEntity transformPartQuestionDtoToEntity(PartQuestionDto partQuestionDto) {
-
-
-        logger.info("Begin transformPartQuestionDtoToEntity with condition :"+partQuestionDto);
-        PartQuestionEntity partQuestionEntity = this.partQuestionTransform.convertPartQuestionDtoToEntity(partQuestionDto);
-        // add accountEntity in partQuestionEntity
-        //AccountEntity accountEntity =  accountRepository.findByName(partQuestionDto.getAccountDto().getEmail());
-        //partQuestionEntity.setAccountEntity(accountEntity);
-        // new ArrayList<>() for QuestionEntityList in partQuestionEntity
+    public PartQuestionEntity transformPartQuestionModelToEntity(PartQuestionModel partQuestionModel) {
+        logger.info("Begin transformPartQuestionModelToEntity with condition :" + partQuestionModel);
+        PartQuestionEntity partQuestionEntity = this.partQuestionTransform.convertPartQuestionModelToEntity(partQuestionModel);
         partQuestionEntity.setQuestionEntityList(new ArrayList<>());
-         // transform questionDtoToEntity
-        for (QuestionDto questionDto : partQuestionDto.getQuestionDtoList()) {
+        // transform questionModelToEntity
+        for (QuestionModel questionModel : partQuestionModel.getQuestionModelList()) {
 
-            QuestionEntity questionEntity = this.questionTransform.convertQuestionDtoToEntity(questionDto);
+            QuestionEntity questionEntity = this.questionTransform.convertQuestionModelToEntity(questionModel);
             questionEntity.setFileImageEntityList(new ArrayList<>());
             questionEntity.setParagraphEntityList(new ArrayList<>());
             questionEntity.setSubQuestionEntityList(new ArrayList<>());
+
             partQuestionEntity.getQuestionEntityList().add(questionEntity);
             questionEntity.setPartQuestionEntity(partQuestionEntity);
 
-            if (!questionDto.getFileImageDtoList().isEmpty()) {
-                //transform fileImageDtoToEntity
-                for (FileImageDto fileImageDto : questionDto.getFileImageDtoList()) {
-                    FileImageEntity fileImageEntity = fileImageTransform.convertFileImageDtoToEntity(fileImageDto);
+            if (!questionModel.getFileImageModelList().isEmpty()) {
+                //transform fileImageModelToEntity
+                for (FileImageModel fileImageModel : questionModel.getFileImageModelList()) {
+                    FileImageEntity fileImageEntity = fileImageTransform.convertFileImageModelToEntity(fileImageModel);
                     questionEntity.getFileImageEntityList().add(fileImageEntity);
                     fileImageEntity.setQuestionEntity(questionEntity);
                 }
             }
 
-            if (!questionDto.getParagraphDtoList().isEmpty()) {
-                //transform paragrapDtoToEntity
-                for (ParagraphDto paragraphDto : questionDto.getParagraphDtoList()) {
-                    ParagraphEntity paragraphEntity = this.paragraphTransform.convertParagraphDtoToEntity(paragraphDto);
+            if (!questionModel.getParagraphModelList().isEmpty()) {
+                //transform paragrapModelToEntity
+                for (ParagraphModel paragraphModel : questionModel.getParagraphModelList()) {
+                    ParagraphEntity paragraphEntity = this.paragraphTransform.convertParagraphModelToEntity(paragraphModel);
                     questionEntity.getParagraphEntityList().add(paragraphEntity);
                     paragraphEntity.setQuestionEntity(questionEntity);
                 }
             }
-            if (!questionDto.getSubQuestionDtoList().isEmpty()) {
-                //transform subQuestionDtoToEntity
-                for (SubQuestionDto subQuestionDto : questionDto.getSubQuestionDtoList()) {
-                    SubQuestionEntity subQuestionEntity = this.subQuestionTransform.convertSubQuestionDtoToEntity(subQuestionDto);
+            if (!questionModel.getSubQuestionModelList().isEmpty()) {
+                //transform subQuestionModelToEntity
+                for (SubQuestionModel subQuestionModel : questionModel.getSubQuestionModelList()) {
+                    SubQuestionEntity subQuestionEntity = this.subQuestionTransform.convertSubQuestionModelToEntity(subQuestionModel);
                     subQuestionEntity.setSentenceEntityList(new ArrayList<>());
                     questionEntity.getSubQuestionEntityList().add(subQuestionEntity);
-                    if (!subQuestionDto.getSentenceDtoList().isEmpty()) {
-                        //transform sentenceDtoToEntity
-                        for (SentenceDto sentenceDto : subQuestionDto.getSentenceDtoList()) {
-                            SentenceEntity sentenceEntity = this.sentenceTransform.convertSentenceDtoToEntity(sentenceDto);
+                    if (!subQuestionModel.getSentenceAsk().isEmpty()) {
+                        //transform sentenceModelToEntity
+                        for (SentenceModel sentenceModel : subQuestionModel.getSentenceModelList()) {
+                            SentenceEntity sentenceEntity = this.sentenceTransform.convertSentenceModelToEntity(sentenceModel);
                             subQuestionEntity.getSentenceEntityList().add(sentenceEntity);
                             sentenceEntity.setSubQuestionEntity(subQuestionEntity);
                         }
@@ -92,12 +84,8 @@ public class GenericTransformsImpl implements GenericTransform {
                     subQuestionEntity.setQuestionEntity(questionEntity);
                 }
             }
-
         }
-//        logger.info("End transformPartQuestionDtoToEntity with result :"+partQuestionEntity);
-
+        logger.info("End transformPartQuestionModelToEntity with result :" + partQuestionEntity);
         return partQuestionEntity;
-
-
     }
 }

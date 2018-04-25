@@ -35,10 +35,10 @@ public class FactoryVerifyPartQuestionImpl implements FactoryVerifyPartQuestion 
         VerifyPartQuestion verifyPartQuestion = null;
         switch (part) {
             case ONE:
-                verifyPartQuestion = new VerifyQuestionPartOne(10, 1, 1, 4, 1);
+                verifyPartQuestion = new VerifyQuestionPartOne(true, false, 10, 1, 1, 4, 1);
                 break;
             case TWO:
-                verifyPartQuestion = new VerifyQuestionPartTwo(30, 1, 3);
+                verifyPartQuestion = new VerifyQuestionPartTwo(true, true, 30, 1, 3);
                 break;
             case THREE:
                 verifyPartQuestion = new VerifyQuestionPartThree(10, 3, 4);
@@ -47,13 +47,13 @@ public class FactoryVerifyPartQuestionImpl implements FactoryVerifyPartQuestion 
                 verifyPartQuestion = new VerifyQuestionPartFour(10, 3, 4);
                 break;
             case FIVE:
-                verifyPartQuestion = new VerifyQuestionPartFive(40, 1, 4);
+                verifyPartQuestion = new VerifyQuestionPartFive(false, true, 40, 1, 4);
                 break;
             case SIX:
-                verifyPartQuestion = new VerifyForPartSix(4, 3, 4);
+                verifyPartQuestion = new VerifyQuestionPartSix(false, true, 4, 3, 4);
                 break;
             case SEVEN:
-                verifyPartQuestion = new VerifyQuestionPartSeven(14, 5, 2,4,2);
+                verifyPartQuestion = new VerifyQuestionPartSeven(true, false, 14, 5, 2, 4, 2);
                 break;
         }
         return verifyPartQuestion;

@@ -1,22 +1,22 @@
 package rio.it.App.Transform;
 
 import rio.it.App.Entity.SentenceEntity;
-import rio.it.App.Dto.SentenceDto;
+import rio.it.App.Model.SentenceModel;
 
 public interface SentenceTransform {
     /**
-     * convert to SentenceEntity form SentenceDto
+     * convert to SentenceEntity form SentenceModel
      * @author Son Nguyen
-     * @param sentenceDto
+     * @param sentenceModel
      * @return the sentence entity
      */
-    SentenceEntity convertSentenceDtoToEntity(SentenceDto sentenceDto);
+    SentenceEntity convertSentenceModelToEntity(SentenceModel sentenceModel);
 
     /**
-     * convert to SentenceEntity form SentenceDto
+     * convert to SentenceEntity form SentenceModel
      * @author Son Nguyen
      * @param sentenceEntity
-     * @return the sentence dto
+     * @return the sentence model
      */
-    SentenceDto  convertSentenceEntityToDto(SentenceEntity sentenceEntity);
+    SentenceModel convertSentenceEntityToModel(SentenceEntity sentenceEntity);
 }

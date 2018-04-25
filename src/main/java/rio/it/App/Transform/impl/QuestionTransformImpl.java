@@ -3,7 +3,7 @@ package rio.it.App.Transform.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import rio.it.App.Dto.QuestionDto;
+import rio.it.App.Model.QuestionModel;
 import rio.it.App.Entity.QuestionEntity;
 import rio.it.App.Transform.QuestionTransform;
 
@@ -16,30 +16,30 @@ public class QuestionTransformImpl implements QuestionTransform {
     private Logger logger = LoggerFactory.getLogger(QuestionTransformImpl.class);
 
     @Override
-    public QuestionEntity convertQuestionDtoToEntity(QuestionDto questionDto) {
+    public QuestionEntity convertQuestionModelToEntity(QuestionModel questionModel) {
         QuestionEntity questionEntity = null;
-        logger.info("Begin convertQuestionDtoToEntity with type Dto: "+questionDto);
-        if (questionDto != null) {
+        logger.info("Begin convertQuestionModelToEntity with type Model: "+ questionModel);
+        if (questionModel != null) {
             questionEntity = new QuestionEntity();
-            questionEntity.setQuestionEntityId(questionDto.getQuestionEntityId());
-            questionEntity.setTimeEnd(questionDto.getTimeEnd());
-            questionEntity.setTimeStart(questionDto.getTimeStart());
+            questionEntity.setQuestionEntityId(questionModel.getQuestionEntityId());
+            questionEntity.setTimeEnd(questionModel.getTimeEnd());
+            questionEntity.setTimeStart(questionModel.getTimeStart());
         }
-        logger.info("End convertQuestionDtoToEntity result: "+questionEntity);
+        logger.info("End convertQuestionModelToEntity result: "+questionEntity);
         return questionEntity;
     }
 
     @Override
-    public QuestionDto convertQuestionEntityToDto(QuestionEntity questionEntity) {
-        QuestionDto questionDto = null;
-        logger.info("Begin convertQuestionEntityToDto with type Entity: "+questionEntity);
+    public QuestionModel convertQuestionEntityToModel(QuestionEntity questionEntity) {
+        QuestionModel questionModel = null;
+        logger.info("Begin convertQuestionEntityToModel with type Entity: "+questionEntity);
         if (questionEntity != null){
-            questionDto = new QuestionDto();
-            questionDto.setQuestionEntityId(questionEntity.getQuestionEntityId());
-            questionDto.setTimeEnd(questionEntity.getTimeEnd());
-            questionDto.setTimeStart(questionEntity.getTimeStart());
+            questionModel = new QuestionModel();
+            questionModel.setQuestionEntityId(questionEntity.getQuestionEntityId());
+            questionModel.setTimeEnd(questionEntity.getTimeEnd());
+            questionModel.setTimeStart(questionEntity.getTimeStart());
         }
-        logger.info("End convertQuestionEntityToDto with result: "+questionDto);
-        return questionDto;
+        logger.info("End convertQuestionEntityToModel with result: "+questionModel);
+        return questionModel;
     }
 }
