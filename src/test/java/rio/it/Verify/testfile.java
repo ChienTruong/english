@@ -15,8 +15,8 @@ public class testfile {
     String OS = null;
     String osName = System.getProperty("os.name");
     String osNamecath = osName.toLowerCase();
-    String n = "pArtoNe";
-    String partname = n.toLowerCase();
+    String partone = "pArtoNe";
+    String partname = partone.toLowerCase();
     String characterSplit = "";
     BufferedOutputStream bufferedOutputStream = null;
     String english = "english";
@@ -31,7 +31,7 @@ public class testfile {
         MockMultipartFile mockMultipartFile =
                 new MockMultipartFile(
                         "music",
-                        "Image." + "mp3",
+                        "Image." + "png",
                         "application/octet-stream",
                         bytes);
         String[] splitOfname = mockMultipartFile.getOriginalFilename().split("\\.");
@@ -49,7 +49,7 @@ public class testfile {
         if (osNamecath.contains("linux")) {
             OS = System.getProperty("user.home");
             characterSplit = "/";
-            Path path = Paths.get(OS + characterSplit + english + characterSplit + partQuestion);
+            Path path = Paths.get(OS + characterSplit + english + characterSplit + partQuestion+characterSplit+partname);
 
             if (!Files.exists(path)) {
                 Files.createDirectories(path);
