@@ -18,11 +18,13 @@ public class PartBlImpl implements PartBl {
 
     private PartService partService;
     private PartQuestionService partQuestionService;
+    private Random random;
 
     @Autowired
     public PartBlImpl(PartService partService, PartQuestionService partQuestionService) {
         this.partService = partService;
         this.partQuestionService = partQuestionService;
+        this.random = new Random();
     }
 
     @Override
@@ -31,12 +33,15 @@ public class PartBlImpl implements PartBl {
             if (this.partService.checkExist(namePart)) {
                 List<Long> idPartQuestionList = this.partService.getAllIdOfListPartQuestion(namePart);
                 int sizeOfPartQuestionList = idPartQuestionList.size();
-                Random random = new Random();
-                int index = random.nextInt(sizeOfPartQuestionList) + 1;
+                int index = this.makeRandomNumInteger(sizeOfPartQuestionList);
                 Long idOfPartQuestion = idPartQuestionList.get(index);
-                this.partQuestionService.getById(idOfPartQuestion);
+                return this.partQuestionService.getById(idOfPartQuestion);
             }
         }
         return null;
+    }
+
+    private int makeRandomNumInteger(int maxSize) {
+        return this.random.nextInt(maxSize) + 1;
     }
 }

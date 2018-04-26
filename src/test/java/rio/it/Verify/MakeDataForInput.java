@@ -58,7 +58,7 @@ public class MakeDataForInput {
 
     public SubQuestionModel makeSubQuestionModel(boolean nullAsk, boolean nullListSentence) {
         SubQuestionModel subQuestionModel = new SubQuestionModel();
-        subQuestionModel.setAnswer('C');
+        subQuestionModel.setAnswer("C");
         if (!nullAsk) {
             subQuestionModel.setSentenceAsk("Ask Sentence");
         }
