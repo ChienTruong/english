@@ -28,6 +28,13 @@ public class UserDetail implements UserDetailsService {
         this.accountDao = accountDao;
     }
 
+    /**
+     * @ntoe find user for feature login of spring 5.
+     * @param s
+     * @return
+     * @throws UsernameNotFoundException
+     * @version spring 5.
+     */
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         // find account

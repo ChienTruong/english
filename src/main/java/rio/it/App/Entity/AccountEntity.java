@@ -13,6 +13,7 @@ public class AccountEntity {
     @GeneratedValue()
     private Long id;
     private String email;
+    @Column(length = 60)
     private String pwd;
     private Boolean enable = Boolean.FALSE;
     @ManyToMany(fetch = FetchType.EAGER)
@@ -22,4 +23,6 @@ public class AccountEntity {
     private List<RoleEntity> roleEntityList;
     @OneToMany
     private List<PartQuestionEntity> partQuestionEntities;
+    @OneToMany(mappedBy = "pk.accountEntity")
+    private List<HistoryEntity> historyEntityList;
 }

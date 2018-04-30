@@ -1,10 +1,8 @@
 package rio.it.App.HandleMultipartfile.impl;
 
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 import rio.it.App.Entity.FileImageEntity;
 import rio.it.App.Entity.PartQuestionEntity;
-import rio.it.App.Entity.QuestionEntity;
 import rio.it.App.HandleMultipartfile.HandleFile;
 import rio.it.App.Model.FileImageModel;
 import rio.it.App.Model.PartQuestionModel;

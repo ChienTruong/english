@@ -127,7 +127,6 @@ public abstract class VerifyPartQuestionGeneric implements VerifyPartQuestion {
     }
 
     /**
-     *
      * @param questionModel
      * @return
      */

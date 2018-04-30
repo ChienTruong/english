@@ -1,6 +1,7 @@
 package rio.it.App.RestController;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -10,5 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface PartRest {
 
     @GetMapping("/{namePart}")
-    ResponseEntity getPartQuestionRandom(@PathVariable(name = "namePart") String namePart);
+    ResponseEntity getPartQuestionRandom(@PathVariable(name = "namePart") String namePart,
+                                         Authentication authentication);
 }

@@ -1,6 +1,7 @@
 package rio.it.App.Configuration.Security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,6 +20,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    /**
+     * @note load user of database
+     * @param auth
+     * @throws Exception
+     */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
@@ -29,30 +35,48 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetail).passwordEncoder(bCryptPasswordEncoder);
     }
 
+    /**
+     * @note some config of spring security
+     * @param http
+     * @throws Exception
+     * document reference: https://docs.spring.io/spring-security/site/docs/5.0.5.BUILD-SNAPSHOT/reference/htmlsingle/
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
                 .antMatchers("/login", "/h2-console/**")
-                .permitAll()
-                .and()
-                .exceptionHandling()
-                .accessDeniedPage("/403")
-                .and()
+                .permitAll();
+        http
+                .authorizeRequests()
+                .antMatchers("/api/**")
+                .authenticated();
+        http
                 .authorizeRequests()
                 .antMatchers("/admin")
-                .hasRole("ADMIN")
-                .and()
+                .hasRole("ADMIN");
+        http
+                .exceptionHandling()
+                .accessDeniedPage("/403");
+        // part
+        http
+                .authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/part/*")
+                .authenticated();
+        // login
+        http
                 .formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/home", true)
                 .failureUrl("/login?error")
                 .usernameParameter("email")
-                .passwordParameter("pwd")
-                .and()
+                .passwordParameter("pwd");
+        // logout
+        http
                 .logout()
-                .logoutSuccessUrl("/login?logout")
-                .and()
+                .logoutSuccessUrl("/login?logout");
+        // setting for h2 database
+        http
                 .csrf().disable()
                 .headers().disable();
     }
