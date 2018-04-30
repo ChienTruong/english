@@ -7,5 +7,5 @@ import java.util.Map;
  */
 public interface AccountService {
 
-    Map<Long, Integer> getHistoryOfUser(String emailUser);
+    Map<Long, Integer> getHistoryOfUser(String emailUser,String namePart);
 }

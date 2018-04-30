@@ -57,7 +57,7 @@ public class PartBlImpl implements PartBl {
                 // get history of user
                 // key -> long -> part question id
                 // value -> integer -> num of completion of part question
-                Map<Long, Integer> mapCountHistory = this.accountService.getHistoryOfUser(emailUser);
+                Map<Long, Integer> mapCountHistory = this.accountService.getHistoryOfUser(emailUser,namePart);
                 // get size of part question is children of part
                 int sizeOfPartQuestionList = idPartQuestionList.size();
                 // get random index in list

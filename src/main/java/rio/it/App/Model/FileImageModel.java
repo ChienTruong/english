@@ -12,4 +12,5 @@ public class FileImageModel {
     private Long fileImageId;
     private MultipartFile pathFileImage;
     private QuestionModel questionModel;
+
 }
