@@ -3,6 +3,7 @@ package rio.it.App.Util.Impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
+import rio.it.App.Model.QuestionModel;
 import rio.it.App.Model.SentenceModel;
 import rio.it.App.Model.SubQuestionModel;
 import rio.it.App.Util.VerifyPartQuestion;
@@ -40,6 +41,15 @@ public class VerifyQuestionPartFive extends VerifyPartQuestionGeneric implements
             if (this.verifyForSentenceModelList(sentenceModelList)) {
                 return this.filterEachInSentenceModelList(sentenceModelList);
             }
+        }
+        return false;
+    }
+
+    @Override
+    protected boolean verifyTimeOfQuestionModel(QuestionModel questionModel) {
+        if (questionModel.getTimeStart() == null
+                && questionModel.getTimeEnd() == null) {
+            return true;
         }
         return false;
     }

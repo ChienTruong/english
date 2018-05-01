@@ -3,6 +3,7 @@ package rio.it.App.Util.Impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
+import rio.it.App.Model.QuestionModel;
 import rio.it.App.Util.VerifyPartQuestion;
 
 /**
@@ -27,4 +28,12 @@ public class VerifyQuestionPartSeven extends VerifyPartQuestionGeneric implement
         return this.verifyAllowNullFileMp3(multipartFile);
     }
 
+    @Override
+    protected boolean verifyTimeOfQuestionModel(QuestionModel questionModel) {
+        if (questionModel.getTimeStart() == null
+                && questionModel.getTimeEnd() == null) {
+            return true;
+        }
+        return false;
+    }
 }

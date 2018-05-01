@@ -13,10 +13,11 @@ import javax.persistence.TypedQuery;
  */
 @Repository
 public class PartDaoImpl extends GenericDaoImpl<PartEntity, Long> implements PartDao {
+
     private Logger logger = LoggerFactory.getLogger(PartDao.class);
+
     @Override
     public PartEntity findByName(String namePart) {
-        System.out.println("######  "+namePart);
         logger.info("Begin findByName with Prerequisite: "+namePart);
         String selection = "SELECT p FROM " + PartEntity.class.getSimpleName() + " AS p WHERE UPPER(p.partName) LIKE :namePart";
         TypedQuery<PartEntity> query = this.entityManager.createQuery(selection, PartEntity.class);

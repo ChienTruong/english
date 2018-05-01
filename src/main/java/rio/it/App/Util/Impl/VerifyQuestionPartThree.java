@@ -30,17 +30,19 @@ public class VerifyQuestionPartThree extends VerifyPartQuestionGeneric implement
 
     @Override
     protected boolean verifyForQuestionModel(QuestionModel questionModel) {
-        List<ParagraphModel> paragraphModelList = questionModel.getParagraphModelList();
-        List<SubQuestionModel> subQuestionModelList = questionModel.getSubQuestionModelList();
-        if (!this.functionVerify.verifyListNotNullAndNotEmpty(questionModel.getFileImageModelList())
-                && this.functionVerify.verifyListNotNullAndNotEmpty(subQuestionModelList)) {
-            if (this.functionVerify.verifyListNotNullAndNotEmpty(paragraphModelList)) {
-                if (!this.verifyForParagraphModel(paragraphModelList.get(0))) {
-                    return false;
+        if (this.verifyTimeOfQuestionModel(questionModel)) {
+            List<ParagraphModel> paragraphModelList = questionModel.getParagraphModelList();
+            List<SubQuestionModel> subQuestionModelList = questionModel.getSubQuestionModelList();
+            if (!this.functionVerify.verifyListNotNullAndNotEmpty(questionModel.getFileImageModelList())
+                    && this.functionVerify.verifyListNotNullAndNotEmpty(subQuestionModelList)) {
+                if (this.functionVerify.verifyListNotNullAndNotEmpty(paragraphModelList)) {
+                    if (!this.verifyForParagraphModel(paragraphModelList.get(0))) {
+                        return false;
+                    }
                 }
-            }
-            if (this.verifyForSubQuestionModelList(subQuestionModelList)) {
-                return this.filterEachInSubQuestionModelList(subQuestionModelList);
+                if (this.verifyForSubQuestionModelList(subQuestionModelList)) {
+                    return this.filterEachInSubQuestionModelList(subQuestionModelList);
+                }
             }
         }
         return false;

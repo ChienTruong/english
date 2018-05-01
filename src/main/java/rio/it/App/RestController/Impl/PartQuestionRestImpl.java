@@ -2,6 +2,7 @@ package rio.it.App.RestController.Impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,10 +29,16 @@ public class PartQuestionRestImpl implements PartQuestionRest {
         this.partQuestionBl = partQuestionBl;
     }
 
+    /**
+     * @note it will return url of object just have been created, it necessary for direction to new url
+     * show information of object is crated
+     * @param partQuestionModel
+     * @return
+     */
     @Override
-    public ResponseEntity create(PartQuestionModel partQuestionModel) {
-        System.out.println(partQuestionModel.toString());
-        if (this.partQuestionBl.createPartQuestionDto(partQuestionModel)) {
+    public ResponseEntity create(PartQuestionModel partQuestionModel,
+                                 Authentication authentication) {
+        if (this.partQuestionBl.createPartQuestionDto(partQuestionModel, authentication.getName(), authentication.getAuthorities())) {
             URI location = ServletUriComponentsBuilder
                     .fromCurrentRequest().path("/{id}")
                     .buildAndExpand(partQuestionModel.getPartQuestionId()).toUri();
