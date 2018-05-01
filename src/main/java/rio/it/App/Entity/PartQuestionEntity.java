@@ -24,11 +24,12 @@ public class PartQuestionEntity {
     private Boolean status;
     @OneToMany(mappedBy = "partQuestionEntity", cascade = CascadeType.ALL)
     private List<QuestionEntity> questionEntityList;
+    @OneToMany(mappedBy = "pk.partQuestionEntity")
+    private List<HistoryEntity> historyEntityList;
     @ManyToOne
     @JoinColumn(name = "partId")
     private PartEntity partEntity;
     @ManyToOne()
     @JoinColumn(name = "accountID")
     private AccountEntity accountEntity;
-
 }

@@ -11,8 +11,6 @@ import rio.it.App.Model.PartQuestionModel;
 import rio.it.App.Repository.PartQuestionRepository;
 import rio.it.App.Transform.PartQuestionTransform;
 
-import javax.persistence.Access;
-
 /**
  * Created by chien on 23/04/2018.
  */
@@ -34,11 +32,15 @@ public class PartQuestionRepositoryImpl implements PartQuestionRepository {
 
     @Override
     public void save(PartQuestionModel partQuestionModel) {
+        // convert to entity from model
         PartQuestionEntity partQuestionEntity = this.partQuestionTransform.convertPartQuestionModelToEntity(partQuestionModel);
+        // find part entity related with part question entity
         PartEntity partEntity = this.partDao.findByName(partQuestionModel.getNamePart());
         partQuestionEntity.setPartEntity(partEntity);
-        handleFile.dosomething(partQuestionEntity,partQuestionModel);
-        System.out.println("File Mp3   "+partQuestionEntity.getPathFileMp3());
+        // some process with file mp3 and file image
+        handleFile.dosomething(partQuestionEntity, partQuestionModel);
+        System.out.println("File Mp3   " + partQuestionEntity.getPathFileMp3());
+        // do save
         partQuestionDao.save(partQuestionEntity);
     }
 

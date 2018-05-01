@@ -7,5 +7,5 @@ import rio.it.App.Model.PartQuestionModel;
  */
 public interface PartBl {
 
-    PartQuestionModel getPartQuestionRandom(String namePart);
+    PartQuestionModel getPartQuestionRandom(String namePart, String emailUser);
 }

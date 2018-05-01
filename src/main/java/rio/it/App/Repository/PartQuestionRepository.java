@@ -7,6 +7,10 @@ import rio.it.App.Model.PartQuestionModel;
  */
 public interface PartQuestionRepository {
 
+    /**
+     * save object part question model
+     * @param partQuestionModel
+     */
     void save(PartQuestionModel partQuestionModel);
 
     PartQuestionModel findById(Long idOfPartQuestion);

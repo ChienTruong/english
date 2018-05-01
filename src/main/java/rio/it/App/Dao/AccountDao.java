@@ -1,7 +1,12 @@
 package rio.it.App.Dao;
 
 import rio.it.App.Entity.AccountEntity;
+import rio.it.App.Model.SomeObject;
+
+import java.util.Map;
 
 public interface AccountDao extends GenericDao<AccountEntity,Long> {
-    AccountEntity findByName(String email);
+
+    AccountEntity findByEmail(String email);
+
 }
