@@ -13,15 +13,15 @@ import java.util.List;
 @Data
 public class QuestionEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long questionEntityId;
     private Integer timeStart;
     private Integer timeEnd;
-    @OneToMany(mappedBy = "questionEntity")
+    @OneToMany(mappedBy = "questionEntity",cascade = CascadeType.ALL)
     private List<ParagraphEntity> paragraphEntityList;
-    @OneToMany(mappedBy = "questionEntity")
+    @OneToMany(mappedBy = "questionEntity",cascade = CascadeType.ALL)
     private List<FileImageEntity> fileImageEntityList;
-    @OneToMany(mappedBy = "questionEntity")
+    @OneToMany(mappedBy = "questionEntity",cascade = CascadeType.ALL)
     private List<SubQuestionEntity> subQuestionEntityList;
     @ManyToOne
     @JoinColumn(name = "partQuestionId")

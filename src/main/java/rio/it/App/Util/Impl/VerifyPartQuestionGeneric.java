@@ -58,9 +58,12 @@ public abstract class VerifyPartQuestionGeneric implements VerifyPartQuestion {
         this.doLog();
         if (partQuestionModel != null) {
             if (functionVerify.verifyStringNotNullAndNoEmpty(partQuestionModel.getNamePart())) {
+                System.out.println("Verify Name Part");
                 if (this.verifyForFileMp3(partQuestionModel.getPathFileMp3())) {
+                    System.out.println("Verify Mp3 Not Null");
                     List<QuestionModel> questionModelList = partQuestionModel.getQuestionModelList();
                     if (this.verifyForQuestionModelList(questionModelList)) {
+                        System.out.println("Verify Question Model");
                         return filterEachInQuestionModelList(questionModelList);
                     }
                 }
@@ -74,10 +77,13 @@ public abstract class VerifyPartQuestionGeneric implements VerifyPartQuestion {
      * @return
      */
     protected boolean verifyForQuestionModelList(List<QuestionModel> questionModelList) {
+        System.out.println(questionModelList.size());
         if (this.functionVerify.verifyListNotNullAndNotEmpty(questionModelList)
                 && questionModelList.size() <= this.maxSizeOfListQuestionModel) {
+            System.out.println("Verify QuestionList not null & size <= MaxSize");
             return true;
         }
+        System.out.println("Verify Question False");
         return false;
     }
 
@@ -89,6 +95,7 @@ public abstract class VerifyPartQuestionGeneric implements VerifyPartQuestion {
         for (QuestionModel questionModel : questionModelList) {
             if (questionModel == null
                     || !this.verifyForQuestionModel(questionModel)) {
+                System.out.println("Verify Question equal null Or ");
                 return false;
             }
         }
@@ -106,6 +113,7 @@ public abstract class VerifyPartQuestionGeneric implements VerifyPartQuestion {
         if (this.functionVerify.verifyListNotNullAndNotEmpty(paragraphModelList) != this.allowNullListParagraphModel
                 && this.functionVerify.verifyListNotNullAndNotEmpty(fileImageModelList) != this.allowNullListFileImageModel
                 && this.functionVerify.verifyListNotNullAndNotEmpty(subQuestionModelList)) {
+            System.out.println("Verify Paragraph");
             if (!this.allowNullListParagraphModel
                     && !this.verifyForParagraphModelList(paragraphModelList)) {
                 return false;
@@ -186,6 +194,7 @@ public abstract class VerifyPartQuestionGeneric implements VerifyPartQuestion {
     protected boolean verifyForSubQuestionModelList(List<SubQuestionModel> subQuestionModelList) {
         if (subQuestionModelList.size() <= this.maxSizeOfListSubQuestionModel
                 && subQuestionModelList.size() >= this.minSizeOfListSubQuestionModel) {
+            System.out.println("Verify SubQuestion True");
             return true;
         }
         return false;

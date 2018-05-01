@@ -9,6 +9,7 @@ import rio.it.App.Model.*;
 import rio.it.App.Transform.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by chien on 13/04/2018.
@@ -36,56 +37,60 @@ public class GenericTransformsImpl implements GenericTransform {
     }
 
     public PartQuestionEntity transformPartQuestionModelToEntity(PartQuestionModel partQuestionModel) {
-        logger.info("Begin transformPartQuestionModelToEntity with condition :" + partQuestionModel);
+//        logger.info("Begin transformPartQuestionModelToEntity with condition :" + partQuestionModel);
         PartQuestionEntity partQuestionEntity = this.partQuestionTransform.convertPartQuestionModelToEntity(partQuestionModel);
         partQuestionEntity.setQuestionEntityList(new ArrayList<>());
         // transform questionModelToEntity
+        List<QuestionEntity> questionEntities  = new ArrayList<>();
         for (QuestionModel questionModel : partQuestionModel.getQuestionModelList()) {
 
             QuestionEntity questionEntity = this.questionTransform.convertQuestionModelToEntity(questionModel);
-            questionEntity.setFileImageEntityList(new ArrayList<>());
-            questionEntity.setParagraphEntityList(new ArrayList<>());
-            questionEntity.setSubQuestionEntityList(new ArrayList<>());
 
-            partQuestionEntity.getQuestionEntityList().add(questionEntity);
+            questionEntity.setSubQuestionEntityList(new ArrayList<>());
+            questionEntity.setFileImageEntityList(new ArrayList<>());
+
             questionEntity.setPartQuestionEntity(partQuestionEntity);
 
-            if (!questionModel.getFileImageModelList().isEmpty()) {
-                //transform fileImageModelToEntity
-                for (FileImageModel fileImageModel : questionModel.getFileImageModelList()) {
-                    FileImageEntity fileImageEntity = fileImageTransform.convertFileImageModelToEntity(fileImageModel);
-                    questionEntity.getFileImageEntityList().add(fileImageEntity);
-                    fileImageEntity.setQuestionEntity(questionEntity);
-                }
+            for (FileImageModel fileImageModel : questionModel.getFileImageModelList()){
+
+                FileImageEntity fileImageEntity = fileImageTransform.convertFileImageModelToEntity(fileImageModel);
+                fileImageEntity.setQuestionEntity(questionEntity);
+
+                questionEntity.getFileImageEntityList().add(fileImageEntity);
             }
 
-            if (!questionModel.getParagraphModelList().isEmpty()) {
-                //transform paragrapModelToEntity
-                for (ParagraphModel paragraphModel : questionModel.getParagraphModelList()) {
-                    ParagraphEntity paragraphEntity = this.paragraphTransform.convertParagraphModelToEntity(paragraphModel);
-                    questionEntity.getParagraphEntityList().add(paragraphEntity);
-                    paragraphEntity.setQuestionEntity(questionEntity);
-                }
+            for (SubQuestionModel subQuestionModel : questionModel.getSubQuestionModelList()){
+
+                SubQuestionEntity subQuestionEntity = subQuestionTransform.convertSubQuestionModelToEntity(subQuestionModel);
+
+                subQuestionEntity.setQuestionEntity(questionEntity);
+
+                questionEntity.getSubQuestionEntityList().add(subQuestionEntity);
+
             }
-            if (!questionModel.getSubQuestionModelList().isEmpty()) {
-                //transform subQuestionModelToEntity
-                for (SubQuestionModel subQuestionModel : questionModel.getSubQuestionModelList()) {
-                    SubQuestionEntity subQuestionEntity = this.subQuestionTransform.convertSubQuestionModelToEntity(subQuestionModel);
-                    subQuestionEntity.setSentenceEntityList(new ArrayList<>());
-                    questionEntity.getSubQuestionEntityList().add(subQuestionEntity);
-                    if (!subQuestionModel.getSentenceAsk().isEmpty()) {
-                        //transform sentenceModelToEntity
-                        for (SentenceModel sentenceModel : subQuestionModel.getSentenceModelList()) {
-                            SentenceEntity sentenceEntity = this.sentenceTransform.convertSentenceModelToEntity(sentenceModel);
-                            subQuestionEntity.getSentenceEntityList().add(sentenceEntity);
-                            sentenceEntity.setSubQuestionEntity(subQuestionEntity);
-                        }
-                    }
-                    subQuestionEntity.setQuestionEntity(questionEntity);
-                }
-            }
+
+
+            partQuestionEntity.getQuestionEntityList().add(questionEntity);
+//            if (questionModel.getFileImageModelList()!= null && !questionModel.getFileImageModelList().isEmpty()) {
+//                //transform fileImageModelToEntity
+//                for (FileImageModel fileImageModel : questionModel.getFileImageModelList()) {
+//
+//                    FileImageEntity fileImageEntity = fileImageTransform.convertFileImageModelToEntity(fileImageModel);
+//
+//
+////                    fileImageEntities.add(fileImageEntity);
+//                    questionEntity.getFileImageEntityList().add(fileImageEntity);
+//                    fileImageEntity.setQuestionEntity(questionEntity);
+//
+//                }
+////                    questionEntity.setFileImageEntityList(fileImageEntities);
+//
+//            }
+
+
         }
-        logger.info("End transformPartQuestionModelToEntity with result :" + partQuestionEntity);
+//        partQuestionEntity.setQuestionEntityList(questionEntities);
+//        logger.info("End transformPartQuestionModelToEntity with result :" + partQuestionEntity);
         return partQuestionEntity;
     }
 }

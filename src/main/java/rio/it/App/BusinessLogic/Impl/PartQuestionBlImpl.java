@@ -48,6 +48,7 @@ public class PartQuestionBlImpl implements PartQuestionBl {
             PartEnum part = getPartEnum(partQuestionModel.getNamePart());
             this.verifyPartQuestion = this.factoryVerifyPartQuestion.getVerify(part);
             boolean verifyResult = this.verifyPartQuestion.verify(partQuestionModel);
+            System.out.println(verifyResult);
             if (verifyResult) {
                 this.partQuestionService.save(partQuestionModel);
             }
@@ -62,6 +63,7 @@ public class PartQuestionBlImpl implements PartQuestionBl {
      * @return
      */
     private PartEnum getPartEnum(String partName) {
+        System.out.println("^&*&^&*&^");
         return Arrays.stream(PartEnum.values()).filter(part -> part.toString().endsWith(partName)).findFirst().get();
     }
 }

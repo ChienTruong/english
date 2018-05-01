@@ -19,7 +19,7 @@ import java.util.List;
 })
 public class PartEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long partId;
     private String partName;
     @OneToMany(mappedBy = "partEntity")

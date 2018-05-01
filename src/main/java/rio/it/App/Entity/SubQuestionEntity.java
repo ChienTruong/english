@@ -13,12 +13,12 @@ import java.util.List;
 @Data
 public class SubQuestionEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long subQuestionId;
     private String sentenceAsk;
     private String translateAsk;
     private String answer;
-    @OneToMany(mappedBy = "subQuestionEntity")
+    @OneToMany(mappedBy = "subQuestionEntity",cascade = CascadeType.ALL)
     private List<SentenceEntity> sentenceEntityList;
     @ManyToOne()
     @JoinColumn(name = "questionEntityId")

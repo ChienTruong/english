@@ -18,7 +18,7 @@ import java.util.List;
 public class PartQuestionEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long partQuestionId;
     private String pathFileMp3;
     private Boolean status;

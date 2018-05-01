@@ -30,6 +30,7 @@ public class PartQuestionRestImpl implements PartQuestionRest {
 
     @Override
     public ResponseEntity create(PartQuestionModel partQuestionModel) {
+        System.out.println(partQuestionModel.toString());
         if (this.partQuestionBl.createPartQuestionDto(partQuestionModel)) {
             URI location = ServletUriComponentsBuilder
                     .fromCurrentRequest().path("/{id}")

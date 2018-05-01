@@ -10,7 +10,6 @@ import java.util.List;
  * Created by chien on 08/04/2018.
  */
 @Data
-@ToString
 public class PartQuestionModel {
 
     private Long partQuestionId;

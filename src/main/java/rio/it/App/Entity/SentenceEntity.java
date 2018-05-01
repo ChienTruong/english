@@ -12,7 +12,7 @@ import javax.persistence.*;
 public class SentenceEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long sentenceId;
     private String character;
     private String sentenceEn;

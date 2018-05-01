@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Data
 public class FileImageEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long fileImageId;
     private String pathFileImage;
     @ManyToOne()

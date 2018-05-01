@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Data
 public class ParagraphEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long paragraphId;
     private String paragraph;
     @ManyToOne()
