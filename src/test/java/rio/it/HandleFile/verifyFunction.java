@@ -5,6 +5,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockMultipartFile;
+import rio.it.App.BusinessLogic.PartQuestionBl;
 import rio.it.App.Model.FileImageModel;
 import rio.it.App.Model.PartQuestionModel;
 import rio.it.App.Model.QuestionModel;
@@ -20,7 +21,7 @@ import java.util.List;
  */
 public class verifyFunction extends EnglishApplicationTests {
     @Autowired
-    private PartQuestionService partQuestionService;
+    private PartQuestionBl partQuestionBl;
     private PartQuestionModel partQuestionModel;
 
 
@@ -33,18 +34,21 @@ public class verifyFunction extends EnglishApplicationTests {
                         "music." + "mp3",
                         "application/octet-stream",
                         bytes);
-        byte[] bytes1 = new byte[2];
-        MockMultipartFile mockMultipartFile1 =
-                new MockMultipartFile(
-                        "music",
-                        "Image." + "png",
-                        "application/octet-stream",
-                        bytes1);
+
         partQuestionModel = new PartQuestionModel();
-        partQuestionModel.setNamePart("Partone");
+        partQuestionModel.setNamePart("ONE");
         partQuestionModel.setPathFileMp3(mockMultipartFile);
         FileImageModel fileImageModel = new FileImageModel();
-        fileImageModel.setPathFileImage(mockMultipartFile1);
+        for (int i = 0; i < 10; i++) {
+            byte[] bytes1 = new byte[2];
+            MockMultipartFile mockMultipartFile1 =
+                    new MockMultipartFile(
+                            "music",
+                            "Image." + "png",
+                            "application/octet-stream",
+                            bytes1);
+            fileImageModel.setPathFileImage(mockMultipartFile1);
+        }
         List<FileImageModel> fileImageModels = new ArrayList<>();
         fileImageModels.add(fileImageModel);
         QuestionModel questionModel = new QuestionModel();
@@ -56,7 +60,7 @@ public class verifyFunction extends EnglishApplicationTests {
 
     @Test
     public void contextLoads() {
-        partQuestionService.save(partQuestionModel);
+        partQuestionBl.createPartQuestionDto(partQuestionModel);
     }
 
 }

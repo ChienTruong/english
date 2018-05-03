@@ -30,6 +30,7 @@ public class PartRepositoryImpl implements PartRepository {
     @Override
     public PartModel findByName(String name) {
         PartEntity partEntity = partDao.findByName(name);
+        System.out.println("@@@@@@@@@@@@");
         PartModel partModel = partTransform.convertPartEntityToModel(partEntity);
         return partModel;
     }

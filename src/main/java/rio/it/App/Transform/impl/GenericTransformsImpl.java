@@ -9,6 +9,7 @@ import rio.it.App.Model.*;
 import rio.it.App.Transform.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by chien on 13/04/2018.
@@ -36,7 +37,29 @@ public class GenericTransformsImpl implements GenericTransform {
     }
 
     public PartQuestionEntity transformPartQuestionModelToEntity(PartQuestionModel partQuestionModel) {
-        logger.info("Begin transformPartQuestionModelToEntity with condition :" + partQuestionModel);
+
+//            if (questionModel.getFileImageModelList()!= null && !questionModel.getFileImageModelList().isEmpty()) {
+//                //transform fileImageModelToEntity
+//                for (FileImageModel fileImageModel : questionModel.getFileImageModelList()) {
+//
+//                    FileImageEntity fileImageEntity = fileImageTransform.convertFileImageModelToEntity(fileImageModel);
+//
+//
+////                    fileImageEntities.add(fileImageEntity);
+//                    questionEntity.getFileImageEntityList().add(fileImageEntity);
+//                    fileImageEntity.setQuestionEntity(questionEntity);
+//
+//                }
+////                    questionEntity.setFileImageEntityList(fileImageEntities);
+//
+//            }
+
+
+//        }
+//        partQuestionEntity.setQuestionEntityList(questionEntities);
+//        logger.info("End transformPartQuestionModelToEntity with result :" + partQuestionEntity);
+
+
         PartQuestionEntity partQuestionEntity = this.partQuestionTransform.convertPartQuestionModelToEntity(partQuestionModel);
         partQuestionEntity.setQuestionEntityList(new ArrayList<>());
         // transform questionModelToEntity
@@ -50,7 +73,7 @@ public class GenericTransformsImpl implements GenericTransform {
             partQuestionEntity.getQuestionEntityList().add(questionEntity);
             questionEntity.setPartQuestionEntity(partQuestionEntity);
 
-            if (!questionModel.getFileImageModelList().isEmpty()) {
+            if (questionModel.getFileImageModelList() != null && !questionModel.getFileImageModelList().isEmpty()) {
                 //transform fileImageModelToEntity
                 for (FileImageModel fileImageModel : questionModel.getFileImageModelList()) {
                     FileImageEntity fileImageEntity = fileImageTransform.convertFileImageModelToEntity(fileImageModel);
@@ -59,7 +82,7 @@ public class GenericTransformsImpl implements GenericTransform {
                 }
             }
 
-            if (!questionModel.getParagraphModelList().isEmpty()) {
+            if (questionModel.getParagraphModelList() != null && !questionModel.getParagraphModelList().isEmpty()) {
                 //transform paragrapModelToEntity
                 for (ParagraphModel paragraphModel : questionModel.getParagraphModelList()) {
                     ParagraphEntity paragraphEntity = this.paragraphTransform.convertParagraphModelToEntity(paragraphModel);
@@ -67,13 +90,13 @@ public class GenericTransformsImpl implements GenericTransform {
                     paragraphEntity.setQuestionEntity(questionEntity);
                 }
             }
-            if (!questionModel.getSubQuestionModelList().isEmpty()) {
+            if (questionModel.getSubQuestionModelList() != null && !questionModel.getSubQuestionModelList().isEmpty()) {
                 //transform subQuestionModelToEntity
                 for (SubQuestionModel subQuestionModel : questionModel.getSubQuestionModelList()) {
                     SubQuestionEntity subQuestionEntity = this.subQuestionTransform.convertSubQuestionModelToEntity(subQuestionModel);
                     subQuestionEntity.setSentenceEntityList(new ArrayList<>());
                     questionEntity.getSubQuestionEntityList().add(subQuestionEntity);
-                    if (!subQuestionModel.getSentenceAsk().isEmpty()) {
+                    if (subQuestionModel.getSentenceAsk() != null && !subQuestionModel.getSentenceAsk().isEmpty()) {
                         //transform sentenceModelToEntity
                         for (SentenceModel sentenceModel : subQuestionModel.getSentenceModelList()) {
                             SentenceEntity sentenceEntity = this.sentenceTransform.convertSentenceModelToEntity(sentenceModel);
@@ -85,7 +108,8 @@ public class GenericTransformsImpl implements GenericTransform {
                 }
             }
         }
-        logger.info("End transformPartQuestionModelToEntity with result :" + partQuestionEntity);
+
+
         return partQuestionEntity;
     }
 }

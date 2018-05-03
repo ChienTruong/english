@@ -40,20 +40,21 @@ public class PartQuestionBlImpl implements PartQuestionBl {
      * Create new part question entity
      *
      * @param partQuestionModel
-     * @param name
-     * @param authorities       @return Step 1: get class verify match with partQuestion
+//     * @param name
+//     * @param authorities       @return Step 1: get class verify match with partQuestion
      * @Note_11/04/18_Chien: view class factoryVerifyPartQuestion to know information of this class
      * Step 2: it will be verified by class verifyPartQuestion
      * Step 3: save this object
      */
     @Override
-    public boolean createPartQuestionDto(PartQuestionModel partQuestionModel, String name, Collection<? extends GrantedAuthority> authorities) {
+    public boolean createPartQuestionDto(PartQuestionModel partQuestionModel/*, String name, Collection<? extends GrantedAuthority> authorities*/) {
         // find part is here
         if (!partQuestionModel.getNamePart().isEmpty()
                 && partService.checkExist(partQuestionModel.getNamePart())) {
             PartEnum part = getPartEnum(partQuestionModel.getNamePart());
             this.verifyPartQuestion = this.factoryVerifyPartQuestion.getVerify(part);
             boolean verifyResult = this.verifyPartQuestion.verify(partQuestionModel);
+            System.out.println(verifyResult);
             if (verifyResult) {
                 this.partQuestionService.save(partQuestionModel);
             }
@@ -68,6 +69,7 @@ public class PartQuestionBlImpl implements PartQuestionBl {
      * @return
      */
     private PartEnum getPartEnum(String partName) {
+        System.out.println("^&*&^&*&^");
         return Arrays.stream(PartEnum.values()).filter(part -> part.toString().endsWith(partName)).findFirst().get();
     }
 }

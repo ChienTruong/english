@@ -3,6 +3,7 @@ package rio.it.App.HandleMultipartfile.impl;
 import org.springframework.stereotype.Component;
 import rio.it.App.Entity.FileImageEntity;
 import rio.it.App.Entity.PartQuestionEntity;
+import rio.it.App.Entity.QuestionEntity;
 import rio.it.App.HandleMultipartfile.HandleFile;
 import rio.it.App.Model.FileImageModel;
 import rio.it.App.Model.PartQuestionModel;
@@ -12,6 +13,8 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ngocson on 23/04/2018.
@@ -76,45 +79,31 @@ public class HandleFileImpl implements HandleFile {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        FileImageEntity fileImageEntity = new FileImageEntity();
-        fileImageEntity.setPathFileImage(fileImageModel.getPathFileImage().getOriginalFilename());
-
-
     }
 
     @Override
-    public void dosomething(PartQuestionEntity partQuestionEntity, PartQuestionModel partQuestionModel) {
+    public void HandleFile(PartQuestionEntity partQuestionEntity, PartQuestionModel partQuestionModel) {
 
-        if (OsName.contains("linux")) {
-
-            if (partQuestionModel.getPathFileMp3() != null && partQuestionModel.getPathFileMp3().getSize() > 1) {
-                createPathMp3(partQuestionModel);
-                partQuestionEntity.setPathFileMp3(partQuestionModel.getPathFileMp3().getOriginalFilename());
-            }
-
-            for (QuestionModel questionModel : partQuestionModel.getQuestionModelList()) {
-                for (FileImageModel fileImageModel : questionModel.getFileImageModelList()) {
-                    if (fileImageModel.getPathFileImage() != null && fileImageModel.getPathFileImage().getSize() > 1) {
-                        createImage(fileImageModel, partQuestionModel.getNamePart());
-                    }
-                }
-            }
-
-        } else if (OsName.contains("windows")) {
-            if (partQuestionModel.getPathFileMp3() != null && partQuestionModel.getPathFileMp3().getSize() > 1) {
-                createPathMp3(partQuestionModel);
-                partQuestionEntity.setPathFileMp3(partQuestionModel.getPathFileMp3().getOriginalFilename());
-            }
-            for (QuestionModel questionModel : partQuestionModel.getQuestionModelList()) {
-                for (FileImageModel fileImageModel : questionModel.getFileImageModelList()) {
-                    if (fileImageModel.getPathFileImage() != null && fileImageModel.getPathFileImage().getSize() > 1) {
-                        createImage(fileImageModel, partQuestionModel.getNamePart());
-                    }
-                }
-            }
-        } else {
-
+        if (partQuestionModel.getPathFileMp3() != null && partQuestionModel.getPathFileMp3().getSize() > 1) {
+            createPathMp3(partQuestionModel);
+            partQuestionEntity.setPathFileMp3(partQuestionModel.getPathFileMp3().getOriginalFilename());
         }
+
+        for (int i = 0; i < partQuestionModel.getQuestionModelList().size();i++) {
+            QuestionModel questionModel = partQuestionModel.getQuestionModelList().get(i);
+            QuestionEntity questionEntity = partQuestionEntity.getQuestionEntityList().get(i);
+            for (int j = 0; j < questionModel.getFileImageModelList().size(); j++) {
+
+                questionEntity.getFileImageEntityList().get(j).setPathFileImage(questionModel.getFileImageModelList().get(j).getPathFileImage().getOriginalFilename());
+            }
+        }
+
+        for (QuestionModel questionModel : partQuestionModel.getQuestionModelList()){
+            for (FileImageModel fileImageModel : questionModel.getFileImageModelList()){
+                createImage(fileImageModel,partQuestionModel.getNamePart());
+            }
+        }
+
     }
 }
 

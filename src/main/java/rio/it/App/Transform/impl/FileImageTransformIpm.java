@@ -18,6 +18,7 @@ public class FileImageTransformIpm implements FileImageTransform {
         logger.info("Begin convertFileImageModelToEntity with Model:"+ fileImageModel);
         if (fileImageModel != null){
             fileImageEntity =new FileImageEntity();
+            fileImageEntity.setFileImageId(fileImageModel.getFileImageId());
         }
         logger.info("End convertFileImageModelToEntity with result:"+fileImageEntity);
         return fileImageEntity;

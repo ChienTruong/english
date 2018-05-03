@@ -28,12 +28,12 @@ public class VerifyQuestionPartSeven extends VerifyPartQuestionGeneric implement
         return this.verifyAllowNullFileMp3(multipartFile);
     }
 
-    @Override
-    protected boolean verifyTimeOfQuestionModel(QuestionModel questionModel) {
-        if (questionModel.getTimeStart() == null
-                && questionModel.getTimeEnd() == null) {
-            return true;
-        }
-        return false;
-    }
+//    @Override
+//    protected boolean verifyTimeOfQuestionModel(QuestionModel questionModel) {
+//        if (questionModel.getTimeStart() == null
+//                && questionModel.getTimeEnd() == null) {
+//            return true;
+//        }
+//        return false;
+//    }
 }

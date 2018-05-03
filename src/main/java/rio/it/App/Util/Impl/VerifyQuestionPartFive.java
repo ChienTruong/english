@@ -45,12 +45,12 @@ public class VerifyQuestionPartFive extends VerifyPartQuestionGeneric implements
         return false;
     }
 
-    @Override
-    protected boolean verifyTimeOfQuestionModel(QuestionModel questionModel) {
-        if (questionModel.getTimeStart() == null
-                && questionModel.getTimeEnd() == null) {
-            return true;
-        }
-        return false;
-    }
+//    @Override
+//    protected boolean verifyTimeOfQuestionModel(QuestionModel questionModel) {
+//        if (questionModel.getTimeStart() == null
+//                && questionModel.getTimeEnd() == null) {
+//            return true;
+//        }
+//        return false;
+//    }
 }
