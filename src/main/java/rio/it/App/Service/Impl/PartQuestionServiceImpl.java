@@ -32,4 +32,17 @@ public class PartQuestionServiceImpl implements PartQuestionService {
         this.partQuestionRepository.findById(idOfPartQuestion);
         return null;
     }
+
+    @Override
+    public boolean checkExist(Long partQuestionId) {
+        if (this.partQuestionRepository.findById(partQuestionId) != null) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void update(Long partQuestionId, PartQuestionModel partQuestionModel) {
+        this.partQuestionRepository.update(partQuestionId, partQuestionModel);
+    }
 }

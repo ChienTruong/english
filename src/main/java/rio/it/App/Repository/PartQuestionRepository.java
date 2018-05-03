@@ -14,4 +14,6 @@ public interface PartQuestionRepository {
     void save(PartQuestionModel partQuestionModel);
 
     PartQuestionModel findById(Long idOfPartQuestion);
+
+    void update(Long partQuestionId, PartQuestionModel partQuestionModel);
 }

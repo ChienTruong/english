@@ -10,4 +10,8 @@ public interface PartQuestionService {
     void save(PartQuestionModel partQuestionModel);
 
     PartQuestionModel getById(Long idOfPartQuestion);
+
+    boolean checkExist(Long partQuestionId);
+
+    void update(Long partQuestionId, PartQuestionModel partQuestionModel);
 }

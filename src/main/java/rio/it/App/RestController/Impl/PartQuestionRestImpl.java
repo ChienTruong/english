@@ -1,6 +1,7 @@
 package rio.it.App.RestController.Impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import rio.it.App.BusinessLogic.Impl.PartQuestionBlImpl;
 import rio.it.App.Model.PartQuestionModel;
+import rio.it.App.RestController.GenericRest;
 import rio.it.App.RestController.PartQuestionRest;
 
 import java.net.URI;
@@ -23,6 +25,7 @@ import java.util.List;
 public class PartQuestionRestImpl implements PartQuestionRest {
 
     private PartQuestionBlImpl partQuestionBl;
+    private GenericRest genericRest;
 
     @Autowired
     public PartQuestionRestImpl(PartQuestionBlImpl partQuestionBl) {
@@ -44,6 +47,7 @@ public class PartQuestionRestImpl implements PartQuestionRest {
 //                    .buildAndExpand(partQuestionModel.getPartQuestionId()).toUri();
 //            return ResponseEntity.created(location).build();
 //        }
+        System.out.println(partQuestionModel);
         partQuestionBl.createPartQuestionDto(partQuestionModel);
         return ResponseEntity.badRequest().build();
     }
@@ -60,7 +64,8 @@ public class PartQuestionRestImpl implements PartQuestionRest {
 
     @Override
     public ResponseEntity update(@PathVariable(name = "id") Long partQuestionId, @RequestBody() PartQuestionModel partQuestionModel) {
-        return null;
+        this.partQuestionBl.update(partQuestionId, partQuestionModel);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @Override

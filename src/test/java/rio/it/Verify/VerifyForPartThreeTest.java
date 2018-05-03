@@ -3,11 +3,12 @@ package rio.it.Verify;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import rio.it.App.Dto.ParagraphDto;
-import rio.it.App.Dto.QuestionDto;
-import rio.it.App.Dto.SentenceDto;
-import rio.it.App.Dto.SubQuestionDto;
+import rio.it.App.Model.ParagraphModel;
+import rio.it.App.Model.QuestionModel;
+import rio.it.App.Model.SentenceModel;
+import rio.it.App.Model.SubQuestionModel;
 import rio.it.App.Util.Impl.VerifyQuestionPartThree;
+import rio.it.App.Util.VerifyPartQuestion;
 
 import java.io.IOException;
 
@@ -17,52 +18,56 @@ import java.io.IOException;
 
 public class VerifyForPartThreeTest extends VerifyForListeningTest {
 
-    private int maxSizeOfListQuestionDto = 10;
-    private int maxSizeOfListSubQuestionDto = 3;
+    private int maxSizeOfListQuestionModel = 10;
+    private int maxSizeOfListSubQuestionModel = 3;
     private int sizeOfListSentence = 4;
 
     @Before
     protected void init() throws IOException {
         super.init();
-        this.verifyPartQuestion = new VerifyQuestionPartThree(this.maxSizeOfListQuestionDto, this.maxSizeOfListSubQuestionDto, this.sizeOfListSentence);
+    }
+
+    @Override
+    protected VerifyPartQuestion makeVerification() {
+        return new VerifyQuestionPartThree(this.maxSizeOfListQuestionModel, this.maxSizeOfListSubQuestionModel, this.sizeOfListSentence);
     }
 
 
     @Test
     public void testPartThreeWithDataNotFull_Success(){
-        for(int i = 0; i < this.maxSizeOfListQuestionDto; i++){
-            QuestionDto questionDto = this.makeDataForInput.makeQuestionDto(true, true);
-            for (int j= 0; j < this.maxSizeOfListSubQuestionDto; j++){
-                SubQuestionDto subQuestionDto = this.makeDataForInput.makeSubQuestionDto(false,false);
+        for(int i = 0; i < this.maxSizeOfListQuestionModel; i++){
+            QuestionModel questionModel = this.makeDataForInput.makeQuestionModel(true, true);
+            for (int j = 0; j < this.maxSizeOfListSubQuestionModel; j++){
+                SubQuestionModel subQuestionModel = this.makeDataForInput.makeSubQuestionModel(false,false);
                 for (int z= 0 ; z < this.sizeOfListSentence ; z++){
-                    SentenceDto sentenceDto = this.makeDataForInput.makeSentenceDto(false);
-                    subQuestionDto.getSentenceDtoList().add(sentenceDto);
+                    SentenceModel sentenceModel = this.makeDataForInput.makeSentenceModel(false);
+                    subQuestionModel.getSentenceModelList().add(sentenceModel);
                 }
-                questionDto.getSubQuestionDtoList().add(subQuestionDto);
+                questionModel.getSubQuestionModelList().add(subQuestionModel);
             }
-            this.partQuestionDto.getQuestionDtoList().add(questionDto);
+            this.partQuestionModel.getQuestionModelList().add(questionModel);
         }
-        Assert.assertTrue(this.verifyPartQuestion.verify(this.partQuestionDto));
+        Assert.assertTrue(this.verifyPartQuestion.verify(this.partQuestionModel));
     }
 
 
     @Test
     public  void testPartThreeWithDataFull_Success(){
-        for(int i=0; i<this.maxSizeOfListQuestionDto; i++){
-            QuestionDto questionDto = this.makeDataForInput.makeQuestionDto(false,true);
-            ParagraphDto paragraphDto = this.makeDataForInput.makeParagraphDto(false);
-            questionDto.getParagraphDtoList().add(paragraphDto);
-            for(int j=0; j<this.maxSizeOfListSubQuestionDto; j++){
-                SubQuestionDto subQuestionDto = this.makeDataForInput.makeSubQuestionDto(false,false);
+        for(int i = 0; i<this.maxSizeOfListQuestionModel; i++){
+            QuestionModel questionModel = this.makeDataForInput.makeQuestionModel(false,true);
+            ParagraphModel paragraphModel = this.makeDataForInput.makeParagraphModel(false);
+            questionModel.getParagraphModelList().add(paragraphModel);
+            for(int j = 0; j<this.maxSizeOfListSubQuestionModel; j++){
+                SubQuestionModel subQuestionModel = this.makeDataForInput.makeSubQuestionModel(false,false);
                 for (int z = 0; z < this.sizeOfListSentence ; z++){
-                    SentenceDto sentenceDto = this.makeDataForInput.makeSentenceDto(false);
-                    subQuestionDto.getSentenceDtoList().add(sentenceDto);
+                    SentenceModel sentenceModel = this.makeDataForInput.makeSentenceModel(false);
+                    subQuestionModel.getSentenceModelList().add(sentenceModel);
                 }
-                questionDto.getSubQuestionDtoList().add(subQuestionDto);
+                questionModel.getSubQuestionModelList().add(subQuestionModel);
             }
-            this.partQuestionDto.getQuestionDtoList().add(questionDto);
+            this.partQuestionModel.getQuestionModelList().add(questionModel);
         }
-        Assert.assertTrue(this.verifyPartQuestion.verify(this.partQuestionDto));
+        Assert.assertTrue(this.verifyPartQuestion.verify(this.partQuestionModel));
     }
 
 }

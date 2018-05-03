@@ -48,16 +48,28 @@ public class PartQuestionBlImpl implements PartQuestionBl {
      */
     @Override
     public boolean createPartQuestionDto(PartQuestionModel partQuestionModel/*, String name, Collection<? extends GrantedAuthority> authorities*/) {
-        // find part is here
+        if (this.preVerify(partQuestionModel)) {
+            this.partQuestionService.save(partQuestionModel);
+        }
+        return false;
+    }
+
+    @Override
+    public void update(Long partQuestionId, PartQuestionModel partQuestionModel) {
+        if (this.preVerify(partQuestionModel)) {
+            if (this.partQuestionService.checkExist(partQuestionId)) {
+                this.partQuestionService.update(partQuestionId, partQuestionModel);
+            }
+        }
+    }
+
+    private boolean preVerify(PartQuestionModel partQuestionModel){
         if (!partQuestionModel.getNamePart().isEmpty()
                 && partService.checkExist(partQuestionModel.getNamePart())) {
             PartEnum part = getPartEnum(partQuestionModel.getNamePart());
             this.verifyPartQuestion = this.factoryVerifyPartQuestion.getVerify(part);
             boolean verifyResult = this.verifyPartQuestion.verify(partQuestionModel);
-            System.out.println(verifyResult);
-            if (verifyResult) {
-                this.partQuestionService.save(partQuestionModel);
-            }
+            return verifyResult;
         }
         return false;
     }
@@ -69,7 +81,7 @@ public class PartQuestionBlImpl implements PartQuestionBl {
      * @return
      */
     private PartEnum getPartEnum(String partName) {
-        System.out.println("^&*&^&*&^");
-        return Arrays.stream(PartEnum.values()).filter(part -> part.toString().endsWith(partName)).findFirst().get();
+        String upperPartName = partName.toUpperCase();
+        return Arrays.stream(PartEnum.values()).filter(part -> upperPartName.contains(part.name().toUpperCase())).findFirst().get();
     }
 }

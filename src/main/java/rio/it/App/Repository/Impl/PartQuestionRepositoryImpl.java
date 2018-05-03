@@ -52,4 +52,12 @@ public class PartQuestionRepositoryImpl implements PartQuestionRepository {
         PartQuestionModel partQuestionModel = this.partQuestionTransform.convertPartQuestionEntityToModel(partQuestionEntity);
         return partQuestionModel;
     }
+
+    @Override
+    public void update(Long partQuestionId, PartQuestionModel partQuestionModel) {
+        PartQuestionEntity partQuestionEntity = this.genericTransform.transformPartQuestionModelToEntity(partQuestionModel);
+        partQuestionEntity.setPartQuestionId(partQuestionId);
+        this.handleFile.HandleFile(partQuestionEntity, partQuestionModel);
+        partQuestionDao.update(partQuestionEntity);
+    }
 }
