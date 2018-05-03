@@ -8,9 +8,8 @@ import java.util.List;
  * Created by ngocson on 10/04/2018.
  */
 @Data
-public class SubQuestionModel {
+public class SubQuestionModel extends IdModel{
 
-    private Long subQuestionId;
     private String sentenceAsk;
     private String translateAsk;
     private String answer;

@@ -15,11 +15,9 @@ import java.util.List;
         "partEntity",
         "accountEntity"
 })
-public class PartQuestionEntity {
+public class PartQuestionEntity  extends IdEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long partQuestionId;
+
     private String pathFileMp3;
     private Boolean status;
     @OneToMany(mappedBy = "partQuestionEntity", cascade = CascadeType.ALL)
@@ -32,4 +30,6 @@ public class PartQuestionEntity {
     @ManyToOne()
     @JoinColumn(name = "accountID")
     private AccountEntity accountEntity;
+
+
 }

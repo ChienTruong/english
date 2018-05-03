@@ -9,10 +9,8 @@ import javax.persistence.*;
  */
 @Entity
 @Data
-public class ParagraphEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long paragraphId;
+public class ParagraphEntity  extends IdEntity{
+
     private String paragraph;
     @ManyToOne()
     @JoinColumn(name = "questionEntityId")

@@ -9,11 +9,9 @@ import javax.persistence.*;
  */
 @Entity
 @Data
-public class SentenceEntity {
+public class SentenceEntity  extends IdEntity{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long sentenceId;
+
     private String character;
     private String sentenceEn;
     private String sentenceVn;

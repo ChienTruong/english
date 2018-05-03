@@ -7,6 +7,8 @@ import rio.it.App.Model.PartQuestionModel;
 import rio.it.App.Entity.PartQuestionEntity;
 import rio.it.App.Transform.PartQuestionTransform;
 
+import java.util.UUID;
+
 /**
  * Created by ngocson on 12/04/2018.
  */
@@ -33,6 +35,7 @@ public class PartQuestionTransformImpl implements PartQuestionTransform {
         logger.info("Begin convertPartQuestionModelTo Model with Entity: "+partQuestionEntity);
         if (partQuestionEntity != null){
             partQuestionModel = new PartQuestionModel();
+            partQuestionModel.setId(partQuestionEntity.getUuid().toString());
         }
         logger.info("End convertPartQuestionModelTo Model with result: "+partQuestionModel);
         return partQuestionModel;

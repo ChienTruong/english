@@ -7,6 +7,8 @@ import rio.it.App.Entity.SubQuestionEntity;
 import rio.it.App.Model.SubQuestionModel;
 import rio.it.App.Transform.SubQuestionTransform;
 
+import java.util.UUID;
+
 /**
  * Created by chien on 13/04/2018.
  */
@@ -21,7 +23,6 @@ public class SubQuestionTransformImpl implements SubQuestionTransform {
         logger.info("Begin convertSubQuestionModelToEntity with type Model: " + subQuestionModel);
         if (subQuestionModel != null) {
             subQuestionEntity = new SubQuestionEntity();
-            subQuestionEntity.setSubQuestionId(subQuestionModel.getSubQuestionId());
             subQuestionEntity.setAnswer(subQuestionModel.getAnswer());
             subQuestionEntity.setSentenceAsk(subQuestionModel.getSentenceAsk());
             subQuestionEntity.setTranslateAsk(subQuestionModel.getTranslateAsk());
@@ -36,7 +37,7 @@ public class SubQuestionTransformImpl implements SubQuestionTransform {
         logger.info("Begin convertSubQuestionEntityToModel with type Entity: " + subQuestionEntity);
         if (subQuestionEntity != null) {
             subQuestionModel = new SubQuestionModel();
-            subQuestionModel.setSubQuestionId(subQuestionEntity.getSubQuestionId());
+            subQuestionModel.setId(subQuestionEntity.getUuid().toString());
             subQuestionModel.setAnswer(subQuestionEntity.getAnswer());
             subQuestionModel.setSentenceAsk(subQuestionEntity.getSentenceAsk());
             subQuestionModel.setTranslateAsk(subQuestionEntity.getTranslateAsk());

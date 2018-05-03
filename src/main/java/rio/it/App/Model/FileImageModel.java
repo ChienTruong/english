@@ -7,9 +7,8 @@ import org.springframework.web.multipart.MultipartFile;
  * Created by ngocson on 10/04/2018.
  */
 @Data
-public class FileImageModel {
+public class FileImageModel extends IdModel{
 
-    private Long fileImageId;
     private MultipartFile pathFileImage;
     private QuestionModel questionModel;
 

@@ -13,11 +13,9 @@ import java.util.List;
 @ToString(exclude = {
         "accountEntityList"
 })
-public class RoleEntity {
+public class RoleEntity  extends IdEntity{
 
-    @Id
-    @GeneratedValue()
-    private Long id;
+
     private String role;
     @ManyToMany
     private List<AccountEntity> accountEntityList;

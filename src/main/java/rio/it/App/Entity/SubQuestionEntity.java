@@ -11,10 +11,8 @@ import java.util.List;
  */
 @Entity
 @Data
-public class SubQuestionEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long subQuestionId;
+public class SubQuestionEntity  extends IdEntity {
+
     private String sentenceAsk;
     private String translateAsk;
     private String answer;

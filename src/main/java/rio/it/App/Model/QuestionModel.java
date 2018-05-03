@@ -8,9 +8,8 @@ import java.util.List;
  * Created by ngocson on 10/04/2018.
  */
 @Data
-public class QuestionModel {
+public class QuestionModel extends IdModel {
 
-    private Long questionEntityId;
     private Integer timeStart;
     private Integer timeEnd;
     private List<ParagraphModel> paragraphModelList;

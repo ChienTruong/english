@@ -10,9 +10,8 @@ import java.util.List;
  * Created by chien on 08/04/2018.
  */
 @Data
-public class PartQuestionModel {
+public class PartQuestionModel  extends IdModel{
 
-    private Long partQuestionId;
     private MultipartFile pathFileMp3;
     private List<QuestionModel> questionModelList;
     private String namePart;
