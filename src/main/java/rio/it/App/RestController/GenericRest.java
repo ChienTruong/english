@@ -12,7 +12,7 @@ import java.util.List;
 public interface GenericRest<D, ID> {
 
     @PostMapping("")
-    ResponseEntity create(@RequestBody() D d, Authentication authentication);
+    ResponseEntity create(@RequestBody() D d/*, Authentication authentication*/);
 
     @GetMapping()
     ResponseEntity<List<D>> findAll();

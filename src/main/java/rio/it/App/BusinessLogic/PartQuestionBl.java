@@ -10,5 +10,5 @@ import java.util.Collection;
  */
 public interface PartQuestionBl {
 
-    boolean createPartQuestionDto(PartQuestionModel partQuestionModel, String name, Collection<? extends GrantedAuthority> authorities);
+    boolean createPartQuestionDto(PartQuestionModel partQuestionModel/*, String name, Collection<? extends GrantedAuthority> authorities*/);
 }

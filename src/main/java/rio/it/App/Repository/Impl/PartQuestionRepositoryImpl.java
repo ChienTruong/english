@@ -9,6 +9,7 @@ import rio.it.App.Entity.PartQuestionEntity;
 import rio.it.App.HandleMultipartfile.HandleFile;
 import rio.it.App.Model.PartQuestionModel;
 import rio.it.App.Repository.PartQuestionRepository;
+import rio.it.App.Transform.GenericTransform;
 import rio.it.App.Transform.PartQuestionTransform;
 
 /**
@@ -21,24 +22,25 @@ public class PartQuestionRepositoryImpl implements PartQuestionRepository {
     private PartQuestionDao partQuestionDao;
     private PartDao partDao;
     private HandleFile handleFile;
-
+    private GenericTransform genericTransform;
     @Autowired
-    public PartQuestionRepositoryImpl(PartQuestionTransform partQuestionTransform, PartQuestionDao partQuestionDao, PartDao partDao, HandleFile handleFile) {
+    public PartQuestionRepositoryImpl(PartQuestionTransform partQuestionTransform, PartQuestionDao partQuestionDao, PartDao partDao, HandleFile handleFile,GenericTransform genericTransform) {
         this.partQuestionTransform = partQuestionTransform;
         this.partQuestionDao = partQuestionDao;
         this.partDao = partDao;
         this.handleFile = handleFile;
+        this.genericTransform = genericTransform;
     }
 
     @Override
     public void save(PartQuestionModel partQuestionModel) {
         // convert to entity from model
-        PartQuestionEntity partQuestionEntity = this.partQuestionTransform.convertPartQuestionModelToEntity(partQuestionModel);
+        PartQuestionEntity partQuestionEntity = this.genericTransform.transformPartQuestionModelToEntity(partQuestionModel);
         // find part entity related with part question entity
         PartEntity partEntity = this.partDao.findByName(partQuestionModel.getNamePart());
         partQuestionEntity.setPartEntity(partEntity);
         // some process with file mp3 and file image
-        handleFile.dosomething(partQuestionEntity, partQuestionModel);
+        handleFile.HandleFile(partQuestionEntity, partQuestionModel);
         System.out.println("File Mp3   " + partQuestionEntity.getPathFileMp3());
         // do save
         partQuestionDao.save(partQuestionEntity);

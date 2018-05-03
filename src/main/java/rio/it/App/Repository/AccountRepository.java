@@ -6,7 +6,7 @@ import rio.it.App.Model.SomeObject;
 
 import java.util.Map;
 
-@Component
+//@Component
 public interface AccountRepository {
 
     AccountModel findOne(Long idAccount);

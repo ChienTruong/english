@@ -62,6 +62,7 @@ public abstract class VerifyPartQuestionGeneric implements VerifyPartQuestion {
         if (partQuestionModel != null) {
             if (functionVerify.verifyStringNotNullAndNoEmpty(partQuestionModel.getNamePart())) {
                 if (this.verifyForFileMp3(partQuestionModel.getPathFileMp3())) {
+                    System.out.println("Verify Mp3");
                     List<QuestionModel> questionModelList = partQuestionModel.getQuestionModelList();
                     if (this.verifyForQuestionModelList(questionModelList)) {
                         return filterEachInQuestionModelList(questionModelList);
@@ -80,7 +81,9 @@ public abstract class VerifyPartQuestionGeneric implements VerifyPartQuestion {
         if (this.functionVerify.verifyListNotNullAndNotEmpty(questionModelList)
                 && questionModelList.size() <= this.maxSizeOfListQuestionModel) {
             return true;
+
         }
+        System.out.println("Verify Question False");
         return false;
     }
 
@@ -92,6 +95,7 @@ public abstract class VerifyPartQuestionGeneric implements VerifyPartQuestion {
         for (QuestionModel questionModel : questionModelList) {
             if (questionModel == null
                     || !this.verifyForQuestionModel(questionModel)) {
+                System.out.println("Verify List<QuestionModel> False");
                 return false;
             }
         }
@@ -103,26 +107,31 @@ public abstract class VerifyPartQuestionGeneric implements VerifyPartQuestion {
      * @return
      */
     protected boolean verifyForQuestionModel(QuestionModel questionModel) {
-        if (this.verifyTimeOfQuestionModel(questionModel)) {
+//        if (this.verifyTimeOfQuestionModel(questionModel)) {
             List<ParagraphModel> paragraphModelList = questionModel.getParagraphModelList();
             List<FileImageModel> fileImageModelList = questionModel.getFileImageModelList();
             List<SubQuestionModel> subQuestionModelList = questionModel.getSubQuestionModelList();
             if (this.functionVerify.verifyListNotNullAndNotEmpty(paragraphModelList) != this.allowNullListParagraphModel
                     && this.functionVerify.verifyListNotNullAndNotEmpty(fileImageModelList) != this.allowNullListFileImageModel
                     && this.functionVerify.verifyListNotNullAndNotEmpty(subQuestionModelList)) {
+                System.out.println("Verify 3 cai");
                 if (!this.allowNullListParagraphModel
                         && !this.verifyForParagraphModelList(paragraphModelList)) {
+                    System.out.println("Verify Paragraph False");
                     return false;
                 }
                 if (!this.allowNullListFileImageModel
                         && !this.verifyForFileImageModelList(fileImageModelList)) {
+                    System.out.println("Verify FileImage False");
                     return false;
                 }
                 if (this.verifyForSubQuestionModelList(subQuestionModelList)) {
+                    System.out.println("Verify SubQuestion False");
                     return filterEachInSubQuestionModelList(subQuestionModelList);
                 }
             }
-        }
+//        }
+        System.out.println("Verify QuestionModel False");
         return false;
     }
 
@@ -130,20 +139,21 @@ public abstract class VerifyPartQuestionGeneric implements VerifyPartQuestion {
      * @param questionModel
      * @return
      */
-    protected boolean verifyTimeOfQuestionModel(QuestionModel questionModel) {
-        if (questionModel.getTimeStart() != null
-                && questionModel.getTimeEnd() != null) {
-            int timeStart = questionModel.getTimeStart();
-            int timeEnd = questionModel.getTimeEnd();
-            if (timeEnd > 0
-                    && timeStart > 0
-                    && timeEnd - timeStart >= this.minTime
-                    && timeEnd - timeEnd <= this.maxTime) {
-                return true;
-            }
-        }
-        return false;
-    }
+//    protected boolean verifyTimeOfQuestionModel(QuestionModel questionModel) {
+//        if (questionModel.getTimeStart() != null
+//                && questionModel.getTimeEnd() != null) {
+//            int timeStart = questionModel.getTimeStart();
+//            int timeEnd = questionModel.getTimeEnd();
+//            if (timeEnd > 0
+//                    && timeStart > 0
+//                    && timeEnd - timeStart >= this.minTime
+//                    && timeEnd - timeEnd <= this.maxTime) {
+//                return true;
+//            }
+//        }
+//        System.out.println("Verify TimeStart And TimeEnd");
+//        return false;
+//    }
 
     /**
      * @param paragraphModelList
@@ -181,6 +191,7 @@ public abstract class VerifyPartQuestionGeneric implements VerifyPartQuestion {
         if (fileImageModelList.size() <= sizeOfListFileImageModel) {
             for (FileImageModel fileImageModel : fileImageModelList) {
                 if (!this.verifyForFileImageModel(fileImageModel)) {
+                    System.out.println("Verify List<FileImage> False");
                     return false;
                 }
             }
@@ -212,6 +223,7 @@ public abstract class VerifyPartQuestionGeneric implements VerifyPartQuestion {
                 && subQuestionModelList.size() >= this.minSizeOfListSubQuestionModel) {
             return true;
         }
+        System.out.println("Verify List<SubQuestion> False");
         return false;
     }
 

@@ -36,14 +36,15 @@ public class PartQuestionRestImpl implements PartQuestionRest {
      * @return
      */
     @Override
-    public ResponseEntity create(PartQuestionModel partQuestionModel,
-                                 Authentication authentication) {
-        if (this.partQuestionBl.createPartQuestionDto(partQuestionModel, authentication.getName(), authentication.getAuthorities())) {
-            URI location = ServletUriComponentsBuilder
-                    .fromCurrentRequest().path("/{id}")
-                    .buildAndExpand(partQuestionModel.getPartQuestionId()).toUri();
-            return ResponseEntity.created(location).build();
-        }
+    public ResponseEntity create(PartQuestionModel partQuestionModel
+                                 /*Authentication authentication*/) {
+//        if (this.partQuestionBl.createPartQuestionDto(partQuestionModel, authentication.getName(), authentication.getAuthorities())) {
+//            URI location = ServletUriComponentsBuilder
+//                    .fromCurrentRequest().path("/{id}")
+//                    .buildAndExpand(partQuestionModel.getPartQuestionId()).toUri();
+//            return ResponseEntity.created(location).build();
+//        }
+        partQuestionBl.createPartQuestionDto(partQuestionModel);
         return ResponseEntity.badRequest().build();
     }
 

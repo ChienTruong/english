@@ -3,6 +3,7 @@ package rio.it.App.HandleMultipartfile.impl;
 import org.springframework.stereotype.Component;
 import rio.it.App.Entity.FileImageEntity;
 import rio.it.App.Entity.PartQuestionEntity;
+import rio.it.App.Entity.QuestionEntity;
 import rio.it.App.HandleMultipartfile.HandleFile;
 import rio.it.App.Model.FileImageModel;
 import rio.it.App.Model.PartQuestionModel;
@@ -81,9 +82,7 @@ public class HandleFileImpl implements HandleFile {
     }
 
     @Override
-    public void dosomething(PartQuestionEntity partQuestionEntity, PartQuestionModel partQuestionModel) {
-
-//        if (OsName.contains("linux")) {
+    public void HandleFile(PartQuestionEntity partQuestionEntity, PartQuestionModel partQuestionModel) {
 
         if (partQuestionModel.getPathFileMp3() != null && partQuestionModel.getPathFileMp3().getSize() > 1) {
             createPathMp3(partQuestionModel);
@@ -105,32 +104,6 @@ public class HandleFileImpl implements HandleFile {
             }
         }
 
-
-//        for (QuestionEntity questionEntity : partQuestionEntity.getQuestionEntityList()) {
-//            questionEntity.setFileImageEntityList(fileImageEntities);
-//        }
-
-
-//        if (fileImageModel.getPathFileImage() != null && fileImageModel.getPathFileImage().getSize() > 1) {
-//            createImage(fileImageModel, partQuestionModel.getNamePart(), partQuestionEntity);
-//        }
-
-//
-//        } else if (OsName.contains("windows")) {
-//            if (partQuestionModel.getPathFileMp3() != null && partQuestionModel.getPathFileMp3().getSize() > 1) {
-//                createPathMp3(partQuestionModel);
-//                partQuestionEntity.setPathFileMp3(partQuestionModel.getPathFileMp3().getOriginalFilename());
-//            }
-//            for (QuestionModel questionModel : partQuestionModel.getQuestionModelList()) {
-//                for (FileImageModel fileImageModel : questionModel.getFileImageModelList()) {
-//                    if (fileImageModel.getPathFileImage() != null && fileImageModel.getPathFileImage().getSize() > 1) {
-//                        createImage(fileImageModel, partQuestionModel.getNamePart());
-//                    }
-//                }
-//            }
-//        } else {
-//
-//        }
     }
 }
 

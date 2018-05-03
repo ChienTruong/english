@@ -30,7 +30,7 @@ public class VerifyQuestionPartThree extends VerifyPartQuestionGeneric implement
 
     @Override
     protected boolean verifyForQuestionModel(QuestionModel questionModel) {
-        if (this.verifyTimeOfQuestionModel(questionModel)) {
+//        if (this.verifyTimeOfQuestionModel(questionModel)) {
             List<ParagraphModel> paragraphModelList = questionModel.getParagraphModelList();
             List<SubQuestionModel> subQuestionModelList = questionModel.getSubQuestionModelList();
             if (!this.functionVerify.verifyListNotNullAndNotEmpty(questionModel.getFileImageModelList())
@@ -44,7 +44,7 @@ public class VerifyQuestionPartThree extends VerifyPartQuestionGeneric implement
                     return this.filterEachInSubQuestionModelList(subQuestionModelList);
                 }
             }
-        }
+//        }
         return false;
     }
 }

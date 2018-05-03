@@ -49,7 +49,7 @@ public class PartBlImplTest {
         // mock
         Mockito.when(this.partService.checkExist(namePart)).thenReturn(true);
         Mockito.when(this.partService.getAllIdOfListPartQuestion(namePart)).thenReturn(idList);
-        Mockito.when(this.accountService.getHistoryOfUser(nameUser)).thenReturn(mapCount);
+//        Mockito.when(this.accountService.getHistoryOfUser(nameUser)).thenReturn(mapCount);
         ArgumentCaptor<Integer> integerArgumentCaptor = ArgumentCaptor.forClass(Integer.class);
         Mockito.when(idList.get(integerArgumentCaptor.capture())).thenReturn(id);
         Mockito.when(this.partQuestionService.getById(id)).thenReturn(partQuestionModel);
