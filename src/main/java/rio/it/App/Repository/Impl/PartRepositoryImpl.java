@@ -39,7 +39,7 @@ public class PartRepositoryImpl implements PartRepository {
     public List<Long> getListIdOfPartQuestionByNamePart(String namePart) {
         PartEntity partEntity = partDao.findByName(namePart);
         return partEntity.getPartQuestionEntityList()
-                .stream().map(PartQuestionEntity::getPartQuestionId)
+                .stream().map(PartQuestionEntity::getId)
                 .collect(Collectors.toList());
     }
 }

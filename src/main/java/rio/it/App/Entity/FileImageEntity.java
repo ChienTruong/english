@@ -9,10 +9,8 @@ import javax.persistence.*;
  */
 @Entity
 @Data
-public class FileImageEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long fileImageId;
+public class FileImageEntity extends IdEntity {
+
     private String pathFileImage;
     @ManyToOne()
     @JoinColumn(name = "questionEntityId")

@@ -7,6 +7,8 @@ import rio.it.App.Model.SentenceModel;
 import rio.it.App.Entity.SentenceEntity;
 import rio.it.App.Transform.SentenceTransform;
 
+import java.util.UUID;
+
 /**
  * Created by chien on 13/04/2018.
  */
@@ -20,7 +22,6 @@ public class SentenceTransformImpl implements SentenceTransform {
         logger.info("Begin convertSentenceModelToEntity with type Model: "+ sentenceModel);
         if (sentenceModel != null){
             sentenceEntity = new SentenceEntity();
-            sentenceEntity.setSentenceId(sentenceModel.getSentenceId());
             sentenceEntity.setCharacter(sentenceModel.getCharacter());
             sentenceEntity.setSentenceEn(sentenceModel.getSentenceEn());
             sentenceEntity.setSentenceVn(sentenceModel.getSentenceVn());
@@ -35,7 +36,7 @@ public class SentenceTransformImpl implements SentenceTransform {
         logger.info("Begin convertSentenceEntityToModel with type Entity: "+sentenceEntity);
         if (sentenceEntity != null){
             sentenceModel = new SentenceModel();
-            sentenceModel.setSentenceId(sentenceEntity.getSentenceId());
+            sentenceModel.setId(sentenceEntity.getUuid().toString());
             sentenceModel.setCharacter(sentenceEntity.getCharacter());
             sentenceModel.setSentenceEn(sentenceEntity.getSentenceEn());
             sentenceModel.setSentenceVn(sentenceEntity.getSentenceVn());

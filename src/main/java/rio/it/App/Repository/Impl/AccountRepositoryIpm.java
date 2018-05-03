@@ -42,7 +42,7 @@ public class AccountREpositoryIpm implements AccountRepository {
 
             PartQuestionEntity partQuestionEntity = historyEntity.getPk().getPartQuestionEntity();
 
-            Long idPartQuestion = partQuestionEntity.getPartQuestionId();
+            Long idPartQuestion = partQuestionEntity.getId();
 
             if (!map.containsKey(idPartQuestion)) {
                 SomeObject someObject = new SomeObject();

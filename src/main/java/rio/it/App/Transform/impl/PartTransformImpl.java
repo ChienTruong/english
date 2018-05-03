@@ -12,6 +12,7 @@ import rio.it.App.Transform.PartTransform;
  */
 @Component
 public class PartTransformImpl implements PartTransform {
+
     private Logger logger = LoggerFactory.getLogger(PartTransformImpl.class);
     @Override
     public PartModel convertPartEntityToModel(PartEntity partEntity) {
@@ -19,7 +20,7 @@ public class PartTransformImpl implements PartTransform {
         logger.info("Begin convertPartEntityToModel with type Entity: "+partEntity);
         if (partEntity != null){
             partModel = new PartModel();
-            partModel.setPartId(partEntity.getPartId());
+            partModel.setId(partEntity.getUuid().toString());
             partModel.setPartName(partEntity.getPartName());
         }
         logger.info("End convertPartEntityToModel with result: "+partModel);

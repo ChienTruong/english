@@ -7,11 +7,8 @@ import java.util.List;
 
 @Entity
 @Data
-public class AccountEntity {
+public class AccountEntity extends IdEntity {
 
-    @Id
-    @GeneratedValue()
-    private Long id;
     private String email;
     @Column(length = 60)
     private String pwd;
@@ -25,4 +22,5 @@ public class AccountEntity {
     private List<PartQuestionEntity> partQuestionEntities;
     @OneToMany(mappedBy = "pk.accountEntity")
     private List<HistoryEntity> historyEntityList;
+
 }

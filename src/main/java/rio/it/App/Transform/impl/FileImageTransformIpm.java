@@ -6,6 +6,8 @@ import rio.it.App.Model.FileImageModel;
 import rio.it.App.Entity.FileImageEntity;
 import rio.it.App.Transform.FileImageTransform;
 
+import java.util.UUID;
+
 
 @Service
 public class FileImageTransformIpm implements FileImageTransform {
@@ -18,7 +20,7 @@ public class FileImageTransformIpm implements FileImageTransform {
         logger.info("Begin convertFileImageModelToEntity with Model:"+ fileImageModel);
         if (fileImageModel != null){
             fileImageEntity =new FileImageEntity();
-            fileImageEntity.setFileImageId(fileImageModel.getFileImageId());
+
         }
         logger.info("End convertFileImageModelToEntity with result:"+fileImageEntity);
         return fileImageEntity;
@@ -30,6 +32,7 @@ public class FileImageTransformIpm implements FileImageTransform {
         logger.info("Begin convertFileImageEntityToModel with Entity:"+fileImageEntity);
         if (fileImageEntity != null){
             fileImageModel = new FileImageModel();
+            fileImageModel.setId(fileImageEntity.getUuid().toString());
         }
         logger.info("End convertFileImageEntityToModel with result :"+fileImageModel);
         return fileImageModel;

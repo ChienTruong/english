@@ -7,6 +7,8 @@ import rio.it.App.Entity.ParagraphEntity;
 import rio.it.App.Transform.ParagraphTransform;
 import org.slf4j.Logger;
 
+import java.util.UUID;
+
 /**
  * Created by chien on 13/04/2018.
  */
@@ -32,7 +34,9 @@ public class ParagraphTransformImpl implements ParagraphTransform {
         ParagraphModel paragraphModel = null;
         logger.info("Begin convertParagraphEntityToModel with Entity:"+paragraphEntity);
         if(paragraphEntity != null){
-            paragraphEntity.setParagraph(paragraphModel.getParagraph());
+            paragraphModel = new ParagraphModel();
+            paragraphModel.setParagraph(paragraphEntity.getParagraph());
+            paragraphModel.setId(paragraphEntity.getUuid().toString());
         }
         logger.info("End convertParagraphEntityToModel with result:"+paragraphModel);
         return paragraphModel;

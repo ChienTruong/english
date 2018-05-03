@@ -17,10 +17,8 @@ import java.util.List;
 @ToString(exclude = {
         "partQuestionEntityList"
 })
-public class PartEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long partId;
+public class PartEntity  extends IdEntity{
+
     private String partName;
     @OneToMany(mappedBy = "partEntity")
     private List<PartQuestionEntity> partQuestionEntityList;

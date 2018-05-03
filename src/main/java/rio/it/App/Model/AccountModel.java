@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class AccountModel {
+public class AccountModel extends IdModel{
 
     private String email;
     private String pwd;

@@ -11,10 +11,8 @@ import java.util.List;
  */
 @Entity
 @Data
-public class QuestionEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long questionEntityId;
+public class QuestionEntity  extends IdEntity{
+
     private Integer timeStart;
     private Integer timeEnd;
     @OneToMany(mappedBy = "questionEntity",cascade = CascadeType.ALL)

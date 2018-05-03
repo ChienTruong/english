@@ -15,7 +15,7 @@ import javax.persistence.*;
 )
 @Entity
 @Data
-public class HistoryEntity {
+public class HistoryEntity  {
 
     @EmbeddedId
     private HistoryId pk;

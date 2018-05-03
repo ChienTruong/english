@@ -7,6 +7,8 @@ import rio.it.App.Model.QuestionModel;
 import rio.it.App.Entity.QuestionEntity;
 import rio.it.App.Transform.QuestionTransform;
 
+import java.util.UUID;
+
 /**
  * Created by ngocson on 12/04/2018.
  */
@@ -21,7 +23,6 @@ public class QuestionTransformImpl implements QuestionTransform {
         logger.info("Begin convertQuestionModelToEntity with type Model: "+ questionModel);
         if (questionModel != null) {
             questionEntity = new QuestionEntity();
-            questionEntity.setQuestionEntityId(questionModel.getQuestionEntityId());
             questionEntity.setTimeEnd(questionModel.getTimeEnd());
             questionEntity.setTimeStart(questionModel.getTimeStart());
         }
@@ -35,7 +36,7 @@ public class QuestionTransformImpl implements QuestionTransform {
         logger.info("Begin convertQuestionEntityToModel with type Entity: "+questionEntity);
         if (questionEntity != null){
             questionModel = new QuestionModel();
-            questionModel.setQuestionEntityId(questionEntity.getQuestionEntityId());
+            questionModel.setId(questionEntity.getUuid().toString());
             questionModel.setTimeEnd(questionEntity.getTimeEnd());
             questionModel.setTimeStart(questionEntity.getTimeStart());
         }
