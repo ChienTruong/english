@@ -36,7 +36,7 @@ public class SentenceTransformImpl implements SentenceTransform {
         logger.info("Begin convertSentenceEntityToModel with type Entity: "+sentenceEntity);
         if (sentenceEntity != null){
             sentenceModel = new SentenceModel();
-            sentenceModel.setId(sentenceEntity.getUuid().toString());
+            sentenceModel.setId(sentenceEntity.getUuid());
             sentenceModel.setCharacter(sentenceEntity.getCharacter());
             sentenceModel.setSentenceEn(sentenceEntity.getSentenceEn());
             sentenceModel.setSentenceVn(sentenceEntity.getSentenceVn());

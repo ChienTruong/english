@@ -35,7 +35,7 @@ public class PartQuestionTransformImpl implements PartQuestionTransform {
         logger.info("Begin convertPartQuestionModelTo Model with Entity: "+partQuestionEntity);
         if (partQuestionEntity != null){
             partQuestionModel = new PartQuestionModel();
-            partQuestionModel.setId(partQuestionEntity.getUuid().toString());
+            partQuestionModel.setId(partQuestionEntity.getUuid());
         }
         logger.info("End convertPartQuestionModelTo Model with result: "+partQuestionModel);
         return partQuestionModel;

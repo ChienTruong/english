@@ -29,8 +29,8 @@ public class PartQuestionServiceImpl implements PartQuestionService {
 
     @Override
     public PartQuestionModel getById(Long idOfPartQuestion) {
-        this.partQuestionRepository.findById(idOfPartQuestion);
-        return null;
+
+        return this.partQuestionRepository.findById(idOfPartQuestion);
     }
 
     @Override

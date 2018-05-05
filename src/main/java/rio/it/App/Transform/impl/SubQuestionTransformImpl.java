@@ -37,7 +37,7 @@ public class SubQuestionTransformImpl implements SubQuestionTransform {
         logger.info("Begin convertSubQuestionEntityToModel with type Entity: " + subQuestionEntity);
         if (subQuestionEntity != null) {
             subQuestionModel = new SubQuestionModel();
-            subQuestionModel.setId(subQuestionEntity.getUuid().toString());
+            subQuestionModel.setId(subQuestionEntity.getUuid());
             subQuestionModel.setAnswer(subQuestionEntity.getAnswer());
             subQuestionModel.setSentenceAsk(subQuestionEntity.getSentenceAsk());
             subQuestionModel.setTranslateAsk(subQuestionEntity.getTranslateAsk());

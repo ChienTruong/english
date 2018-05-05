@@ -9,13 +9,12 @@ import rio.it.App.Model.*;
 import rio.it.App.Transform.*;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by chien on 13/04/2018.
  */
 @Service
-public class GenericTransformsImpl implements GenericTransform {
+public class ModelTransformsEntityIpm implements ModelTransformEntity {
 
     private PartQuestionTransform partQuestionTransform;
     private QuestionTransform questionTransform;
@@ -24,10 +23,10 @@ public class GenericTransformsImpl implements GenericTransform {
     private SentenceTransform sentenceTransform;
     private FileImageTransform fileImageTransform;
 
-    private Logger logger = LoggerFactory.getLogger(GenericTransformsImpl.class);
+    private Logger logger = LoggerFactory.getLogger(ModelTransformsEntityIpm.class);
 
     @Autowired
-    public GenericTransformsImpl(PartQuestionTransform partQuestionTransform, QuestionTransform questionTransform, SubQuestionTransform subQuestionTransform, ParagraphTransform paragraphTransform, SentenceTransform sentenceTransform, FileImageTransform fileImageTransform) {
+    public ModelTransformsEntityIpm(PartQuestionTransform partQuestionTransform, QuestionTransform questionTransform, SubQuestionTransform subQuestionTransform, ParagraphTransform paragraphTransform, SentenceTransform sentenceTransform, FileImageTransform fileImageTransform) {
         this.partQuestionTransform = partQuestionTransform;
         this.questionTransform = questionTransform;
         this.subQuestionTransform = subQuestionTransform;

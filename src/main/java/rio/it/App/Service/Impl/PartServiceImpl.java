@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rio.it.App.Model.PartModel;
+import rio.it.App.Model.PartQuestionModel;
 import rio.it.App.Repository.PartRepository;
 import rio.it.App.Service.PartService;
 
@@ -46,5 +47,11 @@ public class PartServiceImpl implements PartService {
     @Override
     public List<Long> getAllIdOfListPartQuestion(String namePart) {
         return this.partRepository.getListIdOfPartQuestionByNamePart(namePart);
+    }
+
+    @Override
+    public List<PartQuestionModel> getAllPartQuestionModelThisAccount(String namePart,String email) {
+
+        return this.partRepository.getAllPartQuestionModelThisAccount(namePart, email);
     }
 }

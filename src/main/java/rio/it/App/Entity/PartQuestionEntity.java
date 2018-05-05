@@ -17,7 +17,6 @@ import java.util.List;
 })
 public class PartQuestionEntity  extends IdEntity {
 
-
     private String pathFileMp3;
     private Boolean status;
     @OneToMany(mappedBy = "partQuestionEntity", cascade = CascadeType.ALL)

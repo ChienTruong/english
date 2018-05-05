@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.Embeddable;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
@@ -14,10 +15,11 @@ import java.io.Serializable;
 @Data
 public class HistoryId implements Serializable {
 
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idAddition;
     @ManyToOne
     private AccountEntity accountEntity;
     @ManyToOne
     private PartQuestionEntity partQuestionEntity;
+
 }

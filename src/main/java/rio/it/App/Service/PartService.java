@@ -1,6 +1,7 @@
 package rio.it.App.Service;
 
 import rio.it.App.Model.PartModel;
+import rio.it.App.Model.PartQuestionModel;
 
 import java.util.List;
 
@@ -16,4 +17,7 @@ public interface PartService {
     PartModel findById(Long idPartQuestion);
 
     List<Long> getAllIdOfListPartQuestion(String namePart);
+
+    List<PartQuestionModel> getAllPartQuestionModelThisAccount(String namePart,String email);
+
 }

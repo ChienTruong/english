@@ -6,10 +6,10 @@ import rio.it.App.Dao.PartDao;
 import rio.it.App.Dao.PartQuestionDao;
 import rio.it.App.Entity.PartEntity;
 import rio.it.App.Entity.PartQuestionEntity;
-import rio.it.App.HandleMultipartfile.HandleFile;
+import rio.it.App.HandleMultipartfile.HandleFileModelToEntity;
 import rio.it.App.Model.PartQuestionModel;
 import rio.it.App.Repository.PartQuestionRepository;
-import rio.it.App.Transform.GenericTransform;
+import rio.it.App.Transform.ModelTransformEntity;
 import rio.it.App.Transform.PartQuestionTransform;
 
 /**
@@ -21,10 +21,10 @@ public class PartQuestionRepositoryImpl implements PartQuestionRepository {
     private PartQuestionTransform partQuestionTransform;
     private PartQuestionDao partQuestionDao;
     private PartDao partDao;
-    private HandleFile handleFile;
-    private GenericTransform genericTransform;
+    private HandleFileModelToEntity handleFile;
+    private ModelTransformEntity genericTransform;
     @Autowired
-    public PartQuestionRepositoryImpl(PartQuestionTransform partQuestionTransform, PartQuestionDao partQuestionDao, PartDao partDao, HandleFile handleFile,GenericTransform genericTransform) {
+    public PartQuestionRepositoryImpl(PartQuestionTransform partQuestionTransform, PartQuestionDao partQuestionDao, PartDao partDao, HandleFileModelToEntity handleFile, ModelTransformEntity genericTransform) {
         this.partQuestionTransform = partQuestionTransform;
         this.partQuestionDao = partQuestionDao;
         this.partDao = partDao;
@@ -40,7 +40,7 @@ public class PartQuestionRepositoryImpl implements PartQuestionRepository {
         PartEntity partEntity = this.partDao.findByName(partQuestionModel.getNamePart());
         partQuestionEntity.setPartEntity(partEntity);
         // some process with file mp3 and file image
-        handleFile.HandleFile(partQuestionEntity, partQuestionModel);
+        handleFile.HandleFileModelToEntity(partQuestionEntity, partQuestionModel);
         System.out.println("File Mp3   " + partQuestionEntity.getPathFileMp3());
         // do save
         partQuestionDao.save(partQuestionEntity);
@@ -56,8 +56,8 @@ public class PartQuestionRepositoryImpl implements PartQuestionRepository {
     @Override
     public void update(Long partQuestionId, PartQuestionModel partQuestionModel) {
         PartQuestionEntity partQuestionEntity = this.genericTransform.transformPartQuestionModelToEntity(partQuestionModel);
-        partQuestionEntity.setPartQuestionId(partQuestionId);
-        this.handleFile.HandleFile(partQuestionEntity, partQuestionModel);
+      //partQuestionEntity.setPartQuestionId(partQuestionId);
+        this.handleFile.HandleFileModelToEntity(partQuestionEntity, partQuestionModel);
         partQuestionDao.update(partQuestionEntity);
     }
 }

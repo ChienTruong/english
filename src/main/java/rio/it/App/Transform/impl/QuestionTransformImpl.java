@@ -36,7 +36,7 @@ public class QuestionTransformImpl implements QuestionTransform {
         logger.info("Begin convertQuestionEntityToModel with type Entity: "+questionEntity);
         if (questionEntity != null){
             questionModel = new QuestionModel();
-            questionModel.setId(questionEntity.getUuid().toString());
+            questionModel.setId(questionEntity.getUuid());
             questionModel.setTimeEnd(questionEntity.getTimeEnd());
             questionModel.setTimeStart(questionEntity.getTimeStart());
         }

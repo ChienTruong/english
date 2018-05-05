@@ -16,4 +16,6 @@ public class PartQuestionModel  extends IdModel{
     private List<QuestionModel> questionModelList;
     private String namePart;
     private AccountModel accountModel;
+    private byte[] mp3;
+
 }

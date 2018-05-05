@@ -21,4 +21,6 @@ public class HistoryEntity  {
     private HistoryId pk;
     private Integer numOfCorrectAnswer;
     private Integer numOfAllQuestion;
+
+
 }

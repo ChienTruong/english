@@ -6,7 +6,7 @@ import rio.it.App.Model.PartQuestionModel;
 /**
  * Created by ngocson on 23/04/2018.
  */
-public interface HandleFile {
+public interface HandleFileModelToEntity {
     /**
      * create folder Mp3 and Image
      *
@@ -17,5 +17,7 @@ public interface HandleFile {
      * @param partQuestionModel
      * @Author Son Nguyen
      */
-    void HandleFile(PartQuestionEntity partQuestionEntity, PartQuestionModel partQuestionModel);
+    void HandleFileModelToEntity(PartQuestionEntity partQuestionEntity, PartQuestionModel partQuestionModel);
+    void HandleFileEntityToModel(PartQuestionEntity partQuestionEntity, PartQuestionModel partQuestionModel);
+
 }

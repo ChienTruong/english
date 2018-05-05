@@ -1,6 +1,7 @@
 package rio.it.App.Repository;
 
 import rio.it.App.Model.PartModel;
+import rio.it.App.Model.PartQuestionModel;
 
 import java.util.List;
 
@@ -11,4 +12,5 @@ public interface PartRepository {
 
     PartModel findByName(String name);
     List<Long> getListIdOfPartQuestionByNamePart(String namePart);
+    List<PartQuestionModel> getAllPartQuestionModelThisAccount(String namePart,String email);
 }

@@ -20,7 +20,7 @@ public class PartTransformImpl implements PartTransform {
         logger.info("Begin convertPartEntityToModel with type Entity: "+partEntity);
         if (partEntity != null){
             partModel = new PartModel();
-            partModel.setId(partEntity.getUuid().toString());
+            partModel.setId(partEntity.getUuid());
             partModel.setPartName(partEntity.getPartName());
         }
         logger.info("End convertPartEntityToModel with result: "+partModel);

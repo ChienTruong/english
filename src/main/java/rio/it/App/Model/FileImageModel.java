@@ -11,5 +11,5 @@ public class FileImageModel extends IdModel{
 
     private MultipartFile pathFileImage;
     private QuestionModel questionModel;
-
+    private byte[] image;
 }

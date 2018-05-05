@@ -1,10 +1,9 @@
 package rio.it.App.HandleMultipartfile.impl;
 
 import org.springframework.stereotype.Component;
-import rio.it.App.Entity.FileImageEntity;
 import rio.it.App.Entity.PartQuestionEntity;
 import rio.it.App.Entity.QuestionEntity;
-import rio.it.App.HandleMultipartfile.HandleFile;
+import rio.it.App.HandleMultipartfile.HandleFileModelToEntity;
 import rio.it.App.Model.FileImageModel;
 import rio.it.App.Model.PartQuestionModel;
 import rio.it.App.Model.QuestionModel;
@@ -13,16 +12,13 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by ngocson on 23/04/2018.
  */
 @Component
-public class HandleFileImpl implements HandleFile {
+public class HandleFileModelToEntityImpl implements HandleFileModelToEntity {
 
-    private final static String OsName = System.getProperty("os.name").toLowerCase();
     private final String characterSplit = "/";
     private final String english = "English";
     private final String partQuestion = "partQuestion";
@@ -82,14 +78,14 @@ public class HandleFileImpl implements HandleFile {
     }
 
     @Override
-    public void HandleFile(PartQuestionEntity partQuestionEntity, PartQuestionModel partQuestionModel) {
+    public void HandleFileModelToEntity(PartQuestionEntity partQuestionEntity, PartQuestionModel partQuestionModel) {
 
         if (partQuestionModel.getPathFileMp3() != null && partQuestionModel.getPathFileMp3().getSize() > 1) {
             createPathMp3(partQuestionModel);
             partQuestionEntity.setPathFileMp3(partQuestionModel.getPathFileMp3().getOriginalFilename());
         }
 
-        for (int i = 0; i < partQuestionModel.getQuestionModelList().size();i++) {
+        for (int i = 0; i < partQuestionModel.getQuestionModelList().size(); i++) {
             QuestionModel questionModel = partQuestionModel.getQuestionModelList().get(i);
             QuestionEntity questionEntity = partQuestionEntity.getQuestionEntityList().get(i);
             for (int j = 0; j < questionModel.getFileImageModelList().size(); j++) {
@@ -98,10 +94,35 @@ public class HandleFileImpl implements HandleFile {
             }
         }
 
-        for (QuestionModel questionModel : partQuestionModel.getQuestionModelList()){
-            for (FileImageModel fileImageModel : questionModel.getFileImageModelList()){
-                createImage(fileImageModel,partQuestionModel.getNamePart());
+        for (QuestionModel questionModel : partQuestionModel.getQuestionModelList()) {
+            for (FileImageModel fileImageModel : questionModel.getFileImageModelList()) {
+                createImage(fileImageModel, partQuestionModel.getNamePart());
             }
+        }
+
+    }
+
+    @Override
+    public void HandleFileEntityToModel(PartQuestionEntity partQuestionEntity, PartQuestionModel partQuestionModel) {
+        Path path = init(partQuestionEntity.getPartEntity().getPartName());
+        try {
+            if (partQuestionEntity.getPathFileMp3() != null && !partQuestionEntity.getPathFileMp3().isEmpty()) {
+                File file = new File(path.toString() + characterSplit + partQuestionEntity.getPathFileMp3());
+                partQuestionModel.setMp3(Files.readAllBytes(file.toPath()));
+            }
+            for (int i = 0; i < partQuestionEntity.getQuestionEntityList().size(); i++) {
+                QuestionModel questionModel = partQuestionModel.getQuestionModelList().get(i);
+                QuestionEntity questionEntity = partQuestionEntity.getQuestionEntityList().get(i);
+
+                if (questionEntity.getFileImageEntityList() != null && !questionEntity.getFileImageEntityList().isEmpty()) {
+                    for (int j = 0; j < questionEntity.getFileImageEntityList().size(); j++) {
+                        File file = new File(path.toString() + characterSplit + "image" + characterSplit + questionEntity.getFileImageEntityList().get(j).getPathFileImage());
+                        questionModel.getFileImageModelList().get(j).setImage(Files.readAllBytes(file.toPath()));
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }

@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Repository
-public class AccountREpositoryIpm implements AccountRepository {
+public class AccountRepositoryIpm implements AccountRepository {
 
     @Autowired
     AccountDao accountDao;
@@ -35,8 +35,6 @@ public class AccountREpositoryIpm implements AccountRepository {
         AccountEntity accountEntity = accountDao.findByEmail(email);
 
         Map<Long, SomeObject> map = new HashMap<>();
-
-
 
         for (HistoryEntity historyEntity : accountEntity.getHistoryEntityList()) {
 

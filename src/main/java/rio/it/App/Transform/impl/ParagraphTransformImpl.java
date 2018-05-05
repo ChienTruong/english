@@ -36,7 +36,7 @@ public class ParagraphTransformImpl implements ParagraphTransform {
         if(paragraphEntity != null){
             paragraphModel = new ParagraphModel();
             paragraphModel.setParagraph(paragraphEntity.getParagraph());
-            paragraphModel.setId(paragraphEntity.getUuid().toString());
+            paragraphModel.setId(paragraphEntity.getUuid());
         }
         logger.info("End convertParagraphEntityToModel with result:"+paragraphModel);
         return paragraphModel;

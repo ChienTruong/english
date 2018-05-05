@@ -7,5 +7,5 @@ import java.util.UUID;
 @Data
 public class IdModel {
 
-    private String id;
+    private UUID id;
 }

@@ -20,6 +20,7 @@ import java.util.Random;
 @Component
 public class PartBlImpl implements PartBl {
 
+
     private static final Logger LOGGER = LoggerFactory.getLogger(PartBlImpl.class);
 
     private AccountService accountService;
@@ -90,6 +91,19 @@ public class PartBlImpl implements PartBl {
                     }
                 }
                 return this.partQuestionService.getById(idOfPartQuestion);
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public List<PartQuestionModel> getAllPartQuestion(String namePart, String emailUser) {
+
+        if (namePart != null
+                && emailUser != null){
+            if (partService.checkExist(namePart)){
+
+                 return  partService.getAllPartQuestionModelThisAccount(namePart,emailUser);
             }
         }
         return null;
