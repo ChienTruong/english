@@ -15,9 +15,7 @@ public class IdEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Long id;
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private UUID uuid;
+    private Long id;
+    private UUID uuid = UUID.randomUUID();
 
 }

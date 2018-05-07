@@ -8,6 +8,9 @@ import rio.it.App.Repository.Impl.PartQuestionRepositoryImpl;
 import rio.it.App.Repository.PartQuestionRepository;
 import rio.it.App.Service.PartQuestionService;
 
+import java.util.UUID;
+
+
 /**
  * Created by chien on 10/04/2018.
  */
@@ -28,9 +31,8 @@ public class PartQuestionServiceImpl implements PartQuestionService {
     }
 
     @Override
-    public PartQuestionModel getById(Long idOfPartQuestion) {
-
-        return this.partQuestionRepository.findById(idOfPartQuestion);
+    public PartQuestionModel getByUUID(UUID uuidPartQuestion) {
+        return null;
     }
 
     @Override

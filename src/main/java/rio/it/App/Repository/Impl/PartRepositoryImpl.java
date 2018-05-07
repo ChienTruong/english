@@ -18,6 +18,7 @@ import rio.it.App.Transform.PartTransform;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -58,6 +59,15 @@ public class PartRepositoryImpl implements PartRepository {
         return questionModelList;
     }
 
+    @Override
+    public List<PartQuestionModel> getAllParQuestionByNamePart(String namePart) {
+        PartEntity partEntity = this.partDao.findByName(namePart);
+        List<PartQuestionModel> partQuestionModelList = new ArrayList<>(0);
+        for (PartQuestionEntity partQuestionEntity : partEntity.getPartQuestionEntityList()) {
+            partQuestionModelList.add(this.entityTransformToModel.transformPartQuestionEntityToModel(partQuestionEntity));
+        }
+        return partQuestionModelList;
+    }
 
 
     @Override
@@ -69,10 +79,10 @@ public class PartRepositoryImpl implements PartRepository {
     }
 
     @Override
-    public List<Long> getListIdOfPartQuestionByNamePart(String namePart) {
+    public List<UUID> getListIdOfPartQuestionByNamePart(String namePart) {
         PartEntity partEntity = partDao.findByName(namePart);
         return partEntity.getPartQuestionEntityList()
-                .stream().map(PartQuestionEntity::getId)
+                .stream().map(PartQuestionEntity::getUuid)
                 .collect(Collectors.toList());
     }
 }

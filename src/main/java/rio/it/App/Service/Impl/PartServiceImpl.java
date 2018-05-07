@@ -8,7 +8,10 @@ import rio.it.App.Model.PartQuestionModel;
 import rio.it.App.Repository.PartRepository;
 import rio.it.App.Service.PartService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by chien on 10/04/2018.
@@ -45,7 +48,7 @@ public class PartServiceImpl implements PartService {
     }
 
     @Override
-    public List<Long> getAllIdOfListPartQuestion(String namePart) {
+    public List<UUID> getAllIdOfListPartQuestion(String namePart) {
         return this.partRepository.getListIdOfPartQuestionByNamePart(namePart);
     }
 
@@ -53,5 +56,15 @@ public class PartServiceImpl implements PartService {
     public List<PartQuestionModel> getAllPartQuestionModelThisAccount(String namePart,String email) {
 
         return this.partRepository.getAllPartQuestionModelThisAccount(namePart, email);
+    }
+
+    @Override
+    public Map<UUID, PartQuestionModel> getAllPartQuestionByNamePart(String namePart) {
+        List<PartQuestionModel> partQuestionModelList = this.partRepository.getAllParQuestionByNamePart(namePart);
+        Map<UUID, PartQuestionModel> uuidPartQuestionModelMap = new HashMap<>(partQuestionModelList.size());
+        for (PartQuestionModel partQuestionModel : partQuestionModelList) {
+            uuidPartQuestionModelMap.put(partQuestionModel.getId(), partQuestionModel);
+        }
+        return uuidPartQuestionModelMap;
     }
 }

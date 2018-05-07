@@ -11,6 +11,7 @@ import rio.it.App.Service.AccountService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -23,11 +24,11 @@ public class AccountServiceImpl implements AccountService {
     AccountRepository accountRepository;
 
     @Override
-    public Map<Long, Integer> getHistoryOfUser(String emailUser, String namePart) {
-        Map<Long, Integer> mapsevice = new HashMap<>();
+    public Map<UUID, Integer> getHistoryOfUser(String emailUser, String namePart) {
+        Map<UUID, Integer> mapsevice = new HashMap<>();
         if (emailUser != null && namePart != null) {
 
-            Map<Long, SomeObject> mapRepository = this.accountRepository.getHistoryOfAccount(emailUser);
+            Map<UUID, SomeObject> mapRepository = this.accountRepository.getHistoryOfAccount(emailUser);
             mapRepository.forEach((aLong, someObject) -> {
                 if (someObject.getNamePart().equalsIgnoreCase(namePart)) {
                     mapsevice.put(aLong, someObject.getNumComplete());

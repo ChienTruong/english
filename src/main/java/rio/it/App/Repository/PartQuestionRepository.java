@@ -2,6 +2,8 @@ package rio.it.App.Repository;
 
 import rio.it.App.Model.PartQuestionModel;
 
+import java.util.UUID;
+
 /**
  * Created by chien on 23/04/2018.
  */
@@ -16,4 +18,6 @@ public interface PartQuestionRepository {
     PartQuestionModel findById(Long idOfPartQuestion);
 
     void update(Long partQuestionId, PartQuestionModel partQuestionModel);
+
+    PartQuestionModel findByUUID(UUID uuidPartQuestion);
 }

@@ -3,8 +3,11 @@ package rio.it.Verify;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import rio.it.App.Model.PartQuestionModel;
 import rio.it.App.Model.QuestionModel;
 import rio.it.App.Model.SubQuestionModel;
+import rio.it.App.Transform.*;
+import rio.it.App.Transform.impl.*;
 import rio.it.App.Util.Impl.VerifyQuestionPartOne;
 import rio.it.App.Util.VerifyPartQuestion;
 

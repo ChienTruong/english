@@ -12,12 +12,13 @@ import rio.it.App.Repository.AccountRepository;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Repository
 public class AccountRepositoryIpm implements AccountRepository {
 
     @Autowired
-    AccountDao accountDao;
+    private AccountDao accountDao;
 
     @Override
     public AccountModel findOne(Long idAccount) {
@@ -30,17 +31,17 @@ public class AccountRepositoryIpm implements AccountRepository {
     }
 
     @Override
-    public Map<Long, SomeObject> getHistoryOfAccount(String email) {
+    public Map<UUID, SomeObject> getHistoryOfAccount(String email) {
 
         AccountEntity accountEntity = accountDao.findByEmail(email);
 
-        Map<Long, SomeObject> map = new HashMap<>();
+        Map<UUID, SomeObject> map = new HashMap<>();
 
         for (HistoryEntity historyEntity : accountEntity.getHistoryEntityList()) {
 
             PartQuestionEntity partQuestionEntity = historyEntity.getPk().getPartQuestionEntity();
 
-            Long idPartQuestion = partQuestionEntity.getId();
+            UUID idPartQuestion = partQuestionEntity.getUuid();
 
             if (!map.containsKey(idPartQuestion)) {
                 SomeObject someObject = new SomeObject();

@@ -12,6 +12,8 @@ import rio.it.App.Repository.PartQuestionRepository;
 import rio.it.App.Transform.ModelTransformEntity;
 import rio.it.App.Transform.PartQuestionTransform;
 
+import java.util.UUID;
+
 /**
  * Created by chien on 23/04/2018.
  */
@@ -59,5 +61,10 @@ public class PartQuestionRepositoryImpl implements PartQuestionRepository {
       //partQuestionEntity.setPartQuestionId(partQuestionId);
         this.handleFile.HandleFileModelToEntity(partQuestionEntity, partQuestionModel);
         partQuestionDao.update(partQuestionEntity);
+    }
+
+    @Override
+    public PartQuestionModel findByUUID(UUID uuidPartQuestion) {
+        return null;
     }
 }

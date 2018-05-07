@@ -13,11 +13,11 @@ import java.util.List;
  */
 @Entity
 @Data
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @ToString(exclude = {
         "partQuestionEntityList"
 })
-public class PartEntity  extends IdEntity{
+public class PartEntity extends IdEntity {
 
     private String partName;
     @OneToMany(mappedBy = "partEntity")
