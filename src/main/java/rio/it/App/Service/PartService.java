@@ -16,10 +16,6 @@ public interface PartService {
 
     PartModel findByName(String namePart);
 
-    PartModel findById(Long idPartQuestion);
-
-    List<UUID> getAllIdOfListPartQuestion(String namePart);
-
     List<PartQuestionModel> getAllPartQuestionModelThisAccount(String namePart,String email);
 
     Map<UUID,PartQuestionModel> getAllPartQuestionByNamePart(String namePart);

@@ -9,6 +9,7 @@ import java.util.List;
 @Data
 public class AccountEntity extends IdEntity {
 
+    @Column(unique = true)
     private String email;
     @Column(length = 60)
     private String pwd;

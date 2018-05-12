@@ -25,16 +25,16 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Map<UUID, Integer> getHistoryOfUser(String emailUser, String namePart) {
-        Map<UUID, Integer> mapsevice = new HashMap<>();
+        Map<UUID, Integer> mapservice = new HashMap<>();
         if (emailUser != null && namePart != null) {
 
             Map<UUID, SomeObject> mapRepository = this.accountRepository.getHistoryOfAccount(emailUser);
             mapRepository.forEach((aLong, someObject) -> {
                 if (someObject.getNamePart().equalsIgnoreCase(namePart)) {
-                    mapsevice.put(aLong, someObject.getNumComplete());
+                    mapservice.put(aLong, someObject.getNumComplete());
                 }
             });
         }
-        return mapsevice;
+        return mapservice;
     }
 }

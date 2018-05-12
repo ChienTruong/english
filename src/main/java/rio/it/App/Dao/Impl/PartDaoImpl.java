@@ -22,8 +22,6 @@ public class PartDaoImpl extends GenericDaoImpl<PartEntity, Long> implements Par
         String selection = "SELECT p FROM " + PartEntity.class.getSimpleName() + " AS p WHERE UPPER(p.partName) LIKE :namePart";
         TypedQuery<PartEntity> query = this.entityManager.createQuery(selection, PartEntity.class);
         query.setParameter("namePart", '%' + namePart.toUpperCase() + '%');
-        query.setMaxResults(1);
-        query.setFirstResult(0);
         logger.info("End findByName with result: "+query.getResultList());
         return query.getSingleResult();
     }

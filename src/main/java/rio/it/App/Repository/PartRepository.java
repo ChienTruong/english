@@ -12,8 +12,8 @@ import java.util.UUID;
 public interface PartRepository {
 
     PartModel findByName(String name);
-    List<UUID> getListIdOfPartQuestionByNamePart(String namePart);
-    List<PartQuestionModel> getAllPartQuestionModelThisAccount(String namePart,String email);
+
+    List<PartQuestionModel> getAllPartQuestionModelThisAccount(String namePart, String email);
 
     List<PartQuestionModel> getAllParQuestionByNamePart(String namePart);
 }

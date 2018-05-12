@@ -19,9 +19,6 @@ public class AccountDaoImpl extends GenericDaoImpl<AccountEntity,Long> implement
     public AccountEntity findByEmail(String email){
         String sql = "SELECT a FROM " + AccountEntity.class.getSimpleName() + " AS a WHERE a.email = :email";
         TypedQuery<AccountEntity> query = this.entityManager.createQuery(sql, AccountEntity.class);
-        query.setFirstResult(0);
-        query.setMaxResults(1);
-        query.setParameter("email", email);
         return query.getSingleResult();
     }
 }

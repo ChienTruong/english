@@ -43,16 +43,6 @@ public class PartServiceImpl implements PartService {
     }
 
     @Override
-    public PartModel findById(Long idPartQuestion) {
-        return null;
-    }
-
-    @Override
-    public List<UUID> getAllIdOfListPartQuestion(String namePart) {
-        return this.partRepository.getListIdOfPartQuestionByNamePart(namePart);
-    }
-
-    @Override
     public List<PartQuestionModel> getAllPartQuestionModelThisAccount(String namePart,String email) {
 
         return this.partRepository.getAllPartQuestionModelThisAccount(namePart, email);
