@@ -14,11 +14,13 @@ public class AccountDaoImpl extends GenericDaoImpl<AccountEntity,Long> implement
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
-
     @Override
     public AccountEntity findByEmail(String email){
+
         String sql = "SELECT a FROM " + AccountEntity.class.getSimpleName() + " AS a WHERE a.email = :email";
         TypedQuery<AccountEntity> query = this.entityManager.createQuery(sql, AccountEntity.class);
         return query.getSingleResult();
+
+
     }
 }
